@@ -1,0 +1,15 @@
+{
+  "name": "Pracovní jinyPrijem 1.5.0.3 – nepotvrzený mzdový export",
+  "bundle_id": "jmhz-1.5.0.3",
+  "scenario": "jinyPrijem",
+  "status": "working_unverified",
+  "columns": {
+    "form_id": "form_id",
+    "period": "period",
+    "activity_code": "activity_code",
+    "ik_mpsv": "ik_mpsv",
+    "id_ppv": "id_ppv",
+    "tax_income_10535": "tax_income_10535",
+    "tax_income_10555": "tax_income_10555"
+  }
+}

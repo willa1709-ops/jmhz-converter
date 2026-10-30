@@ -95,3 +95,32 @@ def test_ui_xml_validation_uses_registered_official_bundle(tmp_path):
     window.validate_xml_path(path)
     assert "XSD: NEPROŠLO" in window.xml_validation_result.toPlainText()
     window.close()
+
+
+def test_ui_prepares_employee_draft_and_clears_it_on_missing_values(tmp_path):
+    import json
+    app = QApplication.instance() or QApplication([])
+    window = MainWindow()
+    root = Path(__file__).parents[1]
+    source = tmp_path / "synthetic.csv"
+    source.write_text("form_id;period;activity_code;ik_mpsv;id_ppv;tax_income_10535;tax_income_10555\n"
+                      "00000000-0000-4000-8000-000000000002;2027-01;11;0000000000;000001;123;0\n")
+    parameters = tmp_path / "parameters.json"
+    parameters.write_text(json.dumps({"submission_id": "00000000-0000-4000-8000-000000000001",
+                                      "employer_variable_symbol": "0000000000", "year": 2027, "month": 1,
+                                      "filled_at": "2026-10-30T12:00:00"}))
+    profile = root / "config/conversion/jiny-prijem-2027.json"
+    window.load_path(source)
+    window.prepare_conversion_paths(profile, parameters)
+    app.processEvents()
+    assert window.generated_draft is not None
+    assert "jinyPrijem" in window.draft_preview.toPlainText()
+    assert "XSD: PROŠLO" in window.conversion_status.text()
+    source.write_text(source.read_text().replace(";123;0", ";;0"))
+    window.load_path(source)
+    assert window.generated_draft is None
+    window.prepare_conversion_paths(profile, parameters)
+    assert window.generated_draft is None
+    assert "Chybí hodnota" in window.draft_preview.toPlainText()
+    assert "XSD: NEPROŠLO" in window.conversion_status.text()
+    window.close()

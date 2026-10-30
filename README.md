@@ -1,6 +1,8 @@
 # JMHZ Converter
 
-Lokální desktopový **prototyp** pro Windows, Python 3.12+, PySide6.
+Lokální desktopový **prototyp** pro moderní Windows, Python 3.12+, PySide6.
+Pro hlavní počítač Windows 7 SP1 x86 je připraven návrh oddělené varianty a
+společné jádro pro Python 3.8; funkční Windows 7 GUI/EXE zatím není prokázané.
 Obsahuje první analýzu, pracovní návrh CSV a základ aplikace. **Není dokončené P0
 a nevytváří XML připravené k podání.** Dodané podklady 2026/2027 jsou evidované,
 porovnané a jejich XSD se lokálně kompilují. Původ a účinnost celých sad stále
@@ -16,10 +18,13 @@ vyžadují doložený přezkum. Žádné smyšlené elementy JMHZ nejsou impleme
 - [Inventura a rozdíly dodaných verzí, účinnost a omezení](docs/official-comparison.md)
 - [Příjem dokumentů a skutečná XSD validace přes UI/CLI](docs/official-intake.md)
 - [Doložený pracovní podklad CSV → XML](docs/csv-jmhz-evidence.md)
+- [Návrh Windows 7 SP1 x86 vedle moderní varianty](docs/windows7-design.md)
+- [Nový pracovní převod CSV/XLSX → XML a potřebné sloupce](docs/conversion-stage.md)
+- [Společné jádro a platformní adaptéry](docs/conversion-architecture.md)
 
 ## Spuštění
 
-Windows PowerShell (z kořene repozitáře):
+Windows 10/11 x64 PowerShell (z kořene repozitáře; ne pro Windows 7):
 
 ```powershell
 py -3.12 -m venv .venv
@@ -55,6 +60,8 @@ a Qt offscreen. Linuxová sestava PyInstaller nevytváří Windows EXE.
    technická kontrola se eviduje odděleně. Význam metodiky a dopad na mapování
    nejsou automaticky vyhodnoceny.
 6. V Generování XML lze vybrat dodaný XSD balíček a zkontrolovat XML soubor.
+   Nově lze také připravit pracovní XML scénáře jinyPrijem přes vlastní profil
+   a parametry z `config/conversion/`; návod a chybějící vstupy jsou výše.
    Finální mzdový export je blokovaný; XSD úspěch sám není metodická validace.
 
 CSV: UTF-8 (i BOM) nebo Windows-1250, oddělovače `; , TAB |`, čárka/tečka

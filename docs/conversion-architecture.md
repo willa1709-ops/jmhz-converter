@@ -1,0 +1,50 @@
+# Společné jádro a platformní adaptéry
+
+Nové `app/core/` používá minimum Python 3.8, nemá závislost na Qt ani StrEnum.
+Žádný z těchto modulů se nezabývá automatickým stahováním definic. Moderní projekt
+nadále vyžaduje Python 3.12 a PySide6; neinstaluje se beze změn jako celek na 3.8.
+
+```mermaid
+flowchart LR
+    Input[CSV / XLSX] --> Reader[core.input]
+    Reader --> Mapping[core.mapping]
+    Mapping --> Checks[core.methodology: konzistence a stav]
+    Checks --> XML[core.generation: verzovaný adaptér]
+    XML --> XSD[core.schemas: lokální validace]
+    XSD --> Result[pracovní výsledek / nálezy]
+    Result --> UI[moderní GUI / CLI / budoucí Qt5 adaptér]
+```
+
+| Modul | Rozhraní a odpovědnost |
+| --- | --- |
+| `core.models` | datové třídy SourceRow/SourceTable, Issue, ConversionResult bez Qt |
+| `core.input` | stávající logika CSV a XLSX přesunutá beze změny pravidel; moderní importery pouze adaptují staré modely |
+| `core.mapping` | validovaný pracovní profil: pojmenované doménové vstupy → sloupce; přesná normalizace celočíselných částek Decimal |
+| `core.methodology` | technická vstupní smlouva, shoda období a explicitní blokátory nedokončené metodiky |
+| `core.generation` | skutečné QName/pořadí scénáře jinyPrijem podle konkrétních verzí; žádné UI a žádný zápis na disk |
+| `core.schemas` / `core.xml_support` | původní zabezpečený parser a hashově ověřený resolver, přenositelné cesty/API pro 3.8 |
+| `core.conversion` | orchestrace, samostatná XSD kontrola hlavičky a řádků, celková XSD validace, součty a neobejitelný blok finálního zápisu |
+| `core.resources` | resource cesta ze zdrojů nebo PyInstaller datového adresáře |
+| `core.__main__` | offline CLI, explicitní `.draft.xml`, žádný konečný export |
+
+Původní veřejná rozhraní `app.importers`, `app.xml` a `app.xml.bundle` zůstala
+zachována tenkými adaptéry. Přesun je cílený kvůli sdílení a kompatibilitě:
+StrEnum z původních UI modelů se do jádra nedostává, Path.is_relative_to je
+nahrazeno ekvivalentem dostupným v 3.8, anotace jsou odložené. Resolver nyní
+správně převádí Windows file URI včetně mezer a nadále odmítá UNC/síťové cesty.
+
+Moderní UI nový převod volá přes `prepare_conversion`, bez duplikace XML/částkových
+pravidel. Budoucí Qt5 adaptér musí použít totéž API. Není správné jen zaměnit
+import PySide6 za PySide2 v celé aplikaci: liší se enumy/API a původní moduly
+nadále používají novější Python. Přechod legacy UI je samostatná další etapa.
+
+Testy jádra lze spustit bez PySide obou generací:
+
+```text
+python -m pytest -q tests/test_conversion_core.py
+```
+
+Úspěch na Linux Python 3.8 + lxml 5.3.2 a moderním Pythonu dokládá kompatibilitu
+jádra, nikoliv schopnost načíst Windows DLL nebo splnění metodiky JMHZ.
+V odděleném 3.8 prostředí byly použity lxml 5.3.2, openpyxl 3.1.5 a pytest 7.4.4;
+moderní prostředí a jeho uzamčené závislosti zůstávají oddělené.

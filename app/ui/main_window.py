@@ -16,6 +16,9 @@ from app.storage import Store
 from app.validation import validate
 from app.ui.definitions_page import DefinitionsPage
 from app.xml.bundle import registered_validator
+from app.core.conversion import prepare_conversion
+from app.core.mapping import load_profile as load_conversion_profile
+from app.core.resources import default_official_root
 
 
 class MainWindow(QMainWindow):
@@ -26,6 +29,7 @@ class MainWindow(QMainWindow):
         self.source: Dataset | None = None
         self.findings: list[Finding] = []
         self.profile = Profile.default()
+        self.generated_draft: bytes | None = None
         self.tabs = QTabWidget()
         self.setCentralWidget(self.tabs)
         self.import_page = self.page("Import dat")
@@ -88,7 +92,7 @@ class MainWindow(QMainWindow):
         xml.addWidget(QLabel("Samostatná technická kontrola XML proti dodanému XSD.\n"
                             "Balíček vyberte výslovně; účinnost celé sady se neurčuje podle složky.\n"
                             "Úspěch XSD kontroly nepotvrzuje metodiku, původ ani připravenost k podání."))
-        self.official_root = Path(__file__).resolve().parents[2] / "schemas/official"
+        self.official_root = default_official_root()
         self.bundle_choice = QComboBox()
         bundle_index = self.official_root / "bundles.json"
         if bundle_index.is_file():
@@ -105,6 +109,17 @@ class MainWindow(QMainWindow):
         self.xml_validation_result = QTextEdit()
         self.xml_validation_result.setReadOnly(True)
         xml.addWidget(self.xml_validation_result)
+        conversion = QPushButton("Pracovní CSV/XLSX → XML: zvolit konverzní profil a parametry…")
+        conversion.clicked.connect(self.choose_conversion)
+        xml.addWidget(conversion)
+        xml.addWidget(QLabel("Experimentální scénář jinyPrijem (činnosti 11, 13, 14), vlastní profil z config/conversion.\n"
+                            "Povinné skutečné vstupy doplňte podle dokumentace; původní profil pěti sloupců nestačí.\n"
+                            "Výsledek je pouze náhled pracovního XML, finální export je blokovaný."))
+        self.conversion_status = QLabel("Pracovní převod dosud neproveden.")
+        xml.addWidget(self.conversion_status)
+        self.draft_preview = QTextEdit()
+        self.draft_preview.setReadOnly(True)
+        xml.addWidget(self.draft_preview)
         self.definitions_page = DefinitionsPage()
         self.tabs.addTab(self.definitions_page, "Definice JMHZ")
         settings = self.page("Nastavení")
@@ -122,6 +137,35 @@ class MainWindow(QMainWindow):
         filename, _ = QFileDialog.getOpenFileName(self, "XML ke kontrole", "", "XML (*.xml)")
         if filename:
             self.validate_xml_path(Path(filename))
+
+    def choose_conversion(self) -> None:
+        if self.source is None:
+            QMessageBox.information(self, "Pracovní převod", "Nejprve načtěte vstupní CSV nebo XLSX.")
+            return
+        profile, _ = QFileDialog.getOpenFileName(self, "Konverzní profil (config/conversion)", "", "JSON (*.json)")
+        if not profile:
+            return
+        parameters, _ = QFileDialog.getOpenFileName(self, "Skutečné parametry podání", "", "JSON (*.json)")
+        if parameters:
+            self.prepare_conversion_paths(Path(profile), Path(parameters))
+
+    def prepare_conversion_paths(self, profile: Path, parameters: Path) -> None:
+        self.generated_draft = None
+        self.draft_preview.clear()
+        try:
+            if self.source is None:
+                raise ValueError("Chybí vstup.")
+            result = prepare_conversion(self.source, load_conversion_profile(profile.read_text(encoding="utf-8")),
+                                        json.loads(parameters.read_text(encoding="utf-8")), self.official_root)
+            self.generated_draft = result.draft_xml
+            self.conversion_status.setText("XSD: " + ("PROŠLO" if result.xsd_valid else "NEPROŠLO") +
+                                           "; metodika neúplná, původ neověřen; finální export NE.")
+            if result.draft_xml:
+                self.draft_preview.setPlainText(result.draft_xml.decode("utf-8"))
+            else:
+                self.draft_preview.setPlainText("\n".join(f"Řádek {i.row or 'hlavička'} | {i.field}: {i.message} {i.remedy}" for i in result.issues))
+        except Exception:
+            self.conversion_status.setText("Pracovní převod nelze připravit. Ověřte profil, parametry a XSD podklady.")
 
     def validate_xml_path(self, path: Path) -> None:
         try:
@@ -175,6 +219,8 @@ class MainWindow(QMainWindow):
         try:
             source = read_xlsx(path) if path.suffix.lower() == ".xlsx" else read_csv(path, self.encoding.currentText(), self.delimiter.currentText())
             self.source = source
+            self.generated_draft = None
+            self.draft_preview.clear()
             self.fill(self.preview, list(source.columns), [[r.values[c] for c in source.columns] for r in source.rows])
             self.check()
             self.tabs.setCurrentIndex(1)

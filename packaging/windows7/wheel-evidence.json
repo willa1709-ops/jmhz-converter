@@ -1,0 +1,45 @@
+{
+  "checked_on": "2026-10-30",
+  "artifacts": [
+    {
+      "package": "PySide2",
+      "version": "5.15.2.1",
+      "requires_python": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <3.11",
+      "filename": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32.whl",
+      "sha256_from_pypi": "439509e53cfe05abbf9a99422a2cbad086408b0f9bf5e6f642ff1b13b1f8b055",
+      "artifact_url": "https://files.pythonhosted.org/packages/c9/ae/a8c2b9d7b19a787a9f96ddead3f38e4e7b041ec7ae901953dfa7a2fe2fff/PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32.whl",
+      "metadata_url": "https://pypi.org/pypi/PySide2/5.15.2.1/json",
+      "status": "availability_metadata_only_not_tested_on_windows7"
+    },
+    {
+      "package": "lxml",
+      "version": "5.3.2",
+      "requires_python": ">=3.6",
+      "filename": "lxml-5.3.2-cp38-cp38-win32.whl",
+      "sha256_from_pypi": "d8f74ef8aacdf6ee5c07566a597634bb8535f6b53dc89790db43412498cf6026",
+      "artifact_url": "https://files.pythonhosted.org/packages/4f/8c/9026305215995431492714adc5f4b695317663f9b73d0b1e6dc883b2235c/lxml-5.3.2-cp38-cp38-win32.whl",
+      "metadata_url": "https://pypi.org/pypi/lxml/5.3.2/json",
+      "status": "availability_metadata_only_not_tested_on_windows7"
+    },
+    {
+      "package": "openpyxl",
+      "version": "3.1.5",
+      "requires_python": ">=3.8",
+      "filename": "openpyxl-3.1.5-py2.py3-none-any.whl",
+      "sha256_from_pypi": "5282c12b107bffeef825f4617dc029afaf41d0ea60823bbb665ef3079dc79de2",
+      "artifact_url": "https://files.pythonhosted.org/packages/c0/da/977ded879c29cbd04de313843e76868e6e13408a94ed6b987245dc7c8506/openpyxl-3.1.5-py2.py3-none-any.whl",
+      "metadata_url": "https://pypi.org/pypi/openpyxl/3.1.5/json",
+      "status": "availability_metadata_only_not_tested_on_windows7"
+    },
+    {
+      "package": "pyinstaller",
+      "version": "5.13.2",
+      "requires_python": "<3.13,>=3.7",
+      "filename": "pyinstaller-5.13.2-py3-none-win32.whl",
+      "sha256_from_pypi": "421cd24f26144f19b66d3868b49ed673176765f92fa9f7914cd2158d25b6d17e",
+      "artifact_url": "https://files.pythonhosted.org/packages/cd/e7/837f40d46b3f00a640caf7d5e8b0dc1ee4d98257cb90705e0c98e47bffea/pyinstaller-5.13.2-py3-none-win32.whl",
+      "metadata_url": "https://pypi.org/pypi/pyinstaller/5.13.2/json",
+      "status": "availability_metadata_only_not_tested_on_windows7"
+    }
+  ]
+}

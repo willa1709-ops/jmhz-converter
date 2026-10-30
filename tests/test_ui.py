@@ -124,3 +124,34 @@ def test_ui_prepares_employee_draft_and_clears_it_on_missing_values(tmp_path):
     assert "Chybí hodnota" in window.draft_preview.toPlainText()
     assert "XSD: NEPROŠLO" in window.conversion_status.text()
     window.close()
+
+
+def test_numbered_payroll_ui_calculates_primary_and_invalidates_context_without_logging_identifiers():
+    from app.ui.payroll_dialog import PayrollDialog
+    from app.core.models import SourceRow, SourceTable
+    app = QApplication.instance() or QApplication([])
+    row = {"internal_number": "10", "period": "26-09", "oic": "1234567890", "rc": "900101/1234",
+           "form_id": "", "id_ppv": "", "activity_code": "", "p100": "100.10", "p110": "0.2", "p120": "0.01", "p190": "100.29", "p200": "0"}
+    second = dict(row, internal_number="0002")
+    source = SourceTable(tuple(row), (SourceRow(2, row), SourceRow(3, second)))
+    dialog = PayrollDialog(source)
+    dialog.load_profile_path(Path(__file__).parents[1] / "config/payroll/numbered.template.json")
+    dialog.period.setText("26-09")
+    dialog.analyze()
+    assert dialog.errors.rowCount() == 0
+    assert dialog.rows.item(0, 4).text() == "ne"
+    assert dialog.rows.item(1, 4).text() == "ano"
+    assert dialog.rows.item(1, 5).text() == "100.29"
+    dialog.revision.setValue(1)
+    assert dialog.result is None and dialog.rows.rowCount() == 0
+    dialog.period.setText("26-10")
+    dialog.analyze()
+    assert any(i.code == "period_mismatch" for i in dialog.result.issues)
+    second["rc"] = "910101/1234"
+    dialog.period.setText("26-09")
+    dialog.analyze()
+    assert all(r.primary_pp is None for r in dialog.result.rows)
+    diagnostics = " ".join(dialog.errors.item(i, j).text() for i in range(dialog.errors.rowCount()) for j in range(dialog.errors.columnCount()))
+    assert row["oic"] not in diagnostics and row["rc"] not in diagnostics and second["rc"] not in diagnostics
+    app.processEvents()
+    dialog.close()

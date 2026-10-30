@@ -1,4 +1,5 @@
 """Omezené lokální rozbalení ZIP, bez spuštění jeho obsahu."""
+from __future__ import annotations
 from io import BytesIO
 from pathlib import Path, PurePosixPath
 import hashlib
@@ -63,8 +64,10 @@ def extract_zip(content: bytes, destination: Path) -> list[dict]:
     with ZipFile(BytesIO(content)) as archive:
         for record in inventory:
             target = root / record["path"]
-            if not target.resolve().is_relative_to(root):
-                raise ValueError("Cesta uniká z cílové složky.")
+            try:
+                target.resolve().relative_to(root)
+            except ValueError:
+                raise ValueError("Cesta uniká z cílové složky.") from None
             if record["directory"]:
                 target.mkdir(parents=True, exist_ok=True)
             else:

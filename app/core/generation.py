@@ -32,6 +32,8 @@ def build_xml(bundle: dict, records, header: dict) -> bytes:
         fh = child(wrapper, ns, "hlavicka")
         child(fh, ns, "idFormulare", record["form_id"])
         child(fh, ns, "typFormulare", "R")
+        if "primary_pp" in record:
+            child(fh, ns, "primarniPpv", "true" if record["primary_pp"] else "false")
         payload = child(wrapper, form, "jinyPrijem")
         identity = child(payload, form, "identifikace")
         child(identity, form, "ikMpsv", record["ik_mpsv"])

@@ -8,7 +8,7 @@ from typing import Dict, FrozenSet, Optional, Tuple
 @dataclass(frozen=True)
 class SourceRow:
     number: int
-    values: Dict[str, str]
+    values: Dict[str, str] = field(repr=False)
     numeric_columns: FrozenSet[str] = frozenset()
 
 
@@ -30,7 +30,7 @@ class Issue:
 
 @dataclass(frozen=True)
 class ConversionResult:
-    draft_xml: Optional[bytes]
+    draft_xml: Optional[bytes] = field(repr=False)
     issues: Tuple[Issue, ...]
     record_count: int
     xsd_valid: bool

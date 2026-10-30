@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import StrEnum
 
 
@@ -11,7 +11,7 @@ class Severity(StrEnum):
 @dataclass(frozen=True)
 class Row:
     number: int
-    values: dict[str, str]
+    values: dict[str, str] = field(repr=False)
     numeric_columns: frozenset[str] = frozenset()
 
 

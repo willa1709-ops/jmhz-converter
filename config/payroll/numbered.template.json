@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "profile_id": "working-numbered",
+  "profile_version": "1.0",
+  "period_century": 2000,
+  "items": {
+    "100": {"column": "p100"},
+    "110": {"column": "p110"},
+    "120": {"column": "p120"},
+    "190": {"column": "p190"},
+    "200": {"column": "p200"}
+  },
+  "metadata": {
+    "internal_number": {"column": "internal_number"},
+    "period": {"column": "period"},
+    "oic": {"column": "oic"},
+    "rc": {"column": "rc"},
+    "form_id": {"column": "form_id"},
+    "id_ppv": {"column": "id_ppv"},
+    "activity_code": {"column": "activity_code"}
+  },
+  "calculations": {
+    "row_total": {"op": "subtract", "args": [
+      {"op": "add", "args": [{"item": "100"}, {"item": "110"}]},
+      {"item": "120"}
+    ]}
+  },
+  "controls": [{"calculation": "row_total", "item": "190", "tolerance": "0"}]
+}

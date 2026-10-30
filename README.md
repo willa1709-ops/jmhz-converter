@@ -21,6 +21,8 @@ vyžadují doložený přezkum. Žádné smyšlené elementy JMHZ nejsou impleme
 - [Návrh Windows 7 SP1 x86 vedle moderní varianty](docs/windows7-design.md)
 - [Nový pracovní převod CSV/XLSX → XML a potřebné sloupce](docs/conversion-stage.md)
 - [Společné jádro a platformní adaptéry](docs/conversion-architecture.md)
+- [Číslované položky, více PP, řádkové výpočty a interní revize](docs/numbered-payroll.md)
+- [Externí offline balíčky definic a jejich ověřování](docs/offline-definition-packages.md)
 
 ## Spuštění
 
@@ -63,6 +65,11 @@ a Qt offscreen. Linuxová sestava PyInstaller nevytváří Windows EXE.
    Nově lze také připravit pracovní XML scénáře jinyPrijem přes vlastní profil
    a parametry z `config/conversion/`; návod a chybějící vstupy jsou výše.
    Finální mzdový export je blokovaný; XSD úspěch sám není metodická validace.
+7. V Mapování otevřete Číslované položky pro obecnou analýzu jednoho řádku za PP:
+   pracovní JSON nebo ověřený offline ZIP, období, interní revize, párování a
+   primární PP, přesné součty a porovnání s kontrolními částkami exportu.
+   Čísla položek a vzorce v šabloně vyžadují potvrzení skutečným mzdovým exportem.
+   Nové číslované mapování na pracovní XML lze použít přes CLI/API; návod je výše.
 
 CSV: UTF-8 (i BOM) nebo Windows-1250, oddělovače `; , TAB |`, čárka/tečka
 v částkách, citování a vícerádkové buňky. Nekonzistentní tabulka je odmítnuta.
@@ -88,13 +95,16 @@ Jádro odmítá DTD a externí zdroje; finální generátor vždy vyvolá Export
 
 Chybí zejména doložený přezkum původu a účinnosti sad, úplné mapování a metodická validace,
 generátor úplného mzdového JMHZ,
-metodické porovnání a dopad na mapování, nezávislé porovnání součtů pro
-složené transformace, datumové transformace a ověření EXE na Windows.
+metodické porovnání a dopad na mapování, potvrzení čísel položek a vzorců ze
+skutečného mzdového exportu, datumové transformace a ověření EXE na Windows.
 P1 a P2 nejsou implementovány. Podrobný postup a otevřené otázky jsou v analýze.
 
 ## Soukromí
 
 Aplikace neprovádí síťové požadavky, neodesílá data a neobsahuje telemetrii.
 Data se drží v paměti; automaticky se ukládá pouze konfigurace profilů, bez
-mzdových řádků. Výpisy parserů s možným osobním obsahem se nezobrazují do logů.
+mzdových řádků. Volitelná evidence revizí ukládá jen metadata zakázek a hash
+definic, bez osobních identifikátorů a GUID. Výpisy parserů s možným osobním
+obsahem se nezobrazují do logů. Výslovně uložené pracovní XML obsahuje osobní
+údaje; není diagnostickým logem a je nutné ho chránit.
 Používejte chráněný uživatelský účet, zabezpečený disk a syntetická testovací data.

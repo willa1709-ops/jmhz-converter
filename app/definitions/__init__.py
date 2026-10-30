@@ -1,4 +1,5 @@
 """Evidence a obecný diff definic; neobsahuje domnělé schéma JMHZ."""
+from __future__ import annotations
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 import hashlib

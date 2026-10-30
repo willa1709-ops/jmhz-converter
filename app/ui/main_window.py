@@ -66,6 +66,9 @@ class MainWindow(QMainWindow):
             button.clicked.connect(handler)
             buttons.addWidget(button)
         mapping.addLayout(buttons)
+        numbered = QPushButton("Číslované položky, řádkové součty a primární PP…")
+        numbered.clicked.connect(self.open_numbered_payroll)
+        mapping.addWidget(numbered)
         self.show_profile()
 
         checks = self.page("Kontrola dat")
@@ -132,6 +135,13 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout(widget)
         self.tabs.addTab(widget, name)
         return layout
+
+    def open_numbered_payroll(self) -> None:
+        if self.source is None:
+            QMessageBox.information(self, "Číslované položky", "Nejprve načtěte CSV nebo XLSX s jedním řádkem za PP.")
+            return
+        from app.ui.payroll_dialog import PayrollDialog
+        PayrollDialog(self.source, self).exec()
 
     def choose_xml_validation(self) -> None:
         filename, _ = QFileDialog.getOpenFileName(self, "XML ke kontrole", "", "XML (*.xml)")

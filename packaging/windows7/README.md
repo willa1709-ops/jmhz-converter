@@ -12,7 +12,7 @@ nejsou úplný platformní lock. Pip pro Python 3.8 musí být kompatibilní (na
 ```powershell
 py -3.8-32 -m venv .venv-win7
 .venv-win7\Scripts\python -m pip install --no-index --find-links wheelhouse -r packaging\windows7\requirements-candidate.txt
-.venv-win7\Scripts\python -m pytest -q tests\test_conversion_core.py
+.venv-win7\Scripts\python -m pytest -q tests\test_conversion_core.py tests\test_numbered_payroll.py
 ```
 
 Neinstalovat tento projekt pomocí `pip install .` do 3.8: balíček moderního UI
@@ -44,3 +44,21 @@ ověřovací kroky, nikoliv alternativní neověřený produkční příkaz.
 [wheel-evidence.json](wheel-evidence.json) zaznamenává pouze ověřenou dostupnost
 vybraných win32/univerzálních artefaktů a hashe z PyPI metadata. Neprokazuje stažení
 nebo úspěšné načtení těchto Windows DLL v této linuxové relaci.
+
+## Kandidát konzole číslovaných položek s externími definicemi
+
+Po stejných přejímacích kontrolách lze samostatně vyzkoušet nový vstupní bod:
+
+```powershell
+.venv-win7\Scripts\python -m PyInstaller --noconfirm --clean --onedir --console --name JMHZ-Payroll-Win7 --paths . app\core\payroll.py
+```
+
+Tato varianta dostává profil, vazby i skutečná XSD z
+[externího ZIPu](../../docs/offline-definition-packages.md) instalovaného mimo EXE.
+Ověřenou sadu nejprve připraví správce nástrojem `app.core.packages`; konzole
+na cílovém PC ji při použití `--package` a `--trusted-manifest-sha256` znovu ověří.
+Příkazy `python -m app.core.payroll ...` z návodu pak nahradí
+`JMHZ-Payroll-Win7.exe ...`. Externí sady ani databázi neukládat do interního
+PyInstaller/TEMP adresáře; změna definice musí zachovat předchozí verzi.
+Ani tento sestavovací příkaz nebyl otestován na Windows a nepředstavuje hotové
+GUI nebo potvrzení kompatibility Win7 x86. Závislosti se zde nemění.

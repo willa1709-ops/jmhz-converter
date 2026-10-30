@@ -26,6 +26,17 @@ flowchart LR
 | `core.conversion` | orchestrace, samostatná XSD kontrola hlavičky a řádků, celková XSD validace, součty a neobejitelný blok finálního zápisu |
 | `core.resources` | resource cesta ze zdrojů nebo PyInstaller datového adresáře |
 | `core.__main__` | offline CLI, explicitní `.draft.xml`, žádný konečný export |
+| `core.payroll` | číslo položky → sloupec; validovaný graf řádkových Decimal výpočtů a kontrol; bezpečný diagnostický report a CLI |
+| `core.identities` | komponenty OIČ/RČ, blokování rozporů, číselné pořadí textových interních čísel, primární PP po měsících |
+| `core.periods` | explicitní století, měsíc, interní revize a volitelná SQLite evidence oddělená od GUID |
+| `core.payroll_conversion` | explicitní pracovní vazby číslovaných položek na původní `jinyPrijem`; nové příznaky `primarniPpv` podle skutečného XSD |
+| `core.packages` | pasivní verzované ZIP mimo EXE, nezávislý pin manifestu, bezpečná instalace, kontrola souborů/API, zachování starších verzí |
+
+Obecná mzdová analýza používá `prepare_payroll`; XML adaptér
+`prepare_numbered_conversion` ji spustí před dosavadním převodem a při libovolném
+nálezu XML nevytvoří. Původní `prepare_conversion` a jeho profily fungují nadále
+bez požadavku na novou vrstvu. `primary_flags` jsou volitelné; nový adaptér je
+předává pouze po jednoznačném vyřešení všech PP. Finální zápis zůstává blokovaný.
 
 Původní veřejná rozhraní `app.importers`, `app.xml` a `app.xml.bundle` zůstala
 zachována tenkými adaptéry. Přesun je cílený kvůli sdílení a kompatibilitě:
@@ -41,7 +52,7 @@ nadále používají novější Python. Přechod legacy UI je samostatná dalš�
 Testy jádra lze spustit bez PySide obou generací:
 
 ```text
-python -m pytest -q tests/test_conversion_core.py
+python -m pytest -q tests/test_conversion_core.py tests/test_numbered_payroll.py
 ```
 
 Úspěch na Linux Python 3.8 + lxml 5.3.2 a moderním Pythonu dokládá kompatibilitu

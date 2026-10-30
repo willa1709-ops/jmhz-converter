@@ -12,7 +12,10 @@ from app.core.models import Issue
 from app.core.periods import Period, SubmissionContext
 
 LOGIC_API = 1
-META_FIELDS = {"internal_number", "period", "oic", "rc", "form_id", "id_ppv", "activity_code"}
+META_FIELDS = {"internal_number", "period", "oic", "rc", "form_id", "id_ppv", "activity_code",
+               "employment_type", "given_name", "surname", "birth_date", "employment_start", "employment_end",
+               "registration_status", "work_performed", "income_amount", "absence_reason",
+               "employer_ico", "employer_variable_symbol"}
 
 
 def strict_json(text: str):
@@ -36,6 +39,21 @@ def decimal_input(value: str) -> Decimal:
     if not re.fullmatch(r"[+-]?[0-9]{1,32}(?:[.,][0-9]{1,8})?", value):
         raise ValueError("Neplatná konečná částka nebo nepodporovaná přesnost.")
     return Decimal(value.replace(",", "."))
+
+
+def input_state(values, column, columns):
+    """Presence is separate from a blank cell and an explicit numeric zero."""
+    if column not in columns:
+        return "absent_column"
+    if column not in values or values[column] is None:
+        return "absent_value"
+    value = values[column]
+    if isinstance(value, str) and not value.strip():
+        return "blank"
+    try:
+        return "zero" if decimal_input(value) == 0 else "value"
+    except ValueError:
+        return "invalid"
 
 
 def load_numbered_profile(text: str) -> dict:
@@ -71,6 +89,8 @@ def load_numbered_profile(text: str) -> dict:
     for ref in meta.values():
         source_column(ref)
     private_columns = {source_column(meta[k]) for k in ("oic", "rc") if k in meta}
+    if "income_amount" in meta and source_column(meta["income_amount"]) in private_columns:
+        raise ValueError("Identifikační sloupec nesmí být zdrojem příjmu.")
     calculations = p["calculations"]
     if not isinstance(calculations, dict) or len(calculations) > 512:
         raise ValueError("Neplatné výpočty.")
@@ -119,6 +139,7 @@ class PayrollRow:
     calculations: dict = field(repr=False)
     person_group: Optional[str] = None
     primary_pp: Optional[bool] = None
+    item_states: dict = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -131,7 +152,8 @@ class PayrollResult:
     def safe_report(self) -> dict:
         return {"period": self.context.period.iso, "internal_revision": self.context.revision_index,
                 "record_count": len(self.rows), "issues": [asdict(i) for i in self.issues],
-                "rows": [{"row": r.number, "person_group": r.person_group, "primary_pp": r.primary_pp} for r in self.rows],
+                "rows": [{"row": r.number, "person_group": r.person_group, "primary_pp": r.primary_pp,
+                          "item_states": r.item_states} for r in self.rows],
                 "submission_ready": False}
 
 
@@ -149,7 +171,6 @@ def prepare_payroll(source, profile: dict, context: SubmissionContext) -> Payrol
     required_columns = set(meta_columns.values()) | {v["column"] for v in profile["items"].values()}
     if required_columns - set(source.columns):
         issues.append(Issue(None, "columns", "missing_columns", "Chybí sloupce definované profilem.", "Ověřte mapování čísel položek na exportní hlavičky."))
-        return PayrollResult(context, (), tuple(issues))
     for source_row in source.rows:
         def issue(field_name, code, message):
             issues.append(Issue(source_row.number, field_name, code, message, "Ověřte a doplňte skutečný údaj ve zdroji."))
@@ -233,7 +254,8 @@ def prepare_payroll(source, profile: dict, context: SubmissionContext) -> Payrol
                         issue("control:" + check["calculation"], "control_mismatch", "Kontrolní součet zdroje nesouhlasí s výpočtem tohoto řádku.")
                 except (ValueError, ArithmeticError):
                     issue("control:" + check["calculation"], "control_input", "Kontrolní součet chybí nebo nemá platný číselný formát.")
-        rows.append(PayrollRow(source_row.number, period, metadata, items, memo))
+        states = {key: input_state(source_row.values, ref["column"], source.columns) for key, ref in profile["items"].items()}
+        rows.append(PayrollRow(source_row.number, period, metadata, items, memo, item_states=states))
     assignments, pairing_issues = pair_employments(identities)
     issues.extend(pairing_issues)
     rows = [replace(r, person_group=assignments[r.number].person_group, primary_pp=assignments[r.number].primary_pp)

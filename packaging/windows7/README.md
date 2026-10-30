@@ -12,7 +12,7 @@ nejsou úplný platformní lock. Pip pro Python 3.8 musí být kompatibilní (na
 ```powershell
 py -3.8-32 -m venv .venv-win7
 .venv-win7\Scripts\python -m pip install --no-index --find-links wheelhouse -r packaging\windows7\requirements-candidate.txt
-.venv-win7\Scripts\python -m pytest -q tests\test_conversion_core.py tests\test_numbered_payroll.py
+.venv-win7\Scripts\python -m pytest -q tests\test_conversion_core.py tests\test_numbered_payroll.py tests\test_organizations.py
 ```
 
 Neinstalovat tento projekt pomocí `pip install .` do 3.8: balíček moderního UI

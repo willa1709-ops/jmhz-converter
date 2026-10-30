@@ -22,8 +22,11 @@ from app.core.resources import default_official_root
 
 
 class MainWindow(QMainWindow):
-    def __init__(self) -> None:
+    def __init__(self, on_import=None, organization_context=None, xml_scenario_allowed=True) -> None:
         super().__init__()
+        self.on_import = on_import
+        self.organization_context = organization_context
+        self.xml_scenario_allowed = xml_scenario_allowed
         self.setWindowTitle("JMHZ Converter – pracovní prototyp")
         self.resize(1150, 780)
         self.source: Dataset | None = None
@@ -165,8 +168,15 @@ class MainWindow(QMainWindow):
         try:
             if self.source is None:
                 raise ValueError("Chybí vstup.")
-            result = prepare_conversion(self.source, load_conversion_profile(profile.read_text(encoding="utf-8")),
-                                        json.loads(parameters.read_text(encoding="utf-8")), self.official_root)
+            if not self.xml_scenario_allowed:
+                raise ValueError("Scénář této organizace nelze nahradit pracovním jinyPrijem.")
+            configuration = json.loads(parameters.read_text(encoding="utf-8"))
+            if self.organization_context:
+                symbol, period = self.organization_context
+                if (str(configuration.get("employer_variable_symbol")) != symbol
+                        or str(configuration.get("year")) != str(period.year) or str(configuration.get("month")).lstrip("0") != str(period.month)):
+                    raise ValueError("Hlavička neodpovídá organizaci a měsíci.")
+            result = prepare_conversion(self.source, load_conversion_profile(profile.read_text(encoding="utf-8")), configuration, self.official_root)
             self.generated_draft = result.draft_xml
             self.conversion_status.setText("XSD: " + ("PROŠLO" if result.xsd_valid else "NEPROŠLO") +
                                            "; metodika neúplná, původ neověřen; finální export NE.")
@@ -223,21 +233,27 @@ class MainWindow(QMainWindow):
     def choose_input(self) -> None:
         path, _ = QFileDialog.getOpenFileName(self, "Načíst data", "", "Mzdová data (*.csv *.xlsx)")
         if path:
-            self.load_path(Path(path))
+            if self.on_import is not None:
+                self.on_import(Path(path))
+            else:
+                self.load_path(Path(path))
 
     def load_path(self, path: Path) -> None:
         try:
             source = read_xlsx(path) if path.suffix.lower() == ".xlsx" else read_csv(path, self.encoding.currentText(), self.delimiter.currentText())
-            self.source = source
-            self.generated_draft = None
-            self.draft_preview.clear()
-            self.fill(self.preview, list(source.columns), [[r.values[c] for c in source.columns] for r in source.rows])
-            self.check()
-            self.tabs.setCurrentIndex(1)
+            self.set_source(source)
         except Exception:
             # No raw parser exceptions: they can include cell contents / personal data.
             QMessageBox.warning(self, "Import selhal", "Ověřte kódování, oddělovač, hlavičky a počet buněk.\n"
                                 "XLSX nepodporuje vzorce, datumové a chybové buňky. Soubor musí obsahovat data a splnit limity.")
+
+    def set_source(self, source) -> None:
+        self.source = source
+        self.generated_draft = None
+        self.draft_preview.clear()
+        self.fill(self.preview, list(source.columns), [[r.values.get(c) or "" for c in source.columns] for r in source.rows])
+        self.check()
+        self.tabs.setCurrentIndex(1)
 
     def check(self) -> None:
         if self.source is None:

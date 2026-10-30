@@ -155,3 +155,71 @@ def test_numbered_payroll_ui_calculates_primary_and_invalidates_context_without_
     assert row["oic"] not in diagnostics and row["rc"] not in diagnostics and second["rc"] not in diagnostics
     app.processEvents()
     dialog.close()
+
+
+def test_organizations_dashboard_isolates_context_history_and_old_tools(tmp_path):
+    import json
+    from app.ui.organizations_window import OrganizationsWindow
+    from app.core.models import SourceRow, SourceTable
+    from app.core.periods import Period
+    app = QApplication.instance() or QApplication([])
+    window = OrganizationsWindow(tmp_path / "workspace")
+    window.period.setText("26-09")
+    a = window.workspace.register("Synthetic A", "00000001", "0000000001")
+    b = window.workspace.register("Synthetic B", "00000002", "0000000002")
+    p = json.loads((Path(__file__).parents[1] / "config/payroll/numbered.template.json").read_text())
+    p["metadata"].update(employment_type={"column": "kind"}, income_amount={"item": "190"})
+    window.workspace.set_profile(p)
+    row = {"internal_number": "2", "period": "26-09", "oic": "1234567890", "rc": "", "form_id": "", "id_ppv": "1", "activity_code": "11",
+           "p100": "100", "p110": "10", "p120": "5", "p190": "105", "p200": "0", "kind": "HPP"}
+    source_a = SourceTable(tuple(row), (SourceRow(2, row), SourceRow(3, dict(row, internal_number="10"))))
+    source_b = SourceTable(tuple(row), (SourceRow(2, dict(row, internal_number="10")),))
+    window.workspace.import_table(a.id, Period(2026, 9), source_a)
+    window.workspace.import_table(b.id, Period(2026, 9), source_b)
+    window.refresh()
+    assert window.organizations.rowCount() == 2
+    window.select_organization(a.id)
+    window.check()
+    assert window.rows.rowCount() == 2
+    assert window.rows.item(1, 4).text() == "ne"
+    window.open_tools()
+    tools = window.tools
+    assert tools.source == source_a and not tools.xml_scenario_allowed
+    window.draft.setPlainText("private synthetic preview")
+    window.select_organization(b.id)
+    assert window.tools is None and not tools.isVisible()
+    assert window.analysis is None and window.rows.rowCount() == 0 and not window.draft.toPlainText()
+    window.check()
+    assert window.rows.rowCount() == 1 and window.rows.item(0, 4).text() == "ano"
+    from PySide6.QtCore import QTimer
+    from PySide6.QtWidgets import QTabWidget, QPlainTextEdit
+    history_preview = []
+    def inspect_history():
+        dialog = app.activeModalWidget()
+        try:
+            tabs = dialog.findChild(QTabWidget)
+            checks = tabs.widget(0)
+            checks.cellClicked.emit(0, 0)
+            history_preview.append((checks.rowCount(), dialog.findChild(QPlainTextEdit).toPlainText()))
+        finally:
+            dialog.accept()
+    QTimer.singleShot(0, inspect_history)
+    window.open_audit_history()
+    assert history_preview[0][0] == 1 and "105" in history_preview[0][1]
+    assert "1234567890" not in history_preview[0][1]
+    window.record_version()
+    assert window.revision.value() == 1
+    assert window.organizations.item(1, 6).text() == "0"
+    window.period.setText("26-10")
+    assert window.imported is None and window.analysis is None
+    assert window.rows.rowCount() == 0 and window.import_history.count() == 0
+    window.period.setText("26-09")
+    window.select_organization(a.id)
+    csv = tmp_path / "repeat.csv"
+    csv.write_text(";".join(row) + "\n" + ";".join(row.values()) + "\n")
+    window.import_path(csv)
+    assert window.imported.import_index == 1
+    assert window.import_history.count() == 2
+    assert window.workspace.overview(Period(2026, 9))[1]["pp_count"] == 1
+    app.processEvents()
+    window.close()

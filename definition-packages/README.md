@@ -23,3 +23,21 @@ Tyto hashe jsou **kandidát k nezávislému schválení**. Jejich přítomnost v
 README neznamená přezkum vydavatele nebo metodiky. Před použitím na skutečných
 datech nahradit zástupné mapování, zvýšit verzi a schválit obsah i pin mimo ZIP.
 Loader žádné schválení z README automaticky nenačítá.
+
+## Šablona pro organizační workflow
+
+[`working-workforce-1.0.zip`](working-workforce-1.0.zip) přidává oproti starší
+šabloně profil vstupů HPP/DPP/DPČ, alternativní identifikační údaje, stav
+registrace, práci a příjem a identifikaci zaměstnavatele v souboru. Obsahuje
+obě XSD runtime sady, ale **žádný nový XML generátor**. Původní balíček zůstává
+nezměněný. Zástupná čísla položek a vzorec stále vyžadují skutečný mzdový export.
+
+| Údaj | Kandidát k nezávislému schválení |
+| --- | --- |
+| SHA-256 manifestu | `541b7563f0146a4edcba889ac6aa1e9a3c83d48088f5c4df095729a9d72dbfab` |
+| SHA-256 ZIPu | `21a29ddd6901098ebf9e9a82191cfd64ca0a155956846d2a82ae4083e32c7ea4` |
+
+Vytvoření: `python -m app.core.packages build --profile config/payroll/workforce.template.json --package-id working-workforce --version 1.0 --official-root schemas/official --output working-workforce-1.0.zip`.
+Nová metadata a organizační služba vyžadují tuto verzi aplikace; starší EXE
+neznámá metadata bezpečně odmítne. Následné změny podporovaných čísel položek,
+sloupců a vzorců lze distribuovat novou verzí balíčku bez další změny EXE.

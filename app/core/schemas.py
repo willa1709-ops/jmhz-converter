@@ -123,3 +123,35 @@ def registered_validator(official_root: Path, bundle_id: str) -> BundleValidator
         if is_below(path, root) and path.suffix == ".xsd":
             hashes[path.relative_to(root).as_posix()] = record["sha256"]
     return BundleValidator(entry, root, hashes)
+
+
+class IdentityValidator(BundleValidator):
+    """Validate a component using the real identifikaceType, never a guessed type.
+
+    The inspection root is internal to the application, not a JMHZ output format.
+    """
+
+    def __init__(self, official_root: Path, bundle_id: str):
+        registered = registered_validator(official_root, bundle_id)
+        self.resolver = registered.resolver
+        entry = self.resolver.root / "formCommonTypes.xsd"
+        document = parse_local_xml(self.resolver.read(entry))
+        ns = document.get("targetNamespace")
+        xs = "http://www.w3.org/2001/XMLSchema"
+        wrapper = etree.Element("{" + xs + "}schema", nsmap={"xs": xs, "form": ns})
+        etree.SubElement(wrapper, "{" + xs + "}import", namespace=ns, schemaLocation=entry.as_uri())
+        etree.SubElement(wrapper, "{" + xs + "}element", name="identity", type="form:identifikaceType")
+        parser = etree.XMLParser(resolve_entities=False, load_dtd=False, no_network=True)
+        parser.resolvers.add(self.resolver)
+        self.schema = etree.XMLSchema(etree.fromstring(etree.tostring(wrapper), parser))
+        self.namespace = ns
+
+    def alternative(self, metadata: dict) -> XmlValidation:
+        root = etree.Element("identity")
+        try:
+            for tag, key in [("prijmeni", "surname"), ("jmeno", "given_name"), ("datumNarozeni", "birth_date"),
+                             ("datumNastupu", "employment_start"), ("druhCinnosti", "activity_code")]:
+                etree.SubElement(root, "{" + self.namespace + "}" + tag).text = metadata.get(key) or ""
+        except (ValueError, TypeError):
+            return XmlValidation(False, ("IDENTITY_FORMAT_ERROR",))
+        return self.validate(etree.tostring(root))

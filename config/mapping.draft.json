@@ -1,0 +1,11 @@
+{
+  "name": "Pracovní návrh",
+  "definition_version": "unverified-draft-0",
+  "rules": {
+    "employee_id": {"op": "column", "name": "employee_id"},
+    "period": {"op": "column", "name": "period"},
+    "income": {"op": "column", "name": "income"},
+    "social_base": {"op": "column", "name": "social_base"},
+    "health_base": {"op": "column", "name": "health_base"}
+  }
+}

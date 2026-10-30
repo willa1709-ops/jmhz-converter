@@ -1,5 +1,9 @@
 # Dodané podklady JMHZ: inventura, účinnost a rozdíly
 
+Navazující etapa po sloučení PR #2 přidává omezený pracovní převod zaměstnaneckého
+formuláře `jinyPrijem`; viz [aktuální konverze a zbylé blokátory](conversion-stage.md).
+Níže je zachovaný report příjmu podkladů, nikoliv tvrzení o dokončeném P0.
+
 Kontrola dodávky z `main` (`4e47731`) dne 30. 10. 2026. Původní složky `2026`
 a `2027` jsou **označením dodávky**, nikoliv automatickým důkazem účinnosti.
 Původ dokumentů zůstává neověřený; obsah byl přečten z lokálně dodaných souborů.

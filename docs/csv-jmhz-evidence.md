@@ -1,5 +1,8 @@
 # Podklad CSV → JMHZ XML z dodaných dokumentů
 
+Na tento rozbor navazuje [první pracovní implementace konkrétního scénáře](conversion-stage.md).
+Nové profily v config/conversion stále neznamenají potvrzení formátu skutečného mzdového exportu.
+
 Toto je **pracovní podklad**, nikoliv aktivní produkční mapovací profil.
 Originály a jejich verze shrnuje [porovnání](official-comparison.md).
 Strojově čitelné podklady jsou v `schemas/official/analysis/`:

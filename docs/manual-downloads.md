@@ -1,45 +1,41 @@
-# Podklady k ručnímu stažení – JMHZ
+# Dodané a zbývající podklady JMHZ
 
-Stav k 30. 10. 2026: kvůli síťové politice nebyly weby institucí v této relaci
-přístupné. **Přesné názvy aktuálních souborů, přímé adresy ke stažení a verze nejsou
-ověřené.** Níže jsou popisy hledaných dokumentů, nikoliv vymyšlené oficiální názvy.
+Dodávka 2026/2027 je již v repozitáři. Není potřeba znovu dodávat shodné originály.
+[Úplný přehled verzí a účinnosti](official-comparison.md) vysvětluje doložená data
+i rozpory. [intake.json](../schemas/official/intake.json) obsahuje přesné původní
+názvy, zdrojové URL rekonstruované z nahraných názvů a SHA-256 všech 13 souborů.
+Ověření dostupnosti URL ani oficiálního původu tím není nahrazeno.
 
-Známé vstupní adresy institucí (nikoliv ověřené odkazy na konkrétní balíčky):
+| Kategorie | Již dodáno |
+| --- | --- |
+| XSD podání | ZIP 1.4.3.6 a ZIP 1.5.0.3 s dalším vnořeným XSD ZIPem |
+| Datový slovník | XLSX 1.4.1.6 a 1.5.0.3, včetně číselníkových listů |
+| Katalog kontrol | XLSX 1.4.2.11 a 1.5.0.4 |
+| Datové scénáře / interakce | XLSX 1.4.0.2 a 1.5.0.3 |
+| Pokyny MH | PDF 1.4.14, 1.4.14 s revizemi a 1.5 |
+| Pravidla podání a související procesy | PDF 1.4.6 |
+| Výsledkové protokoly MH | ZIP 1.5; není příkladem vstupního měsíčního podání |
 
-- ČSSZ: https://www.cssz.cz/
-- ePortál ČSSZ: https://eportal.cssz.cz/
-- MPSV: https://www.mpsv.cz/
-- Kandidátní rozcestník JMHZ: https://jmhz.mpsv.cz/ — dostupnost zde neověřena.
+## Co ještě dodat nebo doložit
 
-Na oficiálním webu vyhledejte JMHZ / Jednotné měsíční hlášení zaměstnavatele a
-technické podklady pro dodavatele mzdových systémů. Zkontrolujte, že odkazy vedou
-na dokumenty publikované příslušnou institucí, a uložte i odkaz na stránku vydání.
+1. Potvrzení vydavatele a kompatibility konkrétních vydání v sadě. Doložit
+   účinnost celé XSD/datové sady, nikoliv jen pojmenovat složku rokem. Titulní
+   strany pokynů uvádějí 1.7.2025 a 1.1.2027; nejsou samy potvrzením každého souboru.
+2. Vysvětlení nesouladu data publikace slovníku 1.4.1.6: starý sešit uvádí
+   29.5.2026, historie nového pro stejné vydání 12.6.2026. Uchovat obě evidence.
+3. Oficiální anonymizované příklady **vstupního měsíčního XML** a očekávané
+   metodické výsledky. Dodaný protokol má jiný účel a není jejich náhradou.
+4. Samostatnou definici EDV, pokud je pro integrační smlouvu vydaná zvlášť,
+   a případné externí číselníky/vazby, které nejsou pokryty přiloženými listy.
+   Jejich úplný potřebný soupis ještě není potvrzen, chybějící kódy nevymýšlíme.
+5. Syntetický skutečný mzdový export: přesný význam částek, více PPV, identifikace
+   zaměstnavatele a očekávané součty. Skutečné osobní údaje pro testy nejsou potřeba.
 
-| Co stáhnout (popis) | Přesný název / přímá URL | K čemu je potřeba |
-| --- | --- | --- |
-| Aktuální kompletní balíček XSD pro měsíční hlášení, včetně všech include/import | zatím neznámé | namespace, struktura, pořadí, typy, povinnost dle XSD |
-| Datový slovník / technický popis položek měsíčního hlášení | zatím neznámé | význam polí a skutečná CSV → JMHZ vazba |
-| Úplné číselníky k příslušné verzi | zatím neznámé | dovolené kódy, názvy, účinnost a podmíněná platnost |
-| Metodika vyplnění měsíčního hlášení | zatím neznámé | podmínky povinnosti a věcné vazby mimo XSD |
-| Seznam logických kontrol, chybových kódů a kontrolních vazeb | zatím neznámé | další validace a kontrolní součty |
-| Popis standardního měsíčního podání a hlavičky/identifikace | zatím neznámé | zaměstnavatel, období, granularita zaměstnance a vztahů |
-| Přehled vydání, změnové listy a účinnost jednotlivých verzí | zatím neznámé | výběr správné definice pro vykazovaný měsíc |
-| Oficiální anonymizované testovací XML, příklady a očekávané výsledky | zatím neznámé | integrační testy generátoru a validátoru |
+Oficiální rozcestníky pro dohledání doplnění: https://jmhz.mpsv.cz/,
+https://developers.mpsv.cz/api-list/jednotne-mesicni-hlaseni-zamestnavatelu/documentation/4589f5c6-30e8-4e2b-b341-fe8481ad4e70
+a https://www.cssz.gov.cz/pro-vyvojare-jmhz. Neprohlašujeme nové nepřečtené soubory
+z těchto webů za ověřené.
 
-Stáhněte stávající verzi a pokud možno také předchozí verzi pro porovnání.
-U každého souboru poznamenejte skutečný název, přesnou zdrojovou URL, datum
-stažení, deklarovanou verzi a účinnost. SHA-256 dopočítá registr dokumentů.
-Vydání, zdroj a obsah musí někdo věcně přezkoumat; úspěch parseru nestačí.
-Není potřeba stahovat nebo připravovat opravná hlášení či registrace pro tento úkol.
-
-## Když je číselník/metodika pouze v jiném formátu
-
-CSV číselníky lze importovat jako UTF-8 tabulky s hlavičkou. U XLSX nebo PDF
-číselníku uchovejte originál; jeho převod do CSV je odvozený dokument a musí mít
-vlastní hash, vazbu na originál a přezkum. Takový převod se nesmí vydávat za originál.
-Metodiky PDF lze archivovat; jejich textová interpretace a vykonávání pravidel
-nejsou automatické. JSON pravidla se zatím pouze evidují a porovnávají, nespouštějí.
-
-Kromě oficiálních dokumentů potřebujeme **syntetický vzorek skutečného mzdového
-exportu**, včetně informace o více pracovních vztazích, definici částek a očekávaných
-součtech. Pro základ importu není nutné poskytovat skutečné osobní údaje.
+[Postup načtení a registrace](official-intake.md) nyní podporuje originální XLSX
+i ZIP. Stav technického čtení/CRC je oddělený od přezkumu původu a obsahu.
+Opravná hlášení a registrace do této etapy nepatří.

@@ -1,0 +1,2 @@
+# Official artifact hashes must survive checkout on Windows unchanged.
+schemas/official/** -text

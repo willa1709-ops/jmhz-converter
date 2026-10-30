@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+           xmlns:ct="http://schemas.cssz.cz/JMHZ/msgCommonTypes/1.0"
+           xmlns:form="http://schemas.cssz.cz/JMHZ/form/1.0"
+           xmlns="http://schemas.cssz.cz/JMHZ/msgVezen/1.0"
+           targetNamespace="http://schemas.cssz.cz/JMHZ/msgVezen/1.0" elementFormDefault="qualified"
+           version="1.4.3">
+    
+  <xs:import namespace="http://schemas.cssz.cz/JMHZ/msgCommonTypes/1.0" schemaLocation="msgCommonTypes.xsd"/>
+  <xs:import namespace="http://schemas.cssz.cz/JMHZ/form/1.0" schemaLocation="../externi_xsd/formVezen.xsd"/>
+
+  <xs:element name="msgVezen">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="hlavicka" type="ct:hlavickaType"/>
+        <xs:element ref="form:vezen" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

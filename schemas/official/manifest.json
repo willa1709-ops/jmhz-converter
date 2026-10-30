@@ -1,4 +1,1386 @@
 {
-  "format_version": 1,
-  "documents": []
+  "documents": [
+    {
+      "acquired_at": "2026-10-30T20:55:29.492632+00:00",
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/pravidla-podani-jmhz-a-souvisejici-procesy-ver-1.4.6.pdf",
+      "kind": "methodology",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_227054ec-a530-4c9b-aadb-57a046bb00ef_Pravidla podání JMHZ a související procesy_ver 1.4.6.pdf",
+      "sha256": "52ad6d6e1f51af3ff5c4bde9067fe36c289435b99c6cca5984101379460f493d",
+      "source_url": "https://developers.mpsv.cz/assets/documents/227054ec-a530-4c9b-aadb-57a046bb00ef/Pravidla%20pod%C3%A1n%C3%AD%20JMHZ%20a%20souvisej%C3%ADc%C3%AD%20procesy_ver%201.4.6.pdf",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "retained_only",
+      "version": "1.4.6",
+      "version_evidence": [
+        "PDF strana 1: Pravidla podání JMHZ a související\n                  procesy\n\n\n                                              Verze 1.4.6\n\n\n\n\n                                                            1\nPravidla podání JMHZ a související procesy_ver 1.4.6\n\fHistorie dokumentu\n\n Verze        Datum            Autor                               Změny\n 1.4          27.10.2025       Pavla Myslivcová                    Spojení dokumentace Struktura a pravidla"
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:30.239921+00:00",
+      "effective_evidence": "PDF strana 1: Platné pro období od 1.7.2025",
+      "effective_from": "2025-07-01",
+      "effective_status": "declared_in_document_not_legally_reviewed",
+      "effective_until": null,
+      "file": "2026/mh-pokyny-k-vyplneni-mesicniho-hlaseni-1.4.14.pdf",
+      "kind": "methodology",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_4e835883-2857-4778-8228-9696254810c5_MH - Pokyny k vyplnění měsíčního hlášení_1.4.14.pdf",
+      "sha256": "87e86be66020e88846e737d8e28cab93eef620dac9640dc6bf873400f83d2db3",
+      "source_url": "https://developers.mpsv.cz/assets/documents/4e835883-2857-4778-8228-9696254810c5/MH%20-%20Pokyny%20k%20vypln%C4%9Bn%C3%AD%20m%C4%9Bs%C3%AD%C4%8Dn%C3%ADho%20hl%C3%A1%C5%A1en%C3%AD_1.4.14.pdf",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "retained_only",
+      "version": "1.4.14",
+      "version_evidence": [
+        "PDF strana 1: Ministerstvo práce a sociálních věcí\nVšeobecné zásady pro vyplňování měsíčního podání JMHZ\n\n\n             Platné pro období od 1.7.2025\n                       Verze 1.4.14\n\fHistorie dokumentu\n Verze         Datum             Autor                              Změny\n 1.4\n 1.4.7         13.11.2025        JMHZ procesní tým                  Úpravy v pokynech atributů dle\n                                                                    požadavků vlastníků"
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:30.978518+00:00",
+      "effective_evidence": "PDF strana 1: Platné pro období od 1.7.2025",
+      "effective_from": "2025-07-01",
+      "effective_status": "declared_in_document_not_legally_reviewed",
+      "effective_until": null,
+      "file": "2026/mh-pokyny-k-vyplneni-mesicniho-hlaseni-1.4.14-revize.pdf",
+      "kind": "methodology",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_6a349886-55f8-4495-aaee-cb7fd1a16ee5_MH - Pokyny k vyplnění měsíčního hlášení_1.4.14_revize.pdf",
+      "sha256": "6817864e2f1d6950b85d23f59432d2db6df2338949588ff29d9e8b1571a72372",
+      "source_url": "https://developers.mpsv.cz/assets/documents/6a349886-55f8-4495-aaee-cb7fd1a16ee5/MH%20-%20Pokyny%20k%20vypln%C4%9Bn%C3%AD%20m%C4%9Bs%C3%AD%C4%8Dn%C3%ADho%20hl%C3%A1%C5%A1en%C3%AD_1.4.14_revize.pdf",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "retained_only",
+      "version": "1.4.14",
+      "version_evidence": [
+        "PDF strana 1: Ministerstvo práce a sociálních věcí\nVšeobecné zásady pro vyplňování měsíčního podání JMHZ\n\n\n             Platné pro období od 1.7.2025\n                   Verze 1.4.13Verze 1.4.14\n\fHistorie dokumentu\n Verze         Datum             Autor                              Změny\n 1.4\n 1.4.7         13.11.2025        JMHZ procesní tým                  Úpravy v pokynech atributů dle\n                                                                    požadavků vlastníků"
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:31.304090+00:00",
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/katalog-kontrol-mh-public-1.4.2.11.xlsx",
+      "kind": "control_catalog",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_8aea9a31-e27a-4635-934e-6d2a32289976_Katalog kontrol MH(public)_1.4.2.11.xlsx",
+      "sha256": "e5b664c135b63774b555e067c5ed83991bd919f023f3f577bcfafd030b441b62",
+      "source_url": "https://developers.mpsv.cz/assets/documents/8aea9a31-e27a-4635-934e-6d2a32289976/Katalog%20kontrol%20MH%28public%29_1.4.2.11.xlsx",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "xlsx_read_not_validated",
+      "version": "1.4.2.11",
+      "version_evidence": [
+        "Titulní strana!B9: 1.4.2.11"
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:34.148780+00:00",
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/datove-scenare-interakce-povinnosti-mh-1.4.0.2.xlsx",
+      "kind": "scenarios",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_9fad6021-73d0-4914-80c8-609716b5697d_datove_scenare_interakce_povinnosti_MH_1.4.0.2.xlsx",
+      "sha256": "cc282115d58a3744348b500a2dcc6eec4a5899b12753ec756f01fe261fd7ff37",
+      "source_url": "https://developers.mpsv.cz/assets/documents/9fad6021-73d0-4914-80c8-609716b5697d/datove_scenare_interakce_povinnosti_MH_1.4.0.2.xlsx",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "xlsx_read_not_validated",
+      "version": "1.4.0.2",
+      "version_evidence": [
+        "Verze!A3: 1.4.0.2",
+        "Verze!B3: 9.3.2026 (publikace, nikoliv účinnost)"
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:36.653821+00:00",
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/jmhz-podani-1.4.3.6.zip",
+      "kind": "archive",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_a0ca7983-9aed-40cc-aa96-8a97c3641a88_JMHZ_podání_1.4.3.6.zip",
+      "sha256": "79a08fc60b2cb7753a772100463a1f80259437ab99cfcee8d2e06061e220e879",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "zip_crc_checked",
+      "version": "1.4.3.6",
+      "version_evidence": [
+        "jmhzPodani.xsd/@version=1.4.3",
+        "Poslední verze v dokumentaci XSD=1.4.3.6"
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:37.457694+00:00",
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/datovy-slovnik-1.4.1.6.xlsx",
+      "kind": "data_dictionary",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_f389e547-8bc0-4470-9531-f8319ff4d11e_datovy_slovnik_1.4.1.6.xlsx",
+      "sha256": "e794a56d3baa48dd876ad45a0deb5b1bb77c17a0cb44a3511e8ef4028be69743",
+      "source_url": "https://developers.mpsv.cz/assets/documents/f389e547-8bc0-4470-9531-f8319ff4d11e/datovy_slovnik_1.4.1.6.xlsx",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "xlsx_read_not_validated",
+      "version": "1.4.1.6",
+      "version_evidence": [
+        "Verze!A8: 1.4.1.6",
+        "Verze!B8: 29.5.2026 (publikace, nikoliv účinnost)"
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:38.498355+00:00",
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/datovy-slovnik-1.5.0.3.xlsx",
+      "kind": "data_dictionary",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2027/https___developers.mpsv.cz_assets_documents_03bb1d62-3177-4d4c-b568-7c2667522e2c_datovy_slovnik_1.5.0.3.xlsx",
+      "sha256": "861bc297adbadd475efa68214bdf194ce1b60a14337d5cf10307cf00b12e92ca",
+      "source_url": "https://developers.mpsv.cz/assets/documents/03bb1d62-3177-4d4c-b568-7c2667522e2c/datovy_slovnik_1.5.0.3.xlsx",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "xlsx_read_not_validated",
+      "version": "1.5.0.3",
+      "version_evidence": [
+        "Verze!A12: 1.5.0.3",
+        "Verze!B12: 14.10.2026 (publikace, nikoliv účinnost)"
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:38.912086+00:00",
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/mpsv-jmhz-protokoly-mh-v1.5.zip",
+      "kind": "archive",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2027/https___developers.mpsv.cz_assets_documents_0bcd62d5-eb51-4f14-9dd0-00f70127f8f9_MPSV-JMHZ-protokoly-MH v1.5.zip",
+      "sha256": "1d4c6d1119fa211f6bdbc8c3fefed3725c59cb3c1ddb384e985d3f98e8042317",
+      "source_url": "https://developers.mpsv.cz/assets/documents/0bcd62d5-eb51-4f14-9dd0-00f70127f8f9/MPSV-JMHZ-protokoly-MH%20v1.5.zip",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "zip_crc_checked",
+      "version": "1.5",
+      "version_evidence": [
+        "Vnitřní adresář a DOCX: MPSV-JMHZ-protokoly-MH v1.5; nejde o vstupní měsíční hlášení."
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:39.247970+00:00",
+      "effective_evidence": "PDF strana 1: Platné pro období od 1.1.2027",
+      "effective_from": "2027-01-01",
+      "effective_status": "declared_in_document_not_legally_reviewed",
+      "effective_until": null,
+      "file": "2027/mh-pokyny-k-vyplneni-mesicniho-hlaseni-1.5.pdf",
+      "kind": "methodology",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2027/https___developers.mpsv.cz_assets_documents_1e54be7c-7899-447e-b860-0cca6a326757_MH - Pokyny k vyplnění měsíčního hlášení_1.5.pdf",
+      "sha256": "f9eb220bfc8922f50e640b377f29837a94abd398376e0d604de87afc0402d34f",
+      "source_url": "https://developers.mpsv.cz/assets/documents/1e54be7c-7899-447e-b860-0cca6a326757/MH%20-%20Pokyny%20k%20vypln%C4%9Bn%C3%AD%20m%C4%9Bs%C3%AD%C4%8Dn%C3%ADho%20hl%C3%A1%C5%A1en%C3%AD_1.5.pdf",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "retained_only",
+      "version": "1.5",
+      "version_evidence": [
+        "PDF strana 1: Ministerstvo práce a sociálních věcí\nVšeobecné pokyny pro vyplňování měsíčního podání JMHZ\n\n\n             Platné pro období od 1.1.2027\n                        Verze 1.5\n\fHistorie dokumentu\n\n Verze        Datum            Autor                Změny\n\n                                                    Vznik nové verze pokynů MH\n                                                    k 1.1.2027, která vychází ze základů\n                                                    verze 1.4.14 (5.10.2026)."
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:39.609989+00:00",
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/katalog-kontrol-mh-public-1.5.0.4.xlsx",
+      "kind": "control_catalog",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2027/https___developers.mpsv.cz_assets_documents_4dff6148-81d7-41bc-9042-8fd1b2144033_Katalog kontrol MH(public)_1.5.0.4.xlsx",
+      "sha256": "748dd83a376540b85d5e0942af95ba6230671007c6e4269dda50db74faa88d35",
+      "source_url": "https://developers.mpsv.cz/assets/documents/4dff6148-81d7-41bc-9042-8fd1b2144033/Katalog%20kontrol%20MH%28public%29_1.5.0.4.xlsx",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "xlsx_read_not_validated",
+      "version": "1.5.0.4",
+      "version_evidence": [
+        "Titulní strana!B9: 1.5.0.4"
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:42.638599+00:00",
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/datove-scenare-interakce-povinnosti-mh-1.5.0.3.xlsx",
+      "kind": "scenarios",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2027/https___developers.mpsv.cz_assets_documents_516ed642-d347-4753-8561-6ba68cfa0924_datove_scenare_interakce_povinnosti_MH_1.5.0.3.xlsx",
+      "sha256": "c4cb0704208f463417b564fd91a1884c71789b84d2966b074af33e5c41b5f45e",
+      "source_url": "https://developers.mpsv.cz/assets/documents/516ed642-d347-4753-8561-6ba68cfa0924/datove_scenare_interakce_povinnosti_MH_1.5.0.3.xlsx",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "xlsx_read_not_validated",
+      "version": "1.5.0.3",
+      "version_evidence": [
+        "Verze!A7: 1.5.0.3",
+        "Verze!B7: 14.10.2026 (publikace, nikoliv účinnost)"
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.489026+00:00",
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/jmhz-podani-1.5.0.3.zip",
+      "kind": "archive",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "original_downloaded_at": null,
+      "original_path": "2027/https___developers.mpsv.cz_assets_documents_99dab4c2-7b7c-4422-bf9e-b5cb8192f426_JMHZ_podani_1.5.0.3.zip",
+      "sha256": "e8fe64bb6bea0e12e921995efd2014f8e80360d6df9e3cb00189bc4a87763941",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "status": "unverified",
+      "technical_status": "zip_crc_checked",
+      "version": "1.5.0.3",
+      "version_evidence": [
+        "jmhzPodani.xsd/@version=1.5.0.3",
+        "Poslední verze v dokumentaci XSD=1.5.0.3"
+      ]
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.561407+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/baseTypes2.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/baseTypes2.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "839973458fa82559dfb56114ef2e555523db64d5af9b4f203ece6e941f946660",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "standalone_xsd_valid",
+      "version": "1.0"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.569535+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/form.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/form.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "5597b5ad9f01bd4a56a0eee7fdb8f1d2d30dd5a8bede6cac320c68fde08c7480",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.575261+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formBezPriznaku.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formBezPriznaku.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "242b08344fdcb9c41fb563168699437766b54fd2ee30d12b84c87d7caf6b2262",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.583032+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formCinnostKS.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formCinnostKS.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "713ec54e94dd9be40523e1d3357e0b9a12de9a37d0bd420c3560400094140f3d",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.597682+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formCommonTypes.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formCommonTypes.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "072d2e3002be26c602ccb23326647c1489fd734d1fb976bc8a50165148b5d881",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.613659+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formJinyPrijem.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formJinyPrijem.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "2daf24a0388f692912147a17f9234210bdbed921d5f0ffcebc0c7267b7755f76",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.619431+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formMezinarodniPronajemSily.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formMezinarodniPronajemSily.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "d7c9fa004ca9a1f638eca632d565da0775ef7e45b5d145e59c6dfbdc88fc6d7a",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.629824+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formOdlozenyPrijem.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formOdlozenyPrijem.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "b9fccabee047d69d5f9e8a633e8520f92af38c328cec172ca9ee1ae5045d7f16",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.636879+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formOzpTpp.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formOzpTpp.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "213edd67e3e7b846b69b13405e6ad709c8a52088ee290434c08410897781a487",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.642569+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formPestoun.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formPestoun.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "f2c4ad2e73b616e9dfbad4d9d23b6793644bf4918dcf08489b6049fd2137869f",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.648477+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formVezen.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/formVezen.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "54f3d6eda6602ad958201320aa6ec2fb4a839239b0a7a6dd6d98b9e9e96a8cdd",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.655728+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/jmhzPodani.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/jmhzPodani.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "228db1ee19d9e897d4f1f5f541d6c1c5e7e6c02d07ac7bbd33d987a35cd110f7",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.663056+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/PVPOJ.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/PVPOJ.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "5bf8357aab60d8a27cac35625faaea2a52b72f1f4d9b3bf8c9d3e4c5163af6f8",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.670352+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/souhrn.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/externi_xsd/souhrn.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "4d5be0d5fd0a0fa2e6f7c0ba66a19ff2e9bb122a1c2c03e8d2858a6958a747f7",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.678492+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgBezPriznaku.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgBezPriznaku.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "2aabe80281649e2e86248f7d2c9624ad3e349582bba10ff36c63551667ed4865",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.684712+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgCinnostKS.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgCinnostKS.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "eb3265633b0ad00499da2351ec581e03d1d8df3ebd249d38e9709224eb95a018",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.691456+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgCommonTypes.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgCommonTypes.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "4577aca92d6b1ee87897defaa9583186b38da765b14a37d3d1ca69bdf28fa024",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.698859+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgFormularBezDat.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgFormularBezDat.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "9058eba7ed997029ab251e4f06f6bc399e0d64969e4cc167da757487417488c4",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.703033+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgJinyPrijem.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgJinyPrijem.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "250c5d0d0fe13e596c7fce3d4ecd17e6619fff9d1fb9a96da76253a5a0e1b0d0",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.709717+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgMezinarodniPronajemSily.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgMezinarodniPronajemSily.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "56d6ff7a639f5f2a27c525b5fb5ae5f76a85e82331a121d860c79b1c1fb7966c",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.716236+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgOdlozenyPrijem.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgOdlozenyPrijem.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "abce1e6ce775a2e70e41515c933278b88993e306284b3cda4affda0db6ff8ead",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.725306+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgOzpTpp.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgOzpTpp.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "5f830ae97632778a447612f23259524f9c199074c60bd5948062814bb0338798",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.734368+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgPestoun.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgPestoun.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "e79555b95c437568f50e69fd8a7c74578c16965591c15796b3b1ff152c544e85",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.743066+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgPodani.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgPodani.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "f24f37789d59f71b6a64c35062f6d14bd3e14990b9593293064e0c89c9316581",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.750333+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgPVPOJ.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgPVPOJ.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "cf32bf72dacf284078773f96c3c371db9f8199cb4bc64f622bde4552daf25854",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.756511+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgSouhrn.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgSouhrn.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "1494fbada89ab38bb70fbeb0ce14e5ff830af6b38374faea5f644521226e47aa",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.762920+00:00",
+      "bundle_release": "1.4.3.6",
+      "container_chain": [
+        "JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgVezen.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2026/extracted/jmhz-podani-1.4.3.6/JMHZ_podání_1.4.3.6/xsd_1_4_3_6/interni_xsd/msgVezen.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "4bd650b167f3b7fc340b6bfd3ad2263c3aaabd1bc7d02092c873955848dc3848",
+      "source_file": "2026/jmhz-podani-1.4.3.6.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.4.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.771227+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd.zip",
+      "kind": "archive",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "c65cbd606c1b151a641e06ebe77198fd05ed3d3951cf8b448f9d207edd93cf78",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "zip_crc_checked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.781872+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/formBezPriznaku.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/formBezPriznaku.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "d798508fa8a906cc9aafa8abeb64dcd808f2c2f11847b592a5755be7b98bdd4c",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.792135+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/baseTypes2.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/baseTypes2.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "839973458fa82559dfb56114ef2e555523db64d5af9b4f203ece6e941f946660",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "standalone_xsd_valid",
+      "version": "1.0"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.801697+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/jmhzPodani.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/jmhzPodani.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "7ff94b39bf9965b7e8b10ed9a90cf973f78510bcef00aad2d531a85d48fde186",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.816404+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/formCommonTypes.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/formCommonTypes.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "dda38db922ef83599e427fba675af61c9ceb51233c309a2f3bd518a43c2bb58e",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.835249+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/form.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/form.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "434d1b2abafb08f1ed092a0a1d9ebe8754b906877906eee5b45ef145ef3bf2ab",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.844655+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/souhrn.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/souhrn.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "9c19a0bc078d3af4a7d4e3253ef9a4c719fd90c8c3d1d01185891b1e1e23c6e2",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.853345+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/formVezen.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/formVezen.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "540d02c2ecb352a42e964f5b822c3ae5751aa8424d4c1a2e05fa507658af54ef",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.861366+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/formOdlozenyPrijem.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/formOdlozenyPrijem.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "cdbef23efea14d2d1bb66c57cac3997637f5a812f9d51c5663cb3b93199b56aa",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.867305+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/formPestoun.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/formPestoun.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "fa3b2e99fb296b4f3ea756e5ec6d4a0922351e495874c55245973d2081c44289",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.873394+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/formJinyPrijem.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/formJinyPrijem.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "27a3840cb6e7b67829086204bc97a5271e68f53c5f10a3d798c7df0ea4640911",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.880775+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/simpleTypes.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/simpleTypes.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "5f9505773262327907391eebe9fd37c924d7e214ee48d5b2a964f43eb9b4bf19",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.892444+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/PVPOJ.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/PVPOJ.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "4f3938dbf1e0ffd179c8367def27915c0accfba1e3774b1cbeec512f2b866fed",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.899373+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/formCinnostKS.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/formCinnostKS.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "912e809a289fb2240f59f3b4bf270cecf26b50dfaad9676b67cc651c079651a8",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.906480+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/formOzpTpp.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/formOzpTpp.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "715ac154823f65570576d126b8d094beb3d59534d23d8acc911a7e96906c3bb6",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    },
+    {
+      "acquired_at": "2026-10-30T20:55:45.914140+00:00",
+      "bundle_release": "1.5.0.3",
+      "container_chain": [
+        "JMHZ_podani_1.5.0.3_xsd.zip",
+        "externi_xsd/formMezinarodniPronajemSily.xsd"
+      ],
+      "effective_from": null,
+      "effective_status": "unconfirmed",
+      "effective_until": null,
+      "file": "2027/extracted/jmhz-podani-1.5.0.3/JMHZ_podani_1.5.0.3_xsd/externi_xsd/formMezinarodniPronajemSily.xsd",
+      "kind": "xsd",
+      "origin_review": {
+        "evidence": null,
+        "reviewed_at": null,
+        "reviewer": null,
+        "status": "unverified"
+      },
+      "sha256": "e1ab3928941f004b5a3e16faf66e048d406829745dd53807074b0fac4d6b06a6",
+      "source_file": "2027/jmhz-podani-1.5.0.3.zip",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "status": "unverified",
+      "technical_status": "dependencies_unchecked",
+      "version": "1.5.0.3"
+    }
+  ],
+  "format_version": 1
 }

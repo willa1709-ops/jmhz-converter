@@ -70,3 +70,28 @@ def test_codelist_and_methodology_import_ui(tmp_path):
     assert page.inventory.item(1, 2).text() == "Text načten"
     assert page.inventory.item(0, 1).text() == page.inventory.item(1, 1).text() == "NEOVĚŘENO"
     page.close()
+
+
+def test_ui_xml_validation_uses_registered_official_bundle(tmp_path):
+    import json
+    from lxml import etree
+    app = QApplication.instance() or QApplication([])
+    window = MainWindow()
+    bundle = json.loads((window.official_root / "bundles.json").read_text())["bundles"][0]
+    window.bundle_choice.setCurrentIndex(window.bundle_choice.findData(bundle["id"]))
+    ns = bundle["namespace"]
+    root = etree.Element(f"{{{ns}}}jmhz", nsmap={None: ns})
+    header = etree.SubElement(root, f"{{{ns}}}hlavicka")
+    for name, value in [("idPodani", "00000000-0000-4000-8000-000000000001"), ("typPodani", "R"),
+                        ("variabilniSymbol", "0000000000"), ("mesic", "1"), ("rok", "2026"),
+                        ("datumVyplneni", "2026-10-30T12:00:00")]:
+        etree.SubElement(header, f"{{{ns}}}{name}").text = value
+    path = tmp_path / "synthetic.xml"
+    path.write_bytes(etree.tostring(root))
+    window.validate_xml_path(path)
+    assert "XSD: PROŠLO" in window.xml_validation_result.toPlainText()
+    assert "K podání: NE" in window.xml_validation_result.toPlainText()
+    path.write_bytes(b"<invalid/>")
+    window.validate_xml_path(path)
+    assert "XSD: NEPROŠLO" in window.xml_validation_result.toPlainText()
+    window.close()

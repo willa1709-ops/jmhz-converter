@@ -1,0 +1,135 @@
+{
+  "format_version": 1,
+  "documents": [
+    {
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_227054ec-a530-4c9b-aadb-57a046bb00ef_Pravidla podání JMHZ a související procesy_ver 1.4.6.pdf",
+      "file": "2026/pravidla-podani-jmhz-a-souvisejici-procesy-ver-1.4.6.pdf",
+      "original_document_name": "Pravidla podání JMHZ a související procesy_ver 1.4.6.pdf",
+      "sha256": "52ad6d6e1f51af3ff5c4bde9067fe36c289435b99c6cca5984101379460f493d",
+      "source_url": "https://developers.mpsv.cz/assets/documents/227054ec-a530-4c9b-aadb-57a046bb00ef/Pravidla%20pod%C3%A1n%C3%AD%20JMHZ%20a%20souvisej%C3%ADc%C3%AD%20procesy_ver%201.4.6.pdf",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    },
+    {
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_4e835883-2857-4778-8228-9696254810c5_MH - Pokyny k vyplnění měsíčního hlášení_1.4.14.pdf",
+      "file": "2026/mh-pokyny-k-vyplneni-mesicniho-hlaseni-1.4.14.pdf",
+      "original_document_name": "MH - Pokyny k vyplnění měsíčního hlášení_1.4.14.pdf",
+      "sha256": "87e86be66020e88846e737d8e28cab93eef620dac9640dc6bf873400f83d2db3",
+      "source_url": "https://developers.mpsv.cz/assets/documents/4e835883-2857-4778-8228-9696254810c5/MH%20-%20Pokyny%20k%20vypln%C4%9Bn%C3%AD%20m%C4%9Bs%C3%AD%C4%8Dn%C3%ADho%20hl%C3%A1%C5%A1en%C3%AD_1.4.14.pdf",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    },
+    {
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_6a349886-55f8-4495-aaee-cb7fd1a16ee5_MH - Pokyny k vyplnění měsíčního hlášení_1.4.14_revize.pdf",
+      "file": "2026/mh-pokyny-k-vyplneni-mesicniho-hlaseni-1.4.14-revize.pdf",
+      "original_document_name": "MH - Pokyny k vyplnění měsíčního hlášení_1.4.14_revize.pdf",
+      "sha256": "6817864e2f1d6950b85d23f59432d2db6df2338949588ff29d9e8b1571a72372",
+      "source_url": "https://developers.mpsv.cz/assets/documents/6a349886-55f8-4495-aaee-cb7fd1a16ee5/MH%20-%20Pokyny%20k%20vypln%C4%9Bn%C3%AD%20m%C4%9Bs%C3%AD%C4%8Dn%C3%ADho%20hl%C3%A1%C5%A1en%C3%AD_1.4.14_revize.pdf",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    },
+    {
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_8aea9a31-e27a-4635-934e-6d2a32289976_Katalog kontrol MH(public)_1.4.2.11.xlsx",
+      "file": "2026/katalog-kontrol-mh-public-1.4.2.11.xlsx",
+      "original_document_name": "Katalog kontrol MH(public)_1.4.2.11.xlsx",
+      "sha256": "e5b664c135b63774b555e067c5ed83991bd919f023f3f577bcfafd030b441b62",
+      "source_url": "https://developers.mpsv.cz/assets/documents/8aea9a31-e27a-4635-934e-6d2a32289976/Katalog%20kontrol%20MH%28public%29_1.4.2.11.xlsx",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    },
+    {
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_9fad6021-73d0-4914-80c8-609716b5697d_datove_scenare_interakce_povinnosti_MH_1.4.0.2.xlsx",
+      "file": "2026/datove-scenare-interakce-povinnosti-mh-1.4.0.2.xlsx",
+      "original_document_name": "datove_scenare_interakce_povinnosti_MH_1.4.0.2.xlsx",
+      "sha256": "cc282115d58a3744348b500a2dcc6eec4a5899b12753ec756f01fe261fd7ff37",
+      "source_url": "https://developers.mpsv.cz/assets/documents/9fad6021-73d0-4914-80c8-609716b5697d/datove_scenare_interakce_povinnosti_MH_1.4.0.2.xlsx",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    },
+    {
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_a0ca7983-9aed-40cc-aa96-8a97c3641a88_JMHZ_podání_1.4.3.6.zip",
+      "file": "2026/jmhz-podani-1.4.3.6.zip",
+      "original_document_name": "JMHZ_podání_1.4.3.6.zip",
+      "sha256": "79a08fc60b2cb7753a772100463a1f80259437ab99cfcee8d2e06061e220e879",
+      "source_url": "https://developers.mpsv.cz/assets/documents/a0ca7983-9aed-40cc-aa96-8a97c3641a88/JMHZ_pod%C3%A1n%C3%AD_1.4.3.6.zip",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    },
+    {
+      "original_path": "2026/https___developers.mpsv.cz_assets_documents_f389e547-8bc0-4470-9531-f8319ff4d11e_datovy_slovnik_1.4.1.6.xlsx",
+      "file": "2026/datovy-slovnik-1.4.1.6.xlsx",
+      "original_document_name": "datovy_slovnik_1.4.1.6.xlsx",
+      "sha256": "e794a56d3baa48dd876ad45a0deb5b1bb77c17a0cb44a3511e8ef4028be69743",
+      "source_url": "https://developers.mpsv.cz/assets/documents/f389e547-8bc0-4470-9531-f8319ff4d11e/datovy_slovnik_1.4.1.6.xlsx",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    },
+    {
+      "original_path": "2027/https___developers.mpsv.cz_assets_documents_03bb1d62-3177-4d4c-b568-7c2667522e2c_datovy_slovnik_1.5.0.3.xlsx",
+      "file": "2027/datovy-slovnik-1.5.0.3.xlsx",
+      "original_document_name": "datovy_slovnik_1.5.0.3.xlsx",
+      "sha256": "861bc297adbadd475efa68214bdf194ce1b60a14337d5cf10307cf00b12e92ca",
+      "source_url": "https://developers.mpsv.cz/assets/documents/03bb1d62-3177-4d4c-b568-7c2667522e2c/datovy_slovnik_1.5.0.3.xlsx",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    },
+    {
+      "original_path": "2027/https___developers.mpsv.cz_assets_documents_0bcd62d5-eb51-4f14-9dd0-00f70127f8f9_MPSV-JMHZ-protokoly-MH v1.5.zip",
+      "file": "2027/mpsv-jmhz-protokoly-mh-v1.5.zip",
+      "original_document_name": "MPSV-JMHZ-protokoly-MH v1.5.zip",
+      "sha256": "1d4c6d1119fa211f6bdbc8c3fefed3725c59cb3c1ddb384e985d3f98e8042317",
+      "source_url": "https://developers.mpsv.cz/assets/documents/0bcd62d5-eb51-4f14-9dd0-00f70127f8f9/MPSV-JMHZ-protokoly-MH%20v1.5.zip",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    },
+    {
+      "original_path": "2027/https___developers.mpsv.cz_assets_documents_1e54be7c-7899-447e-b860-0cca6a326757_MH - Pokyny k vyplnění měsíčního hlášení_1.5.pdf",
+      "file": "2027/mh-pokyny-k-vyplneni-mesicniho-hlaseni-1.5.pdf",
+      "original_document_name": "MH - Pokyny k vyplnění měsíčního hlášení_1.5.pdf",
+      "sha256": "f9eb220bfc8922f50e640b377f29837a94abd398376e0d604de87afc0402d34f",
+      "source_url": "https://developers.mpsv.cz/assets/documents/1e54be7c-7899-447e-b860-0cca6a326757/MH%20-%20Pokyny%20k%20vypln%C4%9Bn%C3%AD%20m%C4%9Bs%C3%AD%C4%8Dn%C3%ADho%20hl%C3%A1%C5%A1en%C3%AD_1.5.pdf",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    },
+    {
+      "original_path": "2027/https___developers.mpsv.cz_assets_documents_4dff6148-81d7-41bc-9042-8fd1b2144033_Katalog kontrol MH(public)_1.5.0.4.xlsx",
+      "file": "2027/katalog-kontrol-mh-public-1.5.0.4.xlsx",
+      "original_document_name": "Katalog kontrol MH(public)_1.5.0.4.xlsx",
+      "sha256": "748dd83a376540b85d5e0942af95ba6230671007c6e4269dda50db74faa88d35",
+      "source_url": "https://developers.mpsv.cz/assets/documents/4dff6148-81d7-41bc-9042-8fd1b2144033/Katalog%20kontrol%20MH%28public%29_1.5.0.4.xlsx",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    },
+    {
+      "original_path": "2027/https___developers.mpsv.cz_assets_documents_516ed642-d347-4753-8561-6ba68cfa0924_datove_scenare_interakce_povinnosti_MH_1.5.0.3.xlsx",
+      "file": "2027/datove-scenare-interakce-povinnosti-mh-1.5.0.3.xlsx",
+      "original_document_name": "datove_scenare_interakce_povinnosti_MH_1.5.0.3.xlsx",
+      "sha256": "c4cb0704208f463417b564fd91a1884c71789b84d2966b074af33e5c41b5f45e",
+      "source_url": "https://developers.mpsv.cz/assets/documents/516ed642-d347-4753-8561-6ba68cfa0924/datove_scenare_interakce_povinnosti_MH_1.5.0.3.xlsx",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    },
+    {
+      "original_path": "2027/https___developers.mpsv.cz_assets_documents_99dab4c2-7b7c-4422-bf9e-b5cb8192f426_JMHZ_podani_1.5.0.3.zip",
+      "file": "2027/jmhz-podani-1.5.0.3.zip",
+      "original_document_name": "JMHZ_podani_1.5.0.3.zip",
+      "sha256": "e8fe64bb6bea0e12e921995efd2014f8e80360d6df9e3cb00189bc4a87763941",
+      "source_url": "https://developers.mpsv.cz/assets/documents/99dab4c2-7b7c-4422-bf9e-b5cb8192f426/JMHZ_podani_1.5.0.3.zip",
+      "source_url_basis": "reconstructed_from_uploaded_filename_not_remote_verified",
+      "original_downloaded_at": null,
+      "origin_status": "unverified"
+    }
+  ]
+}

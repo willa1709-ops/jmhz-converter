@@ -1,6 +1,7 @@
 # Lokální knihovna definic
 
-Na kartě **Definice JMHZ** lze ručně načíst XSD, číselník CSV a metodiku PDF/TXT/MD/JSON. Aplikace sama
+Na kartě **Definice JMHZ** lze načíst katalog manifest.json nebo jednotlivé XSD,
+originální XLSX a ZIP, číselník CSV a metodiku PDF/TXT/MD/JSON. Aplikace sama
 nic nestahuje. Uživatel uvede přesné veřejné HTTPS URL původního dokumentu a
 jeho verzi; účinnost od/do je volitelná, neznámá účinnost se nevymýšlí.
 URL nesmí obsahovat přihlašovací údaje, query parametry ani fragment.
@@ -27,11 +28,12 @@ struktura. To zachytí náhodné poškození obsahu; není to digitální podpis
 ochrana proti útočníkovi, který může současně upravit soubor a jeho metadata.
 Databázi chrání práva uživatelského účtu a případné šifrování disku.
 
-Limit: 5 MiB, 50 000 XML uzlů. Parser odmítá DTD a externí zdroje. U samostatného
+Limit dokumentu: 25 MiB, XSD 5 MiB a 50 000 XML uzlů. Parser odmítá DTD a externí zdroje. U samostatného
 XSD 1.0 proběhne kompilace schématu. U include/import/redefine/override se pouze
 načte struktura a uvede stav „XSD závislosti neověřeny“: neprohlašujeme platnost
 celého balíčku. Žádné závislosti se automaticky nečtou z disku ani ze sítě.
-Jejich kompilaci doplní lokální resolver kompletního balíčku.
+Jejich kompilaci nyní provádí lokální resolver konkrétního celého balíčku na
+kartě Generování XML nebo v CLI; viz [návod](official-intake.md).
 Síťová adresa v metadatech se nikdy automaticky nenavštěvuje.
 
 **Původ** a **Technická kontrola** jsou v UI oddělené sloupce. Úspěšná kompilace
@@ -39,7 +41,14 @@ samostatného XSD nepotvrzuje jeho oficiální původ ani správnost pro konkré
 Ručně vložené soubory v projektu lze navíc evidovat manifestem ve
 [schemas/official](../schemas/official/README.md); jeho registr a knihovna v UI
 jsou oddělené. Ze složky lze soubor kdykoliv vybrat pro import v UI, synchronizace
-obou evidencí není automatická.
+obou evidencí není automatická. Tlačítko načtení katalogu provede výslovný import
+položek manifestu do uživatelské knihovny se zachováním stavu původu neověřeno.
+
+Originální XLSX se načítají bez vykonání vzorců/maker. Stav
+`xlsx_read_not_validated` znamená čtení struktury a hashů, nikoliv správnost obsahu.
+ZIP má stav `zip_crc_checked`, ne potvrzení validity obsažených XSD. Bezpečné
+rozbalení a vnoření je samostatná operace příjmu. Podporované kategorie zahrnují
+data_dictionary, control_catalog, scenarios a archive vedle původních typů.
 
 Číselník CSV musí být UTF-8 pravidelná tabulka s jedinečnou neprázdnou hlavičkou.
 Sloupce se nepřejmenovávají a nepředpokládá se oficiální význam prvního sloupce.
@@ -63,6 +72,8 @@ anotací nebo prefixů v XPath výrazech mohou být zobrazeny jako technické ro
 
 Dopad na současné mapování nelze automaticky určit: pracovní pole CSV nejsou
 dosud propojena s ověřenými oficiálními XML cestami. UI tuto skutečnost uvádí.
-Oficiální XSD, kompletní číselníky, metodika a testovací XML stále chybějí.
+Dodané XSD, slovníky, číselníkové listy a metodiky jsou nyní zpracované jako
+[podklad mapování](csv-jmhz-evidence.md), nikoliv hotový vykonatelný profil.
+Stále chybí přezkum původu/účinnosti celých sad a úplné integrační příklady podání.
 
-Testy knihovny používají pouze syntetická XSD a adresy `example.invalid`.
+Testy používají syntetická i dodaná skutečná XSD; nevkládají skutečná mzdová data.

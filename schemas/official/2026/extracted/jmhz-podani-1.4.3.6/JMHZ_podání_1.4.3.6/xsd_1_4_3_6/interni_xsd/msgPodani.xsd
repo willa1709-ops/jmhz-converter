@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+           xmlns:mh="http://schemas.cssz.cz/JMHZ/podani/1.0"
+           xmlns="http://schemas.cssz.cz/JMHZ/msgPodani/1.0"
+           targetNamespace="http://schemas.cssz.cz/JMHZ/msgPodani/1.0" elementFormDefault="qualified"
+           version="1.4.3">
+
+  <xs:import namespace="http://schemas.cssz.cz/JMHZ/podani/1.0" schemaLocation="../externi_xsd/jmhzPodani.xsd"/>
+
+  <xs:element name="msgPodani">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="mh:podaniHlavickaType">
+          <xs:sequence>
+            <xs:element name="kanalPodani" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>Číselník kanálů podání
+DS: Meta atributy > Podání (ID 10470)</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="typKlienta" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>Typ klienta</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="klientId">
+              <xs:annotation>
+                <xs:documentation>ID klienta</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:maxLength value="64"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="datumPrijeti" type="xs:dateTime">
+              <xs:annotation>
+                <xs:documentation>Datum a čas přijetí systémem
+DS: Meta atributy > Podání (ID 10006)</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="disMsgCid" type="xs:string">
+              <xs:annotation>
+                <xs:documentation>Interní ID podání na DIS</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="idKonkretnihoPodani" type="xs:string" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>ID konkrétního podání je reprezentováno externím identifikátorem 1.dílčího podání.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="obsahujeSouhrn" type="xs:boolean" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Opravné hlášení obsahuje Souhrnnou vrstvu</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="obsahujePvpoj" type="xs:boolean" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Opravné hlášení obsahuje PVPOJ</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="produktNazev" type="xs:string" minOccurs="0" />
+            <xs:element name="produktVerze" type="xs:string" minOccurs="0" />
+            <xs:element name="verze" type="xs:string" />
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

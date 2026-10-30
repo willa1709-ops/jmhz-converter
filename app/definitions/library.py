@@ -14,6 +14,7 @@ from app.xml import parse_local_xml
 
 XSD = "http://www.w3.org/2001/XMLSchema"
 MAX_SCHEMA_BYTES = 5 * 1024 * 1024
+MAX_DOCUMENT_BYTES = 25 * 1024 * 1024
 
 
 def inspect_xsd(content: bytes, allow_dependencies: bool = False) -> dict:
@@ -66,8 +67,16 @@ def inspect_xsd(content: bytes, allow_dependencies: bool = False) -> dict:
 
 
 def inspect_document(content: bytes, kind: str, suffix: str) -> tuple[dict, str]:
-    if len(content) > MAX_SCHEMA_BYTES:
-        raise ValueError("Dokument překračuje limit 5 MiB.")
+    if len(content) > MAX_DOCUMENT_BYTES:
+        raise ValueError("Dokument překračuje limit 25 MiB.")
+    if kind not in {"xsd", "codelist", "methodology", "data_dictionary", "control_catalog", "scenarios", "archive"}:
+        raise ValueError("Neznámý typ dokumentu.")
+    if suffix.lower() == ".zip":
+        from app.definitions.archives import zip_inventory
+        return {"archive_members": zip_inventory(content), "interpretation": "not_validated"}, "zip_crc_checked"
+    if suffix.lower() == ".xlsx":
+        from app.definitions.workbooks import workbook_snapshot
+        return workbook_snapshot(content), "xlsx_read_not_validated"
     if kind == "xsd":
         snapshot = inspect_xsd(content, allow_dependencies=True)
         root = parse_local_xml(content)
@@ -141,7 +150,7 @@ class DefinitionLibrary:
         if start and end and start > end:
             raise ValueError("Účinnost od nesmí být po účinnosti do.")
         with path.open("rb") as handle:
-            content = handle.read(MAX_SCHEMA_BYTES + 1)
+            content = handle.read(MAX_DOCUMENT_BYTES + 1)
         snapshot, technical = inspect_document(content, kind, path.suffix)
         artifact = Artifact(source_url, version.strip(), datetime.now(timezone.utc).isoformat(),
                             effective_from, effective_until, hashlib.sha256(content).hexdigest(),
@@ -161,6 +170,20 @@ class DefinitionLibrary:
         with sqlite3.connect(self.path) as db:
             rows = db.execute("SELECT id, metadata, snapshot FROM definition_library ORDER BY id").fetchall()
         return [StoredDefinition(id_, Artifact(**json.loads(metadata)), json.loads(snapshot)) for id_, metadata, snapshot in rows]
+
+    def import_catalog(self, official_root: Path) -> int:
+        from app.definitions.catalog import verify
+        official_root = official_root.resolve()
+        if verify(official_root):
+            raise ValueError("Manifest má chybějící nebo pozměněné soubory.")
+        records = json.loads((official_root / "manifest.json").read_text())["documents"]
+        for record in records:
+            path = (official_root / record["file"]).resolve()
+            if not path.is_relative_to(official_root):
+                raise ValueError("Soubor katalogu uniká z úložiště.")
+            self.import_document(path, record["source_url"], record["version"], record["kind"],
+                                 record.get("effective_from"), record.get("effective_until"))
+        return len(records)
 
     def get(self, id_: int) -> StoredDefinition:
         with sqlite3.connect(self.path) as db:

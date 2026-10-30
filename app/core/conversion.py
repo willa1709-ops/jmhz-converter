@@ -16,12 +16,17 @@ class FinalExportBlocked(ValueError):
     pass
 
 
-def prepare_conversion(source, profile: dict, parameters: dict, official_root: Path) -> ConversionResult:
+def prepare_conversion(source, profile: dict, parameters: dict, official_root: Path, *, primary_flags=None) -> ConversionResult:
     # Validate also programmatically supplied dictionaries, not just files from the UI/CLI.
     profile = load_profile(json.dumps(profile))
     header, issues = check_header(parameters)
     mapped, mapping_issues = map_rows(source, profile)
     issues.extend(mapping_issues)
+    if primary_flags is not None:
+        if set(primary_flags) != {r.number for r in source.rows} or any(type(v) is not bool for v in primary_flags.values()):
+            raise ValueError("Primární příznaky musí jednoznačně pokrývat všechny řádky.")
+        for row, values in mapped:
+            values["primary_pp"] = primary_flags[row]
     if not source.rows:
         issues.append(Issue(None, "records", "empty_input", "Vstup neobsahuje žádné záznamy.", "Načtěte neprázdný skutečný export."))
     if len(source.rows) > 1500:

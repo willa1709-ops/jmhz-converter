@@ -74,6 +74,17 @@ délky cest, zejména u rozbalování onefile do TEMP. Dlouhé cesty se nesmí p
 V této linuxové relaci se ověřuje jádro, nikoliv Win7, jeho grafické UI ani EXE.
 Neověřená sestava se nevydá jako hotový program pro hlavní pracovní počítač.
 
+Další etapa doplnila číslované položky, párování PP, Decimal výpočty, kontext revizí
+a offline verzované balíčky do téhož jádra pro Python 3.8. Bezpečný ZIP helper
+má odložené anotace a přenositelné kontroly cest; nevyžaduje Qt ani moderní UI
+modely. Nový dialog je zatím adaptér PySide6. Testy jádra zahrnují externí sady
+a oba skutečné XSD, ale nadále běží na Linuxu x64. Neprokazují paměťové limity
+x86 ani běh Windows DLL. Obecná analýza má navíc limit milionu pracovních buněk;
+ten nenahrazuje měření skutečného exportu na cílovém počítači.
+Definice se instalují do zapisovatelné složky uživatele mimo EXE/TEMP a vybírají
+výslovnou verzí a hashem; není nutné přestavovat EXE při pouhé změně podporovaných
+mapování. Změna aplikační logiky stále vyžaduje nové sestavení a přejímku.
+
 ## Zdroje ověřené při návrhu
 
 - CPython 3.8 Windows dokumentace: https://raw.githubusercontent.com/python/cpython/v3.8.10/Doc/using/windows.rst

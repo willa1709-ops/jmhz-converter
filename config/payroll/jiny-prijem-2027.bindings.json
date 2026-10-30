@@ -1,0 +1,9 @@
+{
+  "form_id": {"metadata": "form_id"},
+  "period": {"context": "period"},
+  "activity_code": {"metadata": "activity_code"},
+  "ik_mpsv": {"metadata": "oic"},
+  "id_ppv": {"metadata": "id_ppv"},
+  "tax_income_10535": {"calculation": "row_total"},
+  "tax_income_10555": {"item": "200"}
+}

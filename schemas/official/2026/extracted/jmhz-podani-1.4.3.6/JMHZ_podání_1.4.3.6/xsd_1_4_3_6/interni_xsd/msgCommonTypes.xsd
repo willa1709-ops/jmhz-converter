@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+           xmlns:bt="http://schemas.cssz.cz/baseTypes/v2"
+           xmlns="http://schemas.cssz.cz/JMHZ/msgCommonTypes/1.0"
+           targetNamespace="http://schemas.cssz.cz/JMHZ/msgCommonTypes/1.0" elementFormDefault="qualified"
+           version="1.4.3">
+
+  <xs:import namespace="http://schemas.cssz.cz/baseTypes/v2" schemaLocation="../externi_xsd/baseTypes2.xsd"/>
+  <xs:import namespace="http://schemas.cssz.cz/JMHZ/podani/1.0" schemaLocation="../externi_xsd/jmhzPodani.xsd"/>
+
+  <xs:complexType name="hlavickaType">
+    <xs:sequence>
+      <xs:element name="idPodani" type="guidType">
+        <xs:annotation>
+          <xs:documentation>GUID podání(ID podání ve tvaru GUID)
+DS: Meta atributy > Podání (ID 10001) Unikátní GUID pro Měsiční hlášení generovaný na straně ZEL.
+Generuje klient je stejné za celé mesícní hlášení</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="idFormulare" type="guidType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>GUID formuláře (ID  podání ve tvaru GUID)
+DS: Meta atributy > Formulář (ID 10012)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="typFormulare">
+        <xs:annotation>
+          <xs:documentation>Číselník typ formuláře
+DS: Meta atributy > Formulář (ID 10016)
+R - Ŕádný
+O - Opravný
+S - Storno
+Obecné použití ve vrstvě Žurnál zprávy (využívá se pro formuláře i souhrn)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+          <xs:enumeration value="R"/>
+          <xs:enumeration value="O"/>
+          <xs:enumeration value="S"/>
+        </xs:restriction>
+      </xs:simpleType>
+      </xs:element>
+      <xs:element name="stavFormulare">
+        <xs:annotation>
+          <xs:documentation>Číselník stav formuláře
+DS: Meta atributy > Formulář (ID 10017)
+P - Přijato
+O - Odmítnuto
+C - Čekající na ztotožnění</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="P"/>
+            <xs:enumeration value="O"/>
+            <xs:enumeration value="C"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="primarniPpv" type="xs:boolean" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Primární pracovněprávní vztah zaměstnance
+DS: Meta atributy > Formulář (ID 10495)
+Příznak označující pracovněprávní vztah, který bude nosičem souhrnných dat zaměstnance.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="duvodOdmitnuti" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Důvod odmítnutí - hodnota z číselníku
+DS: Meta atributy > Formulář (ID 10018)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="datumZpracovani" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Datum a čas zpracování formuláře
+DS: Meta atributy > Formulář (ID 10019)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="datumZtotozneniIkmpsv" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Datum a čas zapsání osobního identifikačního čísla
+DS: Meta atributy > Formulář (ID 10020)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="disMsgCid" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Interní ID podání na DIS</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="disMsgFormId" type="xs:int">
+        <xs:annotation>
+          <xs:documentation>Interní ID formuláře na DIS</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="verze" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="guidType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

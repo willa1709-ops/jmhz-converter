@@ -2,9 +2,9 @@
 
 Lokální desktopový **prototyp** pro Windows, Python 3.12+, PySide6.
 Obsahuje první analýzu, pracovní návrh CSV a základ aplikace. **Není dokončené P0
-a nevytváří XML připravené k podání.** Oficiální technické podklady se v tomto
-prostředí nepodařilo získat kvůli síťovému omezení; jejich verze a účinnost nejsou
-ověřeny. Žádné smyšlené elementy JMHZ nejsou implementovány.
+a nevytváří XML připravené k podání.** Dodané podklady 2026/2027 jsou evidované,
+porovnané a jejich XSD se lokálně kompilují. Původ a účinnost celých sad stále
+vyžadují doložený přezkum. Žádné smyšlené elementy JMHZ nejsou implementovány.
 
 - [Analýza, CSV → interní model, součty, omezení a plán](docs/analysis.md)
 - [Formát a příklady mapovacích pravidel](docs/mapping.md)
@@ -13,6 +13,9 @@ ověřeny. Žádné smyšlené elementy JMHZ nejsou implementovány.
 - [Ruční import XSD a porovnání definic](docs/definitions.md)
 - [Co ručně stáhnout z ČSSZ/MPSV](docs/manual-downloads.md)
 - [Složka oficiálních podkladů a manifest](schemas/official/README.md)
+- [Inventura a rozdíly dodaných verzí, účinnost a omezení](docs/official-comparison.md)
+- [Příjem dokumentů a skutečná XSD validace přes UI/CLI](docs/official-intake.md)
+- [Doložený pracovní podklad CSV → XML](docs/csv-jmhz-evidence.md)
 
 ## Spuštění
 
@@ -46,11 +49,13 @@ a Qt offscreen. Linuxová sestava PyInstaller nevytváří Windows EXE.
 3. Na kartě Mapování upravte deklarativní pravidla a případně uložte profil JSON.
 4. V Kontrole dat zvolte očekávané období a spusťte kontrolu; dvojklik na nález
    otevře zdrojový řádek. Součty mají vlastní kartu.
-5. V Definicích JMHZ lze ručně importovat lokální XSD, číselníky CSV a metodiku
-   PDF/TXT/MD/JSON a porovnat dvě verze stejného typu. Původ zůstává NEOVĚŘEN;
+5. V Definicích JMHZ lze importovat celý `schemas/official/manifest.json` nebo
+   jednotlivá XSD, XLSX, ZIP, číselníky CSV a metodiku PDF/TXT/MD/JSON a porovnat
+   dvě verze stejného typu. Původ zůstává NEOVĚŘEN;
    technická kontrola se eviduje odděleně. Význam metodiky a dopad na mapování
    nejsou automaticky vyhodnoceny.
-6. Generování XML je zablokované až do implementace ověřené oficiální definice.
+6. V Generování XML lze vybrat dodaný XSD balíček a zkontrolovat XML soubor.
+   Finální mzdový export je blokovaný; XSD úspěch sám není metodická validace.
 
 CSV: UTF-8 (i BOM) nebo Windows-1250, oddělovače `; , TAB |`, čárka/tečka
 v částkách, citování a vícerádkové buňky. Nekonzistentní tabulka je odmítnuta.
@@ -69,11 +74,13 @@ Testy pokrývají kódování/oddělovače, zachování nul, XLSX a odmítnutí 
 vadné CSV, mapovací operace a profily, duplicity, chybějící údaje, období,
 Decimal a součty, ruční import XSD, metadata/hash a strukturální diff, detekci
 poškození uloženého obsahu, SQLite a průchod UI včetně knihovny definic.
-XML testy používají **syntetické XSD**, nejsou integračními testy JMHZ.
+XML testy používají syntetické XSD i dodaná skutečná XSD se synteticky generovaným
+XML: ověřují kompilaci, správný i nesprávný měsíc, namespace a bezpečný resolver.
+Nejde o ověření úplného mzdového podání nebo metodiky.
 Jádro odmítá DTD a externí zdroje; finální generátor vždy vyvolá ExportBlocked.
 
-Chybí zejména oficiální rešerše a úplné mapování, oficiální a metodická validace,
-generátor JMHZ, kompilace kompletních balíčků XSD s lokálními závislostmi,
+Chybí zejména doložený přezkum původu a účinnosti sad, úplné mapování a metodická validace,
+generátor úplného mzdového JMHZ,
 metodické porovnání a dopad na mapování, nezávislé porovnání součtů pro
 složené transformace, datumové transformace a ověření EXE na Windows.
 P1 a P2 nejsou implementovány. Podrobný postup a otevřené otázky jsou v analýze.

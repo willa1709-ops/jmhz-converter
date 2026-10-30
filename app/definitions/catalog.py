@@ -66,7 +66,7 @@ def main() -> int:
     command.add_argument("file", type=Path)
     command.add_argument("--source", required=True)
     command.add_argument("--version", required=True)
-    command.add_argument("--kind", choices=["xsd", "codelist", "methodology"], required=True)
+    command.add_argument("--kind", choices=["xsd", "codelist", "methodology", "data_dictionary", "control_catalog", "scenarios", "archive"], required=True)
     command.add_argument("--effective-from")
     command.add_argument("--effective-until")
     sub.add_parser("verify")

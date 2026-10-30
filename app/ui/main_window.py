@@ -15,6 +15,7 @@ from app.models import Dataset, Finding, Severity
 from app.storage import Store
 from app.validation import validate
 from app.ui.definitions_page import DefinitionsPage
+from app.xml.bundle import registered_validator
 
 
 class MainWindow(QMainWindow):
@@ -79,11 +80,31 @@ class MainWindow(QMainWindow):
         self.sums.setReadOnly(True)
         self.page("Kontrolní součty").addWidget(self.sums)
         xml = self.page("Generování XML")
-        xml.addWidget(QLabel("ZABLOKOVÁNO: chybí ověřené oficiální XSD, číselníky a metodická pravidla.\n"
-                            "Místní validace dat neznamená připravenost k podání."))
+        xml.addWidget(QLabel("Finální export ZABLOKOVÁN: úplný mzdový převod a metodická kontrola ještě nejsou hotové.\n"
+                            "Původ a účinnost celých sad vyžadují přezkum. Úspěch XSD není připravenost k podání."))
         export = QPushButton("Vygenerovat finální XML")
         export.setEnabled(False)
         xml.addWidget(export)
+        xml.addWidget(QLabel("Samostatná technická kontrola XML proti dodanému XSD.\n"
+                            "Balíček vyberte výslovně; účinnost celé sady se neurčuje podle složky.\n"
+                            "Úspěch XSD kontroly nepotvrzuje metodiku, původ ani připravenost k podání."))
+        self.official_root = Path(__file__).resolve().parents[2] / "schemas/official"
+        self.bundle_choice = QComboBox()
+        bundle_index = self.official_root / "bundles.json"
+        if bundle_index.is_file():
+            try:
+                for bundle in json.loads(bundle_index.read_text())["bundles"]:
+                    self.bundle_choice.addItem(bundle["id"], bundle["id"])
+            except (ValueError, KeyError, TypeError):
+                self.bundle_choice.clear()
+        xml.addWidget(self.bundle_choice)
+        validate_xml = QPushButton("Vybrat XML a ověřit proti XSD…")
+        validate_xml.clicked.connect(self.choose_xml_validation)
+        validate_xml.setEnabled(self.bundle_choice.count() > 0)
+        xml.addWidget(validate_xml)
+        self.xml_validation_result = QTextEdit()
+        self.xml_validation_result.setReadOnly(True)
+        xml.addWidget(self.xml_validation_result)
         self.definitions_page = DefinitionsPage()
         self.tabs.addTab(self.definitions_page, "Definice JMHZ")
         settings = self.page("Nastavení")
@@ -96,6 +117,24 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout(widget)
         self.tabs.addTab(widget, name)
         return layout
+
+    def choose_xml_validation(self) -> None:
+        filename, _ = QFileDialog.getOpenFileName(self, "XML ke kontrole", "", "XML (*.xml)")
+        if filename:
+            self.validate_xml_path(Path(filename))
+
+    def validate_xml_path(self, path: Path) -> None:
+        try:
+            if path.stat().st_size > 25 * 1024 * 1024:
+                raise ValueError("Příliš velké XML.")
+            bundle_id = self.bundle_choice.currentData()
+            validator = registered_validator(self.official_root, bundle_id)
+            result = validator.validate(path.read_bytes())
+            lines = [f"Balíček: {bundle_id}", "XSD: " + ("PROŠLO" if result.xsd_valid else "NEPROŠLO"),
+                     "Metodická validace: neprovedena. Původ: neověřen. K podání: NE."]
+            self.xml_validation_result.setPlainText("\n".join(lines + list(result.errors)))
+        except Exception:
+            self.xml_validation_result.setPlainText("Kontrolu nelze provést. Ověřte dostupnost souboru, limit 25 MiB a integritu XSD balíčku.")
 
     @staticmethod
     def table() -> QTableWidget:

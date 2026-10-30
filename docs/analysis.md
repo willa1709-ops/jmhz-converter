@@ -1,5 +1,9 @@
 # Analýza JMHZ a rozhodnutí – 30. 10. 2026
 
+Toto je historická analýza první etapy před dodáním podkladů. Aktuální stav,
+skutečné verze a účinnost jsou v [porovnání dodaných dokumentů](official-comparison.md)
+a [doloženém podkladu mapování](csv-jmhz-evidence.md).
+
 ## Stav ověření
 
 Oficiální definice **nejsou ověřeny**. Pokus o HTTPS přístup přes spravovanou

@@ -18,11 +18,13 @@ class DefinitionsPage(QWidget):
         super().__init__()
         self.database_path = database_path
         layout = QVBoxLayout(self)
-        layout.addWidget(QLabel("Ruční import XSD, číselníků CSV a metodiky PDF/TXT/MD/JSON – původ a účinnost zadává uživatel.\n"
+        layout.addWidget(QLabel("Ruční import XSD, XLSX, ZIP, číselníků a metodiky – původ a účinnost zadává uživatel.\n"
                                 "Import neověřuje oficiální původ ani úplnost metodiky. XML export zůstává zablokovaný."))
         form = QFormLayout()
         self.kind = QComboBox()
-        for label, value in [("XSD schéma", "xsd"), ("Číselník CSV (UTF-8)", "codelist"), ("Metodický dokument", "methodology")]:
+        for label, value in [("XSD schéma", "xsd"), ("Číselník CSV/XLSX", "codelist"), ("Metodický dokument", "methodology"),
+                             ("Datový slovník XLSX", "data_dictionary"), ("Katalog kontrol XLSX", "control_catalog"),
+                             ("Datové scénáře XLSX", "scenarios"), ("Archiv ZIP", "archive")]:
             self.kind.addItem(label, value)
         form.addRow("Typ dokumentu", self.kind)
         self.source = QLineEdit()
@@ -38,6 +40,9 @@ class DefinitionsPage(QWidget):
         button = QPushButton("Ručně importovat dokument…")
         button.clicked.connect(self.choose_xsd)
         layout.addWidget(button)
+        catalog = QPushButton("Načíst dokumenty z katalogu manifest.json…")
+        catalog.clicked.connect(self.choose_catalog)
+        layout.addWidget(catalog)
         self.inventory = QTableWidget()
         self.inventory.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.inventory.setColumnCount(9)
@@ -87,7 +92,8 @@ class DefinitionsPage(QWidget):
             a = entry.artifact
             technical_labels = {"standalone_xsd_valid": "Samostatné XSD platné", "dependencies_unchecked": "XSD závislosti neověřeny",
                                 "csv_parsed": "CSV načteno", "json_parsed": "JSON načten", "text_decoded": "Text načten",
-                                "retained_only": "Pouze archivováno", "not_checked": "Neprovedena"}
+                                "retained_only": "Pouze archivováno", "not_checked": "Neprovedena",
+                                "xlsx_read_not_validated": "XLSX načteno; obsah nevalidován", "zip_crc_checked": "ZIP CRC ověřeno; obsah nevalidován"}
             for j, value in enumerate([a.version, "NEOVĚŘENO", technical_labels.get(a.technical_status, "Neznámá"), a.kind, a.source_url, a.acquired_at,
                                        a.effective_from or "neznámá", a.effective_until or "neznámá", a.sha256]):
                 self.inventory.setItem(i, j, QTableWidgetItem(value))
@@ -107,15 +113,32 @@ class DefinitionsPage(QWidget):
         return id_
 
     def choose_xsd(self) -> None:
-        filters = {"xsd": "XSD (*.xsd)", "codelist": "CSV (*.csv)", "methodology": "Metodika (*.pdf *.txt *.md *.json)"}
+        filters = {"xsd": "XSD (*.xsd)", "codelist": "Číselník (*.csv *.xlsx)", "methodology": "Metodika (*.pdf *.txt *.md *.json *.xlsx)",
+                   "data_dictionary": "Slovník (*.xlsx)", "control_catalog": "Kontroly (*.xlsx)", "scenarios": "Scénáře (*.xlsx)", "archive": "ZIP (*.zip)"}
         path, _ = QFileDialog.getOpenFileName(self, "Import dokumentu", "", filters[self.kind.currentData()])
         if not path:
             return
         try:
             self.import_path(Path(path))
         except Exception:
-            QMessageBox.warning(self, "Definice", "Import selhal. Limit 5 MiB; XSD bez DTD, CSV číselník v UTF-8, metodika PDF/TXT/MD/JSON.\n"
+            QMessageBox.warning(self, "Definice", "Import selhal. Limit 25 MiB na dokument (XSD 5 MiB); podporovány XSD, XLSX, ZIP, CSV, PDF/TXT/MD/JSON.\n"
                                 "Ověřte formát, veřejné HTTPS URL bez query, verzi, data účinnosti a přístup k databázi.")
+
+    def choose_catalog(self) -> None:
+        filename, _ = QFileDialog.getOpenFileName(self, "Katalog oficiálních podkladů", "", "Manifest (manifest.json)")
+        if not filename:
+            return
+        try:
+            count = self.library().import_catalog(Path(filename).parent)
+            self.refresh()
+            self.summary.setText(f"Načteno položek katalogu: {count}. Původ zůstává NEOVĚŘEN; import neaktivuje XML export.")
+        except Exception:
+            try:
+                self.refresh()
+            except (ValueError, OSError, sqlite3.Error):
+                self.inventory.setRowCount(0)
+            QMessageBox.warning(self, "Katalog", "Import katalogu se nedokončil. Ověřte hashe, formáty a metadata.\n"
+                                "Již zpracované položky mohou být v knihovně; opakování stejného importu je neduplikuje.")
 
     def compare(self) -> None:
         if self.before.currentData() is None or self.after.currentData() is None:

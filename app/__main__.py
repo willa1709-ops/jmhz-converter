@@ -1,10 +1,10 @@
 def main() -> int:
     from PySide6.QtWidgets import QApplication
-    from app.ui.main_window import MainWindow
+    from app.ui.organizations_window import OrganizationsWindow
 
     application = QApplication.instance() or QApplication([])
     application.setApplicationName("JMHZ Converter")
-    window = MainWindow()
+    window = OrganizationsWindow()
     window.show()
     return application.exec()
 

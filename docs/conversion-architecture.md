@@ -31,6 +31,18 @@ flowchart LR
 | `core.periods` | explicitní století, měsíc, interní revize a volitelná SQLite evidence oddělená od GUID |
 | `core.payroll_conversion` | explicitní pracovní vazby číslovaných položek na původní `jinyPrijem`; nové příznaky `primarniPpv` podle skutečného XSD |
 | `core.packages` | pasivní verzované ZIP mimo EXE, nezávislý pin manifestu, bezpečná instalace, kontrola souborů/API, zachování starších verzí |
+| `core.organizations` | registr, profil společný/odlišný, fyzicky oddělené databáze, neměnné importy a kontroly, pořadí interních verzí a pracovní XML v organizaci |
+| `core.workforce` | HPP/DPP/DPČ v lokálním modelu, požadavky identifikace/IN01 a podmíněné posouzení nulového příjmu bez vyřazování řádků |
+
+Výchozí GUI je `ui.organizations_window`; staré `MainWindow` zůstává součástí
+kontextových nástrojů. Všechny persistentní mzdové operace nového workflow
+vyžadují organizaci a import/měsíc. Registry a profily neskladují mzdové řádky;
+ty jsou v samostatné databázi každé organizace s kontrolou vlastníka. Interní
+UUID jsou v prostoru organizace a nejsou oficiální GUID. Změna výběru v GUI
+ruší náhledy a uzavírá staré kontextové nástroje.
+`schemas.IdentityValidator` kontroluje skutečný typ identifikace z obou XSD,
+nevytváří nové schéma JMHZ. Přípustnost IN01, párování bez klíčů, úplné
+HPP/DPP/DPČ a účinnost nulových scénářů nejsou pro finální podání potvrzené.
 
 Obecná mzdová analýza používá `prepare_payroll`; XML adaptér
 `prepare_numbered_conversion` ji spustí před dosavadním převodem a při libovolném
@@ -52,7 +64,7 @@ nadále používají novější Python. Přechod legacy UI je samostatná dalš�
 Testy jádra lze spustit bez PySide obou generací:
 
 ```text
-python -m pytest -q tests/test_conversion_core.py tests/test_numbered_payroll.py
+python -m pytest -q tests/test_conversion_core.py tests/test_numbered_payroll.py tests/test_organizations.py
 ```
 
 Úspěch na Linux Python 3.8 + lxml 5.3.2 a moderním Pythonu dokládá kompatibilitu

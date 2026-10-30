@@ -23,6 +23,8 @@ vyžadují doložený přezkum. Žádné smyšlené elementy JMHZ nejsou impleme
 - [Společné jádro a platformní adaptéry](docs/conversion-architecture.md)
 - [Číslované položky, více PP, řádkové výpočty a interní revize](docs/numbered-payroll.md)
 - [Externí offline balíčky definic a jejich ověřování](docs/offline-definition-packages.md)
+- [Organizace, měsíční importy, oddělená data a historie](docs/organizations.md)
+- [Doložené alternativy identifikace cizinců a nulové příjmy](docs/workforce-evidence.md)
 
 ## Spuštění
 
@@ -50,6 +52,18 @@ Na Windows je nutné desktopové spuštění ověřit samostatně; zde byly ově
 a Qt offscreen. Linuxová sestava PyInstaller nevytváří Windows EXE.
 
 ## Práce s prototypem
+
+Výchozí okno nyní nabízí registr organizací s IČO/VS a měsíční přehled.
+Vyberte organizaci a měsíc, nastavte společný profil (případně výjimku pro
+organizaci), importujte CSV/XLSX a spusťte kontrolu. Každá organizace má vlastní
+databázi a historii; nový import nepřepisuje starší data. Období a identifikace
+zaměstnavatele v exportu se kontrolují proti výběru. Nulové a neznámé příjmy
+zůstávají v importu rozlišené. Podrobný postup a pracovní šablona pro
+HPP/DPP/DPČ jsou v [návodu organizací](docs/organizations.md).
+Úplný XML generátor těchto zaměstnání dosud chybí; scénář `jinyPrijem` je
+nenahrazuje a finální export je blokovaný.
+
+Původní nástroje lze otevřít nad vybraným importem; jejich pracovní postup zůstává:
 
 1. Na kartě Import dat vyberte CSV/XLSX, případně kódování a oddělovač CSV.
 2. Prohlédněte textové hodnoty v náhledu. Identifikátor `000001` zůstane zachován.
@@ -102,9 +116,10 @@ P1 a P2 nejsou implementovány. Podrobný postup a otevřené otázky jsou v ana
 ## Soukromí
 
 Aplikace neprovádí síťové požadavky, neodesílá data a neobsahuje telemetrii.
-Data se drží v paměti; automaticky se ukládá pouze konfigurace profilů, bez
-mzdových řádků. Volitelná evidence revizí ukládá jen metadata zakázek a hash
-definic, bez osobních identifikátorů a GUID. Výpisy parserů s možným osobním
+Nový organizační workflow po explicitním importu ukládá mzdové řádky, kontroly
+a pracovní XML do samostatných lokálních databází organizací. Nejsou šifrované.
+Starý samostatný analyzátor zůstává v paměti; jeho volitelná evidence revizí
+ukládá jen metadata zakázek a hash definic. Výpisy parserů s možným osobním
 obsahem se nezobrazují do logů. Výslovně uložené pracovní XML obsahuje osobní
 údaje; není diagnostickým logem a je nutné ho chránit.
 Používejte chráněný uživatelský účet, zabezpečený disk a syntetická testovací data.

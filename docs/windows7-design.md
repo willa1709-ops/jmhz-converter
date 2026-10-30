@@ -85,6 +85,11 @@ Definice se instalují do zapisovatelné složky uživatele mimo EXE/TEMP a vyb�
 výslovnou verzí a hashem; není nutné přestavovat EXE při pouhé změně podporovaných
 mapování. Změna aplikační logiky stále vyžaduje nové sestavení a přejímku.
 
+Organizační služba, samostatné SQLite databáze a posouzení identifikační
+alternativy také používají jádro bez Qt pro Python 3.8. Nové výchozí přehledové
+okno je zatím PySide6. Zachování testů jádra není dokončením Qt5 UI nebo
+otestováním souborových oprávnění/DLL na Win7 SP1 x86 či Windows 11.
+
 ## Zdroje ověřené při návrhu
 
 - CPython 3.8 Windows dokumentace: https://raw.githubusercontent.com/python/cpython/v3.8.10/Doc/using/windows.rst

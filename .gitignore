@@ -5,5 +5,7 @@ __pycache__/
 build/
 dist/
 *.spec
+!packaging/windows7/JMHZ-Converter-Win7-x86.spec
+!packaging/windows11/JMHZ-Converter-Win11-x64.spec
 *.sqlite3
 local/

@@ -1,0 +1,206 @@
+{
+  "format_version": 1,
+  "profile_id": "synthetic-preview",
+  "profile_version": "1.0",
+  "period_century": 2000,
+  "items": {
+    "910001": {
+      "column": "910001"
+    },
+    "910002": {
+      "column": "910002"
+    },
+    "910003": {
+      "column": "910003"
+    },
+    "910090": {
+      "column": "910090"
+    },
+    "9210286": {
+      "column": "9210286"
+    },
+    "9210419": {
+      "column": "9210419"
+    },
+    "9210344": {
+      "column": "9210344"
+    },
+    "9210116": {
+      "column": "9210116"
+    },
+    "9210482": {
+      "column": "9210482"
+    },
+    "9210371": {
+      "column": "9210371"
+    },
+    "9210354": {
+      "column": "9210354"
+    },
+    "9210355": {
+      "column": "9210355"
+    },
+    "9210356": {
+      "column": "9210356"
+    },
+    "9210229": {
+      "column": "9210229"
+    },
+    "9210230": {
+      "column": "9210230"
+    },
+    "9210231": {
+      "column": "9210231"
+    },
+    "9210232": {
+      "column": "9210232"
+    },
+    "9210247": {
+      "column": "9210247"
+    },
+    "9210251": {
+      "column": "9210251"
+    },
+    "9210259": {
+      "column": "9210259"
+    },
+    "9210260": {
+      "column": "9210260"
+    },
+    "9210261": {
+      "column": "9210261"
+    },
+    "9210265": {
+      "column": "9210265"
+    },
+    "9210268": {
+      "column": "9210268"
+    },
+    "9210328": {
+      "column": "9210328"
+    },
+    "9210345": {
+      "column": "9210345"
+    },
+    "9210490": {
+      "column": "9210490"
+    },
+    "9210546": {
+      "column": "9210546"
+    },
+    "9210372": {
+      "column": "9210372"
+    },
+    "9210535": {
+      "column": "9210535"
+    },
+    "9210481": {
+      "column": "9210481"
+    },
+    "9210370": {
+      "column": "9210370"
+    },
+    "9210555": {
+      "column": "9210555"
+    },
+    "9210579": {
+      "column": "9210579"
+    },
+    "9210319": {
+      "column": "9210319"
+    },
+    "9210320": {
+      "column": "9210320"
+    }
+  },
+  "metadata": {
+    "internal_number": {
+      "column": "internal_number"
+    },
+    "period": {
+      "column": "period"
+    },
+    "oic": {
+      "column": "oic"
+    },
+    "rc": {
+      "column": "rc"
+    },
+    "form_id": {
+      "column": "form_id"
+    },
+    "id_ppv": {
+      "column": "id_ppv"
+    },
+    "activity_code": {
+      "column": "activity_code"
+    },
+    "employment_type": {
+      "column": "employment_type"
+    },
+    "given_name": {
+      "column": "given_name"
+    },
+    "surname": {
+      "column": "surname"
+    },
+    "birth_date": {
+      "column": "birth_date"
+    },
+    "employment_start": {
+      "column": "employment_start"
+    },
+    "employment_end": {
+      "column": "employment_end"
+    },
+    "registration_status": {
+      "column": "registration_status"
+    },
+    "work_performed": {
+      "column": "work_performed"
+    },
+    "employment_detail": {
+      "column": "employment_detail"
+    },
+    "eldp_segments": {
+      "column": "eldp_segments"
+    },
+    "income_amount": {
+      "item": "910001"
+    },
+    "employer_ico": {
+      "column": "employer_ico"
+    },
+    "employer_variable_symbol": {
+      "column": "employer_variable_symbol"
+    }
+  },
+  "calculations": {
+    "row_total": {
+      "op": "subtract",
+      "args": [
+        {
+          "op": "add",
+          "args": [
+            {
+              "item": "910001"
+            },
+            {
+              "item": "910002"
+            }
+          ]
+        },
+        {
+          "item": "910003"
+        }
+      ]
+    }
+  },
+  "controls": [
+    {
+      "calculation": "row_total",
+      "item": "910090",
+      "tolerance": "0"
+    }
+  ]
+}

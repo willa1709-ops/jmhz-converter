@@ -1,85 +1,31 @@
-# Kandidátní sestavení pro Windows 7 SP1 x86
+# Windows 7 SP1 x86 – testovací GUI distribuce
 
-Toto je ověřovací postup, **ne hotová Windows 7 sestava**.
-Pro nové hlavní Qt5 GUI a oddělený W11 build použijte
-[aktuální offline builder a přejímku](../../docs/windows-preview-build.md).
-Následující konzolové postupy zůstávají jako dřívější kandidátní vstupní body.
-[Technický návrh a zdroje](../../docs/windows7-design.md) popisují verze,
-KB2533623, UCRT, DLL a přejímku. Moderní `requirements.txt` ani pyproject se nemění.
+**Windows EXE zatím nebylo sestaveno ani spuštěno.** Jde o připravený postup,
+nikoliv potvrzení kompatibility Win7. Win7 je nepodporovaný systém, testovat pouze
+syntetická data. DB a zálohy nejsou šifrované, finální export je blokovaný.
 
-Na odděleném Windows sestavovacím stroji připravte Python 3.8.10 **x86** a
-wheelhouse všech závislostí. Přesný výstup resolveru včetně tranzitivních balíčků
-je před distribucí nutné uzamknout a ověřit jejich hashe; kandidátní requirements
-nejsou úplný platformní lock. Pip pro Python 3.8 musí být kompatibilní (např. 25.0.1).
+Použijte [aktuální úplný návod](../../docs/windows-preview-build.md),
+[český první start](../../docs/first-run-windows.md) a
+[přejímací seznam](../../docs/windows-acceptance.md).
 
-```powershell
-py -3.8-32 -m venv .venv-win7
-.venv-win7\Scripts\python -m pip install --no-index --find-links wheelhouse -r packaging\windows7\requirements-candidate.txt
-.venv-win7\Scripts\python -m pytest -q tests\test_conversion_core.py tests\test_numbered_payroll.py tests\test_organizations.py tests\test_employee_xml.py
-```
+- Oddělený Python 3.8.10 **x86** na Win7 SP1; `build.ps1` volá společný bezpečný
+  builder s `JMHZ-Converter-Win7-x86.spec`. Výsledkem je celá one-folder distribuce
+  s `JMHZ-Converter-Win7-x86.exe`, žádná instalace Pythonu na cíli.
+- `requirements-candidate.txt` obsahuje všech 19 přesně připnutých Windows,
+  runtime, build a test distribucí. Další balíček nebo novější verze se odmítá.
+- `wheels-candidate.json` a `wheels-evidence.json` zachycují skutečně stažené
+  win32/univerzální wheels a shodu jejich hashů s metadaty PyPI; pin musí projít
+  nezávislým přezkumem. Neprokazují spuštění DLL na Win7.
+- `pe-wheel-evidence.json` pokrývá statickou kontrolu 28 vybraných hlavních
+  Qt/Core/Widgets/shiboken/lxml/VC binárek a GUI pluginů. Nezahrnuje celý EXE.
+  Wheel obsahuje také nepotřebné WinRT komponenty; spec je vylučuje a finální
+  audit je odmítá. Celý výsledný EXE/DLL musí projít kontrolou a spuštěním na Win7.
+  Volitelné ANGLE/software-GL/shader DLL se nepřebírají; Qt startup adaptér používá
+  raster widgets a systémový desktop OpenGL. Jeho skutečný běh na Win7 je neověřený.
+- Společné jádro a GUI Qt5 byly ověřeny na **Linux Pythonu 3.8.20**. To není
+  stejný OS ani patch Pythonu jako kandidátní Windows instalátor 3.8.10.
 
-Neinstalovat tento projekt pomocí `pip install .` do 3.8: balíček moderního UI
-má záměrně `requires-python >=3.12`. Testy a sdílený CLI modul se pouštějí přímo
-ze zdrojového checkoutu. Hlavní workflow již má společný Qt5/Qt6 adaptér;
-staré doplňkové PySide6 nástroje se v Qt5 nepouštějí.
-
-Po úspěšné přejímce jádra lze jako první pokus sestavit **konzolové jádro**:
-
-```powershell
-.venv-win7\Scripts\python -m app.core.stage_resources build\win7-resources
-.venv-win7\Scripts\python -m PyInstaller --noconfirm --clean --onedir --console --name JMHZ-Core-Win7 --paths . --add-data "build/win7-resources/schemas/official;schemas/official" app\core\__main__.py
-```
-
-Příkaz PyInstaller zatím nebyl proveden na Windows. Příprava resources se ověřuje
-na obou verzích Pythonu: kopíruje pouze XSD a manifesty, kontroluje hashe a znovu
-kompiluje oba balíčky. Nekopíruje SQLite, PDF, XLSX ani ZIP. Cíl musí být nový.
-Sestava pak obsahuje oba XSD balíčky a manifest,
-které jádro hledá v PyInstaller data adresáři, nikoliv podle aktuálního pracovního
-adresáře. Ověřte přiložené hashe a DLL; resources se za běhu nepřepisují.
-Nesmí přitom chybět žádná použitá XSD závislost nebo manifest.
-
-Výsledek `dist\JMHZ-Core-Win7\` se kopíruje celý na cílový stroj bez Pythonu.
-Nejde zatím o Qt5 desktopovou aplikaci. CLI potřebuje explicitní CSV, konverzní
-profil a vyplněné parametry; připravuje pouze `.draft.xml`, finální export neumí.
-Připojení k internetu za běhu není potřebné. `--onefile` a Qt5 GUI jsou další
-ověřovací kroky, nikoliv alternativní neověřený produkční příkaz.
-
-[wheel-evidence.json](wheel-evidence.json) zaznamenává pouze ověřenou dostupnost
-vybraných win32/univerzálních artefaktů a hashe z PyPI metadata. Neprokazuje stažení
-nebo úspěšné načtení těchto Windows DLL v této linuxové relaci.
-
-## Kandidát konzole číslovaných položek s externími definicemi
-
-Po stejných přejímacích kontrolách lze samostatně vyzkoušet nový vstupní bod:
-
-```powershell
-.venv-win7\Scripts\python -m PyInstaller --noconfirm --clean --onedir --console --name JMHZ-Payroll-Win7 --paths . app\core\payroll.py
-```
-
-Tato varianta dostává profil, vazby i skutečná XSD z
-[externího ZIPu](../../docs/offline-definition-packages.md) instalovaného mimo EXE.
-Ověřenou sadu nejprve připraví správce nástrojem `app.core.packages`; konzole
-na cílovém PC ji při použití `--package` a `--trusted-manifest-sha256` znovu ověří.
-Příkazy `python -m app.core.payroll ...` z návodu pak nahradí
-`JMHZ-Payroll-Win7.exe ...`. Externí sady ani databázi neukládat do interního
-PyInstaller/TEMP adresáře; změna definice musí zachovat předchozí verzi.
-Ani tento sestavovací příkaz nebyl otestován na Windows a nepředstavuje hotové
-GUI nebo potvrzení kompatibility Win7 x86. Závislosti se zde nemění.
-
-## Kandidát konzole běžných zaměstnanců
-
-Po přejímce stejných závislostí a přípravě resources lze zkusit nový organizačně
-vázaný vstupní bod bez Qt:
-
-```powershell
-.venv-win7\Scripts\python -m PyInstaller --noconfirm --clean --onedir --console --name JMHZ-Employees-Win7 --paths . --add-data "build/win7-resources/schemas/official;schemas/official" app\core\employee_xml.py
-```
-
-Přesná data patří do samostatného uživatelského `--workspace`, nikoliv do EXE
-nebo TEMP. Konzole vyžaduje již evidovanou organizaci/import a explicitní
-parametry, případně zaměstnanecký profil. U ověřeného offline balíčku používá
-vlastní XSD a vstupní bod `employee_profile`.
-Postup je v [návodu generátoru](../../docs/employee-generator.md).
-I tento příkaz je pouze kandidát; Win7 x86 ani W11 x64 binárky zatím nebyly
-provozně otestovány. Nové hlavní GUI nyní funguje také s Qt5 na Linux Pythonu 3.8;
-skutečná Win7/W11 přejímka nadále chybí.
+Neinstalujte moderní `pyproject.toml` nebo `requirements.txt` do 3.8. Historické
+samostatné konzolové pokusy nejsou aktuální cestou k požadovanému GUI. Externí
+verzované definice se instalují mimo EXE do uživatelského prostoru; staré sady
+se zachovávají. Neznámá mzda se nedoplňuje nulou a žádný build neodblokuje podání.

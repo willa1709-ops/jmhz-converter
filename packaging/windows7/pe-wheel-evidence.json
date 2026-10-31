@@ -1,0 +1,782 @@
+{
+  "status": "static_checks_passed_not_a_runtime_guarantee",
+  "binaries": [
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/Qt5Core.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "MPR.dll",
+        "USERENV.dll",
+        "VERSION.dll",
+        "NETAPI32.dll",
+        "WS2_32.dll",
+        "ADVAPI32.dll",
+        "KERNEL32.dll",
+        "ole32.dll",
+        "SHELL32.dll",
+        "USER32.dll",
+        "WINMM.dll",
+        "MSVCP140.dll",
+        "MSVCP140_1.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-environment-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-time-l1-1-0.dll",
+        "api-ms-win-crt-math-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-utility-l1-1-0.dll",
+        "api-ms-win-crt-convert-l1-1-0.dll",
+        "api-ms-win-crt-filesystem-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/Qt5Gui.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "d3d11.dll",
+        "dxgi.dll",
+        "Qt5Core.dll",
+        "GDI32.dll",
+        "ole32.dll",
+        "USER32.dll",
+        "MSVCP140.dll",
+        "KERNEL32.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-math-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-utility-l1-1-0.dll",
+        "api-ms-win-crt-environment-l1-1-0.dll",
+        "api-ms-win-crt-locale-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/Qt5Widgets.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "Qt5Gui.dll",
+        "Qt5Core.dll",
+        "UxTheme.dll",
+        "dwmapi.dll",
+        "SHELL32.dll",
+        "GDI32.dll",
+        "ole32.dll",
+        "USER32.dll",
+        "MSVCP140.dll",
+        "MSVCP140_1.dll",
+        "KERNEL32.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-math-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/QtCore.pyd",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "pyside2.abi3.dll",
+        "Qt5Core.dll",
+        "shiboken2.abi3.dll",
+        "python3.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-math-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/QtGui.pyd",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "pyside2.abi3.dll",
+        "Qt5Gui.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/QtWidgets.pyd",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "pyside2.abi3.dll",
+        "Qt5Widgets.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/msvcp140.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-locale-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-filesystem-l1-1-0.dll",
+        "api-ms-win-crt-time-l1-1-0.dll",
+        "api-ms-win-crt-environment-l1-1-0.dll",
+        "api-ms-win-crt-math-l1-1-0.dll",
+        "api-ms-win-crt-convert-l1-1-0.dll",
+        "api-ms-win-crt-utility-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": [
+        "CONCRT140.dll"
+      ]
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/msvcp140_1.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "MSVCP140.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/msvcp140_2.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "MSVCP140.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-math-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-locale-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/msvcp140_codecvt_ids.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/plugins/platforms/qoffscreen.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "Qt5Gui.dll",
+        "Qt5Core.dll",
+        "KERNEL32.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-utility-l1-1-0.dll",
+        "api-ms-win-crt-convert-l1-1-0.dll",
+        "api-ms-win-crt-environment-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-math-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/plugins/platforms/qwindows.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "dwmapi.dll",
+        "IMM32.dll",
+        "OLEAUT32.dll",
+        "WTSAPI32.dll",
+        "ole32.dll",
+        "USER32.dll",
+        "GDI32.dll",
+        "Qt5Gui.dll",
+        "Qt5Core.dll",
+        "SHELL32.dll",
+        "WINMM.dll",
+        "MSVCP140.dll",
+        "KERNEL32.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-math-l1-1-0.dll",
+        "api-ms-win-crt-utility-l1-1-0.dll",
+        "api-ms-win-crt-convert-l1-1-0.dll",
+        "api-ms-win-crt-environment-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/plugins/styles/qwindowsvistastyle.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "Qt5Widgets.dll",
+        "Qt5Gui.dll",
+        "Qt5Core.dll",
+        "UxTheme.dll",
+        "USER32.dll",
+        "GDI32.dll",
+        "KERNEL32.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/pyside2.abi3.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "shiboken2.abi3.dll",
+        "Qt5Qml.dll",
+        "python3.dll",
+        "Qt5Core.dll",
+        "MSVCP140.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/PySide2/vcruntime140.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-convert-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "lxml-5.3.2-cp38-cp38-win32/lxml/_elementpath.cp38-win32.pyd",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "python38.dll",
+        "KERNEL32.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "lxml-5.3.2-cp38-cp38-win32/lxml/builder.cp38-win32.pyd",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "python38.dll",
+        "KERNEL32.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "lxml-5.3.2-cp38-cp38-win32/lxml/etree.cp38-win32.pyd",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "WS2_32.dll",
+        "python38.dll",
+        "ADVAPI32.dll",
+        "KERNEL32.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-filesystem-l1-1-0.dll",
+        "api-ms-win-crt-math-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-convert-l1-1-0.dll",
+        "api-ms-win-crt-environment-l1-1-0.dll",
+        "api-ms-win-crt-time-l1-1-0.dll",
+        "api-ms-win-crt-utility-l1-1-0.dll",
+        "api-ms-win-crt-locale-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "lxml-5.3.2-cp38-cp38-win32/lxml/html/diff.cp38-win32.pyd",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "python38.dll",
+        "KERNEL32.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "lxml-5.3.2-cp38-cp38-win32/lxml/objectify.cp38-win32.pyd",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "WS2_32.dll",
+        "python38.dll",
+        "KERNEL32.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-utility-l1-1-0.dll",
+        "api-ms-win-crt-time-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-filesystem-l1-1-0.dll",
+        "api-ms-win-crt-environment-l1-1-0.dll",
+        "api-ms-win-crt-convert-l1-1-0.dll",
+        "api-ms-win-crt-locale-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "lxml-5.3.2-cp38-cp38-win32/lxml/sax.cp38-win32.pyd",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "python38.dll",
+        "KERNEL32.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "shiboken2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/shiboken2/msvcp140.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-locale-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-filesystem-l1-1-0.dll",
+        "api-ms-win-crt-time-l1-1-0.dll",
+        "api-ms-win-crt-environment-l1-1-0.dll",
+        "api-ms-win-crt-math-l1-1-0.dll",
+        "api-ms-win-crt-convert-l1-1-0.dll",
+        "api-ms-win-crt-utility-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": [
+        "CONCRT140.dll"
+      ]
+    },
+    {
+      "file": "shiboken2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/shiboken2/msvcp140_1.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "MSVCP140.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "shiboken2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/shiboken2/msvcp140_2.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "MSVCP140.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-math-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-locale-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "shiboken2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/shiboken2/msvcp140_codecvt_ids.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "shiboken2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/shiboken2/shiboken2.abi3.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "python3.dll",
+        "KERNEL32.dll",
+        "MSVCP140.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-convert-l1-1-0.dll",
+        "api-ms-win-crt-math-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "shiboken2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/shiboken2/shiboken2.pyd",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "shiboken2.abi3.dll",
+        "python3.dll",
+        "VCRUNTIME140.dll",
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": []
+    },
+    {
+      "file": "shiboken2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32/shiboken2/vcruntime140.dll",
+      "machine": 332,
+      "minimum_os_header": [
+        6,
+        0
+      ],
+      "minimum_subsystem_header": [
+        6,
+        0
+      ],
+      "imports": [
+        "api-ms-win-crt-runtime-l1-1-0.dll",
+        "api-ms-win-crt-heap-l1-1-0.dll",
+        "api-ms-win-crt-string-l1-1-0.dll",
+        "api-ms-win-crt-stdio-l1-1-0.dll",
+        "api-ms-win-crt-convert-l1-1-0.dll",
+        "KERNEL32.dll"
+      ],
+      "delay_imports_review_required": []
+    }
+  ],
+  "scope": "selected_QtCore_Gui_Widgets_shiboken_lxml_VC_and_raster_GUI_plugins_not_final_EXE",
+  "windows_runtime_tested": false,
+  "checked_on": "2026-10-31",
+  "wheel_manifest_sha256": "01aca379ad10aa32fe5a1319b0bf8a8563217e8e80cc6150c4130567bdaa0ab2",
+  "excluded_unneeded_components": [
+    "Qt5Bluetooth.dll",
+    "vccorlib140.dll",
+    "qtaudio_wasapi.dll",
+    "qtposition_winrt.dll",
+    "d3dcompiler_47.dll",
+    "libegl.dll",
+    "libglesv2.dll",
+    "opengl32sw.dll"
+  ],
+  "shader_finding": "Bundled d3dcompiler_47.dll declares OS header 10.0; optional ANGLE/software-GL/shader backends excluded. Target raster/desktop-GL policy still requires Win7 testing.",
+  "prebuilt_pyinstaller_bootloader_audit": {
+    "status": "static_checks_passed_not_a_runtime_guarantee",
+    "binaries": [
+      {
+        "file": "PyInstaller/bootloader/Windows-32bit-intel/run.exe",
+        "machine": 332,
+        "minimum_os_header": [
+          5,
+          1
+        ],
+        "minimum_subsystem_header": [
+          5,
+          1
+        ],
+        "imports": [
+          "KERNEL32.dll",
+          "ADVAPI32.dll"
+        ],
+        "delay_imports_review_required": []
+      },
+      {
+        "file": "PyInstaller/bootloader/Windows-32bit-intel/run_d.exe",
+        "machine": 332,
+        "minimum_os_header": [
+          5,
+          1
+        ],
+        "minimum_subsystem_header": [
+          5,
+          1
+        ],
+        "imports": [
+          "KERNEL32.dll",
+          "ADVAPI32.dll"
+        ],
+        "delay_imports_review_required": []
+      },
+      {
+        "file": "PyInstaller/bootloader/Windows-32bit-intel/runw.exe",
+        "machine": 332,
+        "minimum_os_header": [
+          5,
+          1
+        ],
+        "minimum_subsystem_header": [
+          5,
+          1
+        ],
+        "imports": [
+          "USER32.dll",
+          "COMCTL32.dll",
+          "KERNEL32.dll",
+          "ADVAPI32.dll",
+          "GDI32.dll"
+        ],
+        "delay_imports_review_required": []
+      },
+      {
+        "file": "PyInstaller/bootloader/Windows-32bit-intel/runw_d.exe",
+        "machine": 332,
+        "minimum_os_header": [
+          5,
+          1
+        ],
+        "minimum_subsystem_header": [
+          5,
+          1
+        ],
+        "imports": [
+          "USER32.dll",
+          "COMCTL32.dll",
+          "KERNEL32.dll",
+          "ADVAPI32.dll",
+          "GDI32.dll"
+        ],
+        "delay_imports_review_required": []
+      }
+    ]
+  }
+}

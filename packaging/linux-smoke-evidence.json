@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "data": "synthetic_only",
+  "final_export": "blocked",
+  "windows_acceptance": "manual_target_review_required",
+  "frozen": true,
+  "os": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "qt_binding": "PySide6",
+  "checks": [
+    "cp1250_numbered_csv_decimal_all_monthly_xsd_both_versions",
+    "hpp_dpc_dpp_zero_income_foreign_without_rc_multiple_pp",
+    "reimport_immutable_history_revisions_offline_definitions_versions",
+    "intentional_control_mismatch_and_missing_value",
+    "pending_oic_alternative_keeps_methodological_review",
+    "organization_isolation",
+    "unencrypted_organization_backup_restore",
+    "qt_gui_overview_import_counts_checks_xml_context_reset_shutdown",
+    "final_export_blocked"
+  ],
+  "versions": {
+    "qt": "6.12.0",
+    "binding": "6.12.0",
+    "lxml": "6.1.3",
+    "openpyxl": "3.1.5"
+  },
+  "artifact_kind": "Linux_ELF_packaging_smoke_only_not_a_Windows_EXE",
+  "pyinstaller": "6.22.3",
+  "qt_distribution": "PySide6-Essentials_only_no_PySide6_meta_distribution_or_WebEngine",
+  "scope": "development_freeze_layout_and_synthetic_self_test_before_release_commit",
+  "windows_tested": false
+}

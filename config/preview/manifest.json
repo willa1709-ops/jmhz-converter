@@ -1,0 +1,114 @@
+{
+  "format_version": 1,
+  "data_classification": "synthetic_only_not_for_submission",
+  "organizations": [
+    {
+      "key": "a",
+      "name": "TEST Organizace A",
+      "ico": "00000001",
+      "variable_symbol": "0000000001"
+    },
+    {
+      "key": "b",
+      "name": "TEST Organizace B",
+      "ico": "00000002",
+      "variable_symbol": "0000000002"
+    }
+  ],
+  "profiles": {
+    "2026": {
+      "numbered": "2026-numbered.json",
+      "employee": "2026-employee.json",
+      "monthly": "2026-monthly.json"
+    },
+    "2027": {
+      "numbered": "2027-numbered.json",
+      "employee": "2027-employee.json",
+      "monthly": "2027-monthly.json"
+    }
+  },
+  "cases": [
+    {
+      "id": "a-2026-09",
+      "organization": "a",
+      "period": "2026-09",
+      "year": 2026,
+      "csv": "a-2026-09-pp.csv",
+      "employer_csv": "a-2026-09-employer.csv",
+      "parameters": "a-2026-09-parameters.json",
+      "pp_count": 3,
+      "row_total": "300"
+    },
+    {
+      "id": "a-2026-10",
+      "organization": "a",
+      "period": "2026-10",
+      "year": 2026,
+      "csv": "a-2026-10-pp.csv",
+      "employer_csv": "a-2026-10-employer.csv",
+      "parameters": "a-2026-10-parameters.json",
+      "pp_count": 3,
+      "row_total": "300"
+    },
+    {
+      "id": "b-2026-09",
+      "organization": "b",
+      "period": "2026-09",
+      "year": 2026,
+      "csv": "b-2026-09-pp.csv",
+      "employer_csv": "b-2026-09-employer.csv",
+      "parameters": "b-2026-09-parameters.json",
+      "pp_count": 2,
+      "row_total": "200"
+    },
+    {
+      "id": "a-2027-09",
+      "organization": "a",
+      "period": "2027-09",
+      "year": 2027,
+      "csv": "a-2027-09-pp.csv",
+      "employer_csv": "a-2027-09-employer.csv",
+      "parameters": "a-2027-09-parameters.json",
+      "pp_count": 3,
+      "row_total": "300"
+    },
+    {
+      "id": "b-2027-09",
+      "organization": "b",
+      "period": "2027-09",
+      "year": 2027,
+      "csv": "b-2027-09-pp.csv",
+      "employer_csv": "b-2027-09-employer.csv",
+      "parameters": "b-2027-09-parameters.json",
+      "pp_count": 2,
+      "row_total": "200"
+    }
+  ],
+  "negative_csv": "a-2026-09-errors.csv",
+  "pending_oic_csv": "b-2027-09-pending-oic.csv",
+  "files": {
+    "2026-employee.json": "ab2e8d57c8fd0213bb1835d5664dbe227dc69920a12fdbd1536b69bdb463bd12",
+    "2026-monthly.json": "a076cbf7a30fd253b963d1064975de0caff8e96c313f87afdb2341ed7d9d6ee8",
+    "2026-numbered.json": "2f59503d004f7bfd6f6c9466f899e69c5a9351deee82d70e7eef2a9860b01855",
+    "2027-employee.json": "878173a26ad82556222a74b958b49b0712659205db30dbc5138db020df51c289",
+    "2027-monthly.json": "ec98100b0ed040d09769fcdd24c47281ae10a2aaaca58e080df8889e4bfb7f30",
+    "2027-numbered.json": "c45e10301dc5a299d5881cf4e8a44a8499061871eb41d232fb748768d82edeca",
+    "a-2026-09-employer.csv": "6caa9ff41eee09834d5b98aca1e1c4ecd96268ec44988eeb025bfdf325a3076b",
+    "a-2026-09-errors.csv": "317702b6db4912bf7cec1740a7262b5c3d01331c99dca3225a15d4669903e091",
+    "a-2026-09-parameters.json": "e1d14b77633e27f70c57cf66726875727350b327f3853dc6307b4405d647fe1e",
+    "a-2026-09-pp.csv": "fed2098b7c144be6576f30144c4e6c7c38106bfc0c287599506f8f465868163e",
+    "a-2026-10-employer.csv": "e1c6619bf8b9e6ed5b080f230cee6c6639392ca61f562375ec8c45f632ae44df",
+    "a-2026-10-parameters.json": "b8622a3d473b6303db26f1472f4d6f666d6831713e75b12b12dadd1a375b687c",
+    "a-2026-10-pp.csv": "f3fc6db0c4a36acb61c2fbdff7300809f7a73af66e656ccefa5b336db8af154f",
+    "a-2027-09-employer.csv": "739de28071394247b84092e95022c91d8ca60fc250c75f497077b60eff7e331b",
+    "a-2027-09-parameters.json": "75de356157a77e7fe0ead258c99bbc29ad066c2a880e0577c2bef61e7103cb65",
+    "a-2027-09-pp.csv": "601dfeeb1422e46097847be38bd7cb6baf6fcea226876bf3199039bfa1ea1a88",
+    "b-2026-09-employer.csv": "e9cd0e5b648035aff1038f4337e74e256bc540912a268896cb2ce34f62d92441",
+    "b-2026-09-parameters.json": "c26bf940af26fc18e07c65445205b73168ce15c616b52595ffd84c41ef3e773c",
+    "b-2026-09-pp.csv": "9f45b9c169fad7d8e708ea4f92773055eddb1c63c99abed94676490f6605c0a9",
+    "b-2027-09-employer.csv": "5357b336f121dc3f860619cf94bfa3972878217cc15956c51bfa9c26e47258f7",
+    "b-2027-09-parameters.json": "ff2d3ed3343b07ff660cfb2424110820cb616be287fe118921a173026d1bfa96",
+    "b-2027-09-pending-oic.csv": "4069cd3746b6ae9067543f011ddad3ee81d0d05b084a94cf1cfeadf0e882c66f",
+    "b-2027-09-pp.csv": "f350c8f78c4993924d88fdc67aa8c7482d188f1a0c539ec329540c54ddb62ef3"
+  }
+}

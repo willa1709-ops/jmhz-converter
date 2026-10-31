@@ -20,6 +20,7 @@ def test_reviewed_wheelhouse_hashes_lock_and_unsafe_metadata(tmp_path):
     wheel = directory / "synthetic-1-py3-none-any.whl"
     with ZipFile(wheel, "w") as archive:
         archive.writestr("synthetic-1.dist-info/METADATA", "Metadata-Version: 2.1\nName: synthetic\nVersion: 1\n")
+        archive.writestr("synthetic/_vendor/nested-1.dist-info/METADATA", "Name: nested\nVersion: 1\n")
     manifest = tmp_path / "manifest.json"
     manifest.write_text(json.dumps(wheels.inventory(directory)), encoding="utf-8")
     pin = wheels.digest(manifest)

@@ -1,108 +1,165 @@
-# Dvě testovací Windows sestavy: postup a přejímka
+# Testovací Windows distribuce – sestavení a ověření
 
-**V Codexu nebyly sestaveny ani spuštěny Windows EXE.** Skutečné Qt5/PySide2
-GUI prošlo testy na Linux Pythonu 3.8 a Qt6/PySide6 na Pythonu 3.12. To
-nepotvrzuje Windows DLL, x86 kapacitu nebo přenositelnost EXE. Builder označuje
-výstup `test_build_not_accepted` až do skutečné přejímky na cíli bez Pythonu.
+**Windows EXE v Codexu nevznikly a nebyly na Windows spuštěny.** K dispozici je
+Linux x64, Python 3.12.14/Qt6 a Python 3.8.20/Qt5. Není dostupný Windows host,
+Wine ani PowerShell. Připravený builder běh mimo odpovídající Windows odmítne.
+Sestava je i po úspěšném autotestu označená `test_build_not_accepted`, dokud
+neproběhne přejímka na čistém cíli bez Pythonu.
 
-## Přesné kandidátní verze
+## Přesné oddělené platformy
 
-| Součást | Windows 7 SP1 x86 | Windows 11 x64 |
+| Součást | Win7 SP1 x86 | Win11 x64 |
 | --- | --- | --- |
-| Build Python | 3.8.10 **32-bit** | 3.12.10 **64-bit** |
-| GUI | PySide2/shiboken2 5.15.2.1, Qt 5.15.2 | PySide6 6.12.0, Qt 6.12 |
+| Python pro build | 3.8.10 32-bit | 3.12.10 64-bit |
+| Qt vazba | PySide2/shiboken2 5.15.2.1 | PySide6-Essentials/shiboken6 6.12.0 |
+| Qt | 5.15.2 | 6.12.0 |
 | lxml | 5.3.2 | 6.1.3 |
-| openpyxl | 3.1.5 | 3.1.5 |
-| PyInstaller | 5.13.2 | 6.22.3 |
+| openpyxl / et-xmlfile | 3.1.5 / 2.0.0 | 3.1.5 / 2.0.0 |
+| PyInstaller / hooks-contrib | 5.13.2 / 2023.10 | 6.22.3 / 2026.9 |
+| pip / setuptools | 25.0.1 / 69.5.1 | 25.0.1 / 84.2.1 |
 | pytest | 7.4.4 | 9.2.0 |
-| pip | 25.0.1 | 25.0.1 |
-| setuptools | 69.5.1 | 84.2.1 |
 
-Jde o kandidáty, ne potvrzení Win7 kompatibility. Hlavní win32 artefakty
-dokládá [wheel-evidence.json](../packaging/windows7/wheel-evidence.json).
-Aktuální dostupnost hlavních win32/amd64 wheels, jejich URL a hashe z metadat
-PyPI zachycuje [windows-availability.json](../packaging/windows-availability.json).
-Ani tento záznam nepotvrzuje běh knihoven na cílovém systému.
-Win7 potřebuje SP1, KB2533623 a odpovídající CRT/UCRT x86; skutečné DLL a stav
-aktualizací je nutné ověřit. Starý OS/runtime má zbytková rizika i bez sítě.
-Tranzitivní závislosti musí být zachyceny **pro příslušnou Windows platformu**,
-nikoliv převzaty z linuxového locku.
+Úplné, výhradně přesně připnuté sady včetně všech Windows/test/build závislostí:
+[Win7](../packaging/windows7/requirements-candidate.txt),
+[Win11](../packaging/windows11/requirements-candidate.txt). Nepoužívat moderní
+`pyproject.toml`/`requirements.txt` pro Win7. Společné jádro zůstává Python 3.8;
+platformní konfigurace nejsou přidané do mzdových výpočtů.
 
-Hlavní workflow nyní sdílí `ui.qt_compat` a převodní jádro. Výběr organizace,
-měsíce, import, kontrola, XML, historie/plány a zálohy fungují pod Qt5 i Qt6.
-Jen starší doplňkové nástroje s moderními modely jsou v Qt5 vypnuté.
-Na Linuxu byl ověřen základní rozměr 1024×720; skutečné DPI/Windows se musí otestovat.
+Moderní sada instaluje QtWidgets z **Essentials**, nikoliv metabalík PySide6,
+který nově vyžaduje také nepotřebné Addons/WebEngine/Pdf. Spec explicitně přidává
+`PySide6.support.deprecated`, protože upstream hook kontroluje verzi metabalíku.
+Win7 sestava vylučuje Qt6 i staré doplňkové moderní modely; hlavní workflow je společný.
 
-## Úplný offline wheelhouse
+Celé Windows wheel sady byly skutečně staženy na Linuxu bez instalace Windows
+binárek a jejich SHA-256 porovnány s metadaty PyPI. Záznamy:
+[Win7 manifest](../packaging/windows7/wheels-candidate.json),
+[Win7 URL/hash evidence](../packaging/windows7/wheels-evidence.json),
+[Win11 manifest](../packaging/windows11/wheels-candidate.json),
+[Win11 URL/hash evidence](../packaging/windows11/wheels-evidence.json).
+Jde o kandidátní integritu/dostupnost, ne o potvrzení běhu nebo nezávislé schválení původu.
 
-Na kontrolovaném Windows počítači použijte odpovídající Python/architekturu.
-Pro přípravu Win7 wheels může být použit podporovaný síťový Windows s Pythonem
-3.8.10 x86; resolver tak vidí správnou architekturu i Windows podmínky.
+[Statická PE evidence Win7](../packaging/windows7/pe-wheel-evidence.json)
+pokrývá 28 vybraných hlavních Qt/Core/Widgets/shiboken/lxml/VC binárek a GUI pluginů.
+V celém wheelu se nacházejí i nepoužívané `Qt5Bluetooth.dll`, `vccorlib140.dll`
+a WinRT audio/position pluginy s novějšími API. Tyto součásti se nesmějí dostat
+do Win7 distribuce; spec vylučuje nepoužívané moduly a finální audit je odmítá.
+Evidence nezahrnuje všechny pluginy ani výsledný EXE; konečný audit a běh na Win7
+jsou nadále povinné.
+Win7 spec navíc omezuje Qt DLL na Core/Gui/Widgets a pluginy na `qwindows`,
+`qoffscreen` a Vista styl; nepoužívané Direct2D/WinRT/image backends se nepřibalují.
+Přítomnost skutečného `qwindows.dll` se kontroluje samostatně.
+Přibalený `d3dcompiler_47.dll` deklaruje OS header 10.0. Proto Win7 sestava
+nepřebírá volitelné ANGLE/software-GL/shader DLL z wheelu. Samostatný Qt startup
+adaptér volí raster widgets a systémový desktop OpenGL; aplikace nepoužívá
+QtQuick ani OpenGL widgets. Tato politika musí být otestována na skutečném Win7;
+statická kontrola nenahrazuje ověření systémových grafických knihoven/ovladačů.
+
+## Jednorázová příprava a přenos offline
+
+Na kontrolovaném podporovaném Windows připravit každou sadu zvlášť. Python
+instalátory dodavatele: [3.8.10 x86](https://www.python.org/ftp/python/3.8.10/python-3.8.10.exe),
+[3.12.10 x64](https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe).
+Ověřit jejich původ/podpis/hash, nic nestahovat z neznámých DLL webů.
 
 ```powershell
 py -3.8-32 -m venv C:\JMHZBuild\venv7
-C:\JMHZBuild\venv7\Scripts\python -m pip download --only-binary=:all: --dest C:\JMHZBuild\wheels7 -r packaging\windows7\requirements-candidate.txt
-C:\JMHZBuild\venv7\Scripts\python packaging\wheel_inventory.py capture C:\JMHZBuild\wheels7 C:\JMHZBuild\wheels7-manifest.json
+C:\JMHZBuild\venv7\Scripts\python -m pip download --only-binary=:all: --no-deps --dest C:\JMHZBuild\wheels7 -r packaging\windows7\requirements-candidate.txt
+C:\JMHZBuild\venv7\Scripts\python packaging\wheel_inventory.py verify C:\JMHZBuild\wheels7 packaging\windows7\wheels-candidate.json --approved-sha256 SCHVALENY_HASH
 ```
 
-Pro W11 použít `py -3.12-64`, vlastní adresáře/venv a
-`packaging\windows11\requirements-candidate.txt`. Wheelhouse musí být nový,
-jen s wheels jedné platformy a jedné verze každé distribuce; manifest leží
-**mimo** wheelhouse. Obsahuje přesné verze a SHA-256 všech tranzitivních wheels.
-Výstup capture je kandidát: přezkoumat původ/hashe vůči důvěryhodným metadatům
-dodavatele/PyPI a schválit hash manifestu odděleně. Hash vytvořený ze stejného
-neznámého archivu není automatické schválení. Zachovat i ověřený instalátor Pythonu.
+Pro W11 použít `py -3.12-64`, `venv11`, `wheels11` a soubory `windows11`.
+Sady obsahují všechny tranzitivní závislosti, proto `--no-deps`; žádný volně
+plovoucí balíček se nepřidává. Manifest leží **mimo** wheelhouse. Přezkoumat
+záznamy URL/hashe a schválit pin manifestu nezávisle; nenahrazovat pin náhodným
+hashem neznámého archivu. Případný nový wheel/release vyžaduje nový přezkum
+celé přesné platformní sady, ne tichou změnu jednoho souboru.
+`.gitattributes` chrání bajty oficiálních souborů, syntetické CP1250/CRLF sady
+i připnutých wheel manifestů před Windows `core.autocrlf` konverzí.
 
-## Offline build na odpovídajícím Windows
+Na sestavovacím Win7 SP1 x86 vytvořit čistý build venv Pythonu 3.8.10; na W11
+venv Pythonu 3.12.10 x64. Přenést ověřený instalátor, sadu wheels/manifest a čistý
+zdrojový Git commit. Build potřebuje také Git kompatibilní s hostitelským OS.
+Výstup musí být **mimo checkout**. Pro samotný cílový počítač nejsou Python ani Git potřeba.
+Win7 potřebuje SP1, KB2533623 a příslušné CRT/UCRT x86; jejich skutečný stav je
+nutné ověřit, tento seznam není zárukou kompatibility každé DLL. Potom odpojit síť.
 
-Na Win7 SP1 x86 použít izolovaný Python 3.8.10 x86, na W11 Python 3.12.10 x64.
-Přenést schválený wheelhouse/manifest a čistý zdrojový commit, odpojit síť:
+## Oddělené sestavovací skripty a specs
+
+Z kořene zdrojů (cesty upravit, nikoliv čísla verzí):
 
 ```powershell
-C:\JMHZBuild\venv7\Scripts\python packaging\build_windows.py --variant win7-x86 --wheelhouse C:\JMHZBuild\wheels7 --wheel-manifest C:\JMHZBuild\wheels7-manifest.json --approved-sha256 SCHVALENY_HASH --output C:\JMHZBuild\output7
+& .\packaging\windows7\build.ps1 -Python C:\JMHZBuild\venv7\Scripts\python.exe -Wheelhouse C:\JMHZBuild\wheels7 -WheelManifest C:\zdroje\jmhz-converter\packaging\windows7\wheels-candidate.json -ApprovedSha256 SCHVALENY_HASH -Output C:\JMHZBuild\output7
+& .\packaging\windows11\build.ps1 -Python C:\JMHZBuild\venv11\Scripts\python.exe -Wheelhouse C:\JMHZBuild\wheels11 -WheelManifest C:\zdroje\jmhz-converter\packaging\windows11\wheels-candidate.json -ApprovedSha256 SCHVALENY_HASH -Output C:\JMHZBuild\output11
 ```
 
-Pro W11 obdobně `--variant win11-x64`, vlastní venv/sadu 11. Zástupný text
-`SCHVALENY_HASH` nahradit skutečným nezávisle schváleným hashem. Výstupní
-adresář musí být nový, nic se nemaže. Script kontroluje OS/Python/bitnost,
-hashově připne pip, instaluje kompletní offline lock s `--require-hashes`,
-spustí `pip check`, testy a kontrolu XSD, pak PyInstaller `--onedir --windowed`.
-Linuxový běh builder odmítá; nepředstírá cross-build Windows EXE.
+Win7 wrapper je napsaný pro PowerShell 2; oba lze spustit z libovolné pracovní
+složky absolutní cestou. Pokud firemní execution policy skript nepovolí,
+použít stejný Python přímo s `packaging\build_windows.py --variant win7-x86`
+(nebo `win11-x64`) a argumenty `--wheelhouse`, `--wheel-manifest`,
+`--approved-sha256`, `--output`. Execution policy se automaticky nemění.
 
-Kopíruje se celá `dist\JMHZ-Win7-x86` / `dist\JMHZ-Win11-x64`, včetně DLL,
-Qt pluginů, XSD a pracovních profilů. Na cíli není potřeba instalace Pythonu,
-ale mohou být nutné systémové runtime/aktualizace. Neotestovaný onefile se nevydává.
-Úložiště je mimo EXE v uživatelských AppData; k přenosu historie slouží organizační záloha.
-Sestava neobsahuje žádné skutečné mzdové DB/řádky.
+[Win7 spec](../packaging/windows7/JMHZ-Converter-Win7-x86.spec) a
+[Win11 spec](../packaging/windows11/JMHZ-Converter-Win11-x64.spec) sdílejí jen
+[mechanismus balení](../packaging/freeze_common.py). Builder kontroluje OS/SP,
+přesný Python/bitnost, čistý commit/venv, nezávislý hash a **přesnou úplnou sadu
+wheels bez přídavných distribucí**. Připnutý pip i všechny závislosti se instalují
+`--no-index --no-deps --require-hashes`; následuje kontrola celé instalace,
+`pip check`, platformní testy a kompilace hashově ověřených XSD.
 
-`build-report.json` zaznamená commit, skutečný OS/Python/bitnost, pin wheels
-a úplný pip freeze; `SHA256SUMS.txt` obsahuje výstupní hashe. SOURCE_DATE_EPOCH
-a PYTHONHASHSEED snižují variabilitu, bitově shodné EXE mezi různými VM/cestami
-zatím není prokázané. Nikdy nezaměňovat unit testy s čistou cílovou přejímkou.
+Balení **one-folder**, windowed, bez UPX. Ze vstupních dat se kopírují jen
+runtime XSD/manifesty a explicitní syntetická sada `config/preview`.
+Žádná skutečná SQLite DB, mzdy, XLSX, PDF ani ZIP archivy oficiálních podkladů.
+Knihovní `base_library.zip` je součást Python runtime, nikoliv archiv mzdových dat.
+XSD jsou technicky hashově ověřená, původ a účinnost zůstávají k doloženému přezkumu.
 
-## Data a povinná přejímka obou sestav
+Po sestavení se kontroluje bitnost PE souborů, deklarované OS/subsystem verze,
+smíchání Qt5/Qt6 a známé přímé importy novějších Windows API. Delay importy jsou
+v reportu k přezkumu. Statická kontrola není důkaz, že DLL skutečně běží na Win7.
+**Přesná kopie EXE/DLL** se poté spustí z dočasné cesty s mezerami/diakritikou,
+mimo checkout a z jiné pracovní složky; provede `--self-test` s dočasnými daty.
+Při neúspěchu se distribuce nepředává jako hotová.
 
-Pro vyhrazený lokální datový adresář lze ve Windows PowerShell 2/5.1 připravit
-`packaging\configure-data-acl.ps1 -DataRoot C:\JMHZData`. Přestaví DACL pro
-aktuální SID a SYSTEM; odmítá kořen disku, UNC a odkazy. Při selhání může být
-změna částečná. Skript dosud nebyl spuštěn na Windows. Jde o ACL, nikoliv šifrování.
+## Výstupy a vydání
 
-| Oblast | Přesný požadovaný test na Win7 x86 i W11 x64 |
-| --- | --- |
-| Čistý cíl | bez Pythonu, potvrzené SP/CRT/aktualizace, DLL/qwindows a bitnost, chybný/chybějící runtime |
-| Přenos | celá onedir složka na druhý účet, mezery/české znaky v cestě, offline start, distribuční hashe |
-| GUI | skutečný monitor, 1024×720 a DPI 100/125/150 %, klávesnice/dialogy, ukončení po XML, reset organizace/měsíce |
-| DOS CSV | CP1250/CRLF/`;`, diakritika, číslované hlavičky, `000012`, čárka, citování, prázdno/nula/chybějící sloupec, nesprávné kódování |
-| Zaměstnanci | HPP/DPČ/DPP, více PP osoby, cizinec bez RČ/čekající na OIČ, doložená nula a odmítnuté neznámé případy |
-| Celý paket | skutečné XSD obou sad, správné pořadí souhrn/PVPOJ/PP, rovnice 4/7/9/11/12/13, nesoulad a chybějící operand bez náhrady nulou |
-| Organizace | stejné číslo PP/klíče u dvou firem, cizí VS/měsíc/import odmítnuty, stará definice zachována, reimport nepoškodí historii |
-| Návaznosti | interní revize není režim, původní GUID a důvod plánu, cizí GUID/plán odmítnut, žádné automatické opravné XML/odeslání |
-| Definice | offline dvě verze, starší zachována, chybný pin/soubor/cesta odmítnuty, žádné stahování XSD |
-| Obnova | druhý PC bez původních cest definic, stejné XML/součty/plány, nesprávný hash/existující organizace odmítnuty |
-| Ochrana | druhý účet nesmí číst DB/zálohy; prověřit nové i existující soubory/journal/TEMP, chybná práva a readonly disk, plaintext omezení |
-| Kapacita | RAM/čas skutečného největšího anonymizovaného exportu x86, plný disk, přerušená záloha/obnova; limity nejsou kapacitní záruka |
-| Předání | finální export blokovaný, žádná telemetrie/síť nebo skutečná data v sestavě, známá metodická omezení |
+Výstupní ZIP obsahuje celou onedir složku s požadovaným EXE:
+`JMHZ-Converter-Win7-x86.exe` nebo `JMHZ-Converter-Win11-x64.exe`, český
+`CTETE-NEJDRIVE.md`, `Spustit-ukazku.cmd`, `synthetic-data`, přejímací seznam,
+`build-report.json` a `SHA256SUMS.txt`. Report uvádí commit, všechny verze,
+skutečný OS/bitnost, pin wheels, statickou PE kontrolu a výsledek kopie EXE.
+Builder vypíše SHA-256 ZIP a inventory pro oddělené bezpečné předání.
+`verify_distribution.py` ověří celou složku vůči nezávislému pinu inventory.
 
-Zaznamenat OS patch level, RAM/CPU/DPI, commit, wheel/DLL/EXE hashe a výsledky
-včetně odchylek. Teprve tento záznam může potvrdit konkrétní testovací sestavu;
-sám neodblokuje metodiku ani finální podání.
+Žádný binární soubor necommitovat. Po skutečném sestavení a kontrole lze ZIP
+připojit k testovacímu GitHub Release či artefaktu schváleného Windows runneru.
+V tomto prostředí není Windows runner ani vytvořený artefakt. GitHub-hosted
+Windows Server není přejímka Win7/W11; Win7 navíc nepodporuje moderní Node
+runtime běžných GitHub Actions. Nepřidáváme zdánlivě funkční Win7 workflow.
+
+SOURCE_DATE_EPOCH/PYTHONHASHSEED omezují variabilitu, ale bitově identická EXE
+mezi VM/cestami nejsou prokázaná. Ručně otestovat čistý cíl bez Pythonu,
+[krátký přejímací seznam](windows-acceptance.md) a
+[český první start](first-run-windows.md). Velikost/RAM/čas x86 se musí změřit.
+ACL skript ani šifrování nejsou tímto ověřené; používají se pouze syntetická data.
+
+## Skutečně provedené ověření 31. 10. 2026
+
+- Linux Python 3.12.14 / PySide6 6.12.0 / lxml 6.1.3 / openpyxl 3.1.5 /
+  pytest 9.2.0: **236 testů prošlo**.
+- Linux Python 3.8.20 / PySide2 5.15.2.1 / Qt 5.15.2 / lxml 5.3.2 /
+  openpyxl 3.1.5 / pytest 7.4.4: **160 testů společného jádra a GUI prošlo**.
+- Úplné Windows wheels: 19 win32/univerzálních, 18 amd64/univerzálních;
+  staženo, porovnáno s PyPI hashy, offline resolver dry-run obou sad prošel.
+- Samostatné čisté Linuxové prostředí jen s Qt Essentials bez metabalíku
+  PySide6/WebEngine: PyInstaller 6.22.3 vytvořil **Linux ELF**, jehož zabalený
+  `--self-test` prošel z `/tmp` mimo checkout. Výsledek `frozen: true` se vztahuje
+  pouze k tomuto Linuxovému experimentu, viz
+  [evidence](../packaging/linux-smoke-evidence.json). Linuxový artefakt se nevydává
+  jako Windows sestava a není commitovaný.
+- Kontrola hashů oficiálních souborů, relativních dokumentačních odkazů
+  a `git diff --check` prošly; žádné původní oficiální podklady se neměnily.
+- Checkout s `core.autocrlf=true` zachoval přesné bajty všech 26 chráněných
+  souborů syntetické sady a wheel manifestů.
+
+**Neprovedeno:** Windows build, Windows spuštění/čistá přejímka bez Pythonu,
+PowerShell wrapper/ACL na Windows, provozní kapacitní test x86 a potvrzení
+skutečných DLL/patchů/ovladačů. Žádný Windows EXE/ZIP artefakt není k dispozici.

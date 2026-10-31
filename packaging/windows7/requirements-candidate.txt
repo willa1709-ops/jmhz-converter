@@ -1,10 +1,21 @@
-# Candidate only. Install into isolated Python 3.8 x86; not the modern project env.
-# Win7 loading and EXE deployment still require the acceptance tests in README.md.
+# Complete Windows/Python 3.8 dependency set; no floating transitive packages.
+# Candidate only: actual Win7 SP1 x86 and clean-target acceptance are mandatory.
 pip==25.0.1
 setuptools==69.5.1
 PySide2==5.15.2.1
 shiboken2==5.15.2.1
 lxml==5.3.2
 openpyxl==3.1.5
+et-xmlfile==2.0.0
 pyinstaller==5.13.2
+pyinstaller-hooks-contrib==2023.10
+altgraph==0.17.4
+pefile==2023.2.7
+pywin32-ctypes==0.2.2
 pytest==7.4.4
+iniconfig==2.0.0
+packaging==24.2
+pluggy==1.5.0
+exceptiongroup==1.2.2
+tomli==2.0.1
+colorama==0.4.6

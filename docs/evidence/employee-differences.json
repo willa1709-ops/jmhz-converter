@@ -1,0 +1,1481 @@
+{
+  "added_paths": [
+    "bezPriznaku/pojisteni/nemocenskePojisteni/omluvenaNepritomnost",
+    "bezPriznaku/pojisteni/nemocenskePojisteni/pracovniNeschopnost",
+    "bezPriznaku/pojisteni/nemocenskePojisteni/vyloucenePar18",
+    "bezPriznaku/pojisteni/nemocenskePojisteni/vyplaceniDavek",
+    "bezPriznaku/pojisteni/vymerovaciZaklad/zapocitatelnyPrijem",
+    "bezPriznaku/prijem/dan/prijem",
+    "bezPriznaku/prijem/dan/prijemPar6",
+    "bezPriznaku/prubehZamestnani/odpracovaneHodiny/rozpad/riziko/smenyOdpracovanePocet",
+    "bezPriznaku/souhrnDataZec/mzdaCista/vydelekOZP/mzdaOzpSocPojDatum",
+    "bezPriznaku/souhrnDataZec/mzdaCista/vydelekOZP/mzdaOzpZdravPojDatum",
+    "bezPriznaku/souhrnDataZec/prijmy/odmenaNerezident",
+    "bezPriznaku/souhrnDataZec/prijmy/prispevekZelSporeniOsvob",
+    "bezPriznaku/souhrnDataZec/rocniUhrny/uhrnBonusu",
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/doplatekRok",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnika",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/danoveZvyhodneniDetiMesic",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/datumPodpisu",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/rozsirenaSlevaInvalidita3",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/slevaDite",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/slevaStudent/doktorant",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/slevaStudent/vyseSlevy",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/slevaZTPP",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zakladniSleva",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zakladniSlevaInvalidita12",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/jineOsoby/jinaOsoba/datumNarozeni",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/jineOsoby/jinaOsoba/jmeno",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/jineOsoby/jinaOsoba/prijmeni",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/jineOsoby/jinaOsoba/rodneCislo",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivovaneDeti/vyzivovaneDite/dite/datumNarozeni",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivovaneDeti/vyzivovaneDite/dite/jmeno",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivovaneDeti/vyzivovaneDite/dite/prijmeni",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivovaneDeti/vyzivovaneDite/dite/rodneCislo",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivovaneDeti/vyzivovaneDite/poradi",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivovaneDeti/vyzivovaneDite/prukazZtpp",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivujeJinaOsoba",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/srazenaDanPar6",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/zakladDanePar6",
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/zalohaPar38",
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/cisloOrientacni",
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/cisloPopisne",
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/kodAdresnihoMista",
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/psc",
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/ulice"
+  ],
+  "removed_paths": [
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/vylouceneDny/omluvenaNepritomnost",
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/vylouceneDny/pracovniNeschopnost",
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/vylouceneDny/vyloucenePar18",
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/vylouceneDny/vyplaceniDavek",
+    "bezPriznaku/pojisteni/vymerovaciZaklad/prijemNepojistenaCinnost",
+    "bezPriznaku/prijem/dan/zakladDane",
+    "bezPriznaku/prubehZamestnani/odpracovaneDny/dnyOdpracovanePocet",
+    "bezPriznaku/souhrnDataZec/prijmy/odmenyNerezident",
+    "bezPriznaku/souhrnDataZec/prijmy/prispevekZamestnavatele/prispevekDip",
+    "bezPriznaku/souhrnDataZec/prijmy/prispevekZamestnavatele/prispevekDoplnPenzPripoj",
+    "bezPriznaku/souhrnDataZec/prijmy/prispevekZamestnavatele/prispevekPenzPoj",
+    "bezPriznaku/souhrnDataZec/prijmy/prispevekZamestnavatele/prispevekPenzPripoj",
+    "bezPriznaku/souhrnDataZec/prijmy/prispevekZamestnavatele/prispevekZelPojDlPece",
+    "bezPriznaku/souhrnDataZec/prijmy/prispevekZamestnavatele/prispevekZelSporeniOsvob",
+    "bezPriznaku/souhrnDataZec/prijmy/prispevekZamestnavatele/prispevekZivotPoj",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnika",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/danoveZvyhodneniDetiMesic",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/rozsirenaSlevaInvalidita3",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/slevaDite",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/slevaZTPP",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zakladniSleva",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zakladniSlevaInvalidita12",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/jineOsoby/jinaOsoba/datumNarozeni",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/jineOsoby/jinaOsoba/jmeno",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/jineOsoby/jinaOsoba/prijmeni",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/jineOsoby/jinaOsoba/rodneCislo",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivovaneDeti/vyzivovaneDite/dite/datumNarozeni",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivovaneDeti/vyzivovaneDite/dite/jmeno",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivovaneDeti/vyzivovaneDite/dite/prijmeni",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivovaneDeti/vyzivovaneDite/dite/rodneCislo",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivovaneDeti/vyzivovaneDite/poradi",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivovaneDeti/vyzivovaneDite/prukazZtpp",
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnikaDane/zvyhodneniDetiMesic/vyzivujeJinaOsoba",
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/preplatekRok",
+    "bezPriznaku/souhrnDataZec/zvlastniSazbaDane/odmenaNerezident",
+    "bezPriznaku/souhrnDataZec/zvlastniSazbaDane/srazenaDan",
+    "bezPriznaku/souhrnDataZec/zvlastniSazbaDane/srazenaDanNerezident",
+    "bezPriznaku/souhrnDataZec/zvlastniSazbaDane/zakladDane"
+  ],
+  "changed_paths": {
+    "bezPriznaku/identifikace/druhCinnosti": {
+      "2026": {
+        "xsd_type": "druhCinnostiType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:druhCinnostiType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/identifikace/idPpv": {
+      "2026": {
+        "xsd_type": "idPpvType",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:idPpvType",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/identifikace/ikMpsv": {
+      "2026": {
+        "xsd_type": "ikMpsvType",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:ikMpsvType",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/identifikace/jmeno": {
+      "2026": {
+        "xsd_type": "jmenoType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:jmenoType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/identifikace/prijmeni": {
+      "2026": {
+        "xsd_type": "prijmeniType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:prijmeniType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/mzda/mzdaRozpad/odmenyNepravidelne": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:cislo14Type",
+        "base_type": "long",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/mzda/mzdaRozpad/odmenyPravidelne": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:cislo14Type",
+        "base_type": "long",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/mzda/mzdaRozpad/priplatky/celkem": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:cislo8Type",
+        "base_type": "int",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/mzda/mzdaRozpad/priplatky/nocni": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:cislo8Type",
+        "base_type": "int",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/mzda/mzdaRozpad/priplatky/prescas": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:cislo8Type",
+        "base_type": "int",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/mzda/mzdaRozpad/priplatky/sobotaNedele": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:cislo8Type",
+        "base_type": "int",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/mzda/mzdaRozpad/priplatky/svatek": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:cislo8Type",
+        "base_type": "int",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/mzda/mzdaRozpad/tarif": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:cislo14Type",
+        "base_type": "long",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/mzda/mzdaZuctovana": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/mzda/nahrady/docasnaNeschopnost": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:cislo8Type",
+        "base_type": "int",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/mzda/nahrady/dovolena": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:cislo14Type",
+        "base_type": "long",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/mzda/nahrady/mzdyZuctovane": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:cislo14Type",
+        "base_type": "long",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/mzda/nahrady/prekazkyZamestnanec": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:cislo14Type",
+        "base_type": "long",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/mzda/nahrady/prekazkyZamestnavatel": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:cislo14Type",
+        "base_type": "long",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/mzda/nahrady/svatky": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:cislo8Type",
+        "base_type": "int",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/mzda/odmeny/pohotovost": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:cislo8Type",
+        "base_type": "int",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/mzda/vydelek/vydelekPrumernyHod": {
+      "2026": {
+        "xsd_type": "cislo11_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo11_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/kod": {
+      "2026": {
+        "xsd_type": "",
+        "base_type": "string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:kodEldpType",
+        "base_type": "string",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/odecitaneDny/materstvi": {
+      "2026": {
+        "xsd_type": "cislo2Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo2Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/odecitaneDny/neomluveneAbsence": {
+      "2026": {
+        "xsd_type": "cislo2Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo2Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/odecitaneDny/neplaceneVolno": {
+      "2026": {
+        "xsd_type": "cislo2Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo2Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/odecitaneDny/odecitaneDobyCelkem": {
+      "2026": {
+        "xsd_type": "cislo10Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo10Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/odecitaneDny/osetrovaniBezNaroku": {
+      "2026": {
+        "xsd_type": "cislo2Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo2Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/odecitaneDny/osetrovaniSNarokem": {
+      "2026": {
+        "xsd_type": "cislo2Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo2Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/odecitaneDny/otcovska": {
+      "2026": {
+        "xsd_type": "cislo2Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo2Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/odecitaneDny/pracovniNeschopnost": {
+      "2026": {
+        "xsd_type": "cislo2Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo2Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/pocetDnu": {
+      "2026": {
+        "xsd_type": "pocetDnuType",
+        "base_type": "nonNegativeInteger",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo2Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/vylouceneDny/docasNeschopnost": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/vylouceneDny/osetrovaniClenaRodiny": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/vylouceneDny/otcovska": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/vylouceneDny/penezitaPomocMaterstvi": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/vylouceneDny/vylouceneDobyCelkem": {
+      "2026": {
+        "xsd_type": "cislo10Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo10Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/vylouceneDny/vyloucenePar16": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/vymerovaciZaklad": {
+      "2026": {
+        "xsd_type": "cislo10Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo10Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/pojisteniZamestnanec/socialniPojisteni": {
+      "2026": {
+        "xsd_type": "cislo12Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo12Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/pojisteni/pojisteniZamestnavatel/socialniPojisteni": {
+      "2026": {
+        "xsd_type": "cislo12Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo12Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/pojisteni/slevaZamestnance/slevaZamestnance/vyseSlevy": {
+      "2026": {
+        "xsd_type": "cislo12Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo12Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/pojisteni/slevaZamestnance/slevaZamestnanceEvidovana": {
+      "2026": {
+        "xsd_type": "xs:boolean",
+        "base_type": "boolean",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "xs:boolean",
+        "base_type": "boolean",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/pojisteni/slevaZamestnance/slevaZamestnanceOvoZel/vyseSlevy": {
+      "2026": {
+        "xsd_type": "cislo12Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo12Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/pojisteni/slevaZamestnance/slevaZamestnanceOvoZelEvidovana": {
+      "2026": {
+        "xsd_type": "xs:boolean",
+        "base_type": "boolean",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "xs:boolean",
+        "base_type": "boolean",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/pojisteni/slevaZamestnavatele/slevaZamestnavateleEvidovana": {
+      "2026": {
+        "xsd_type": "xs:boolean",
+        "base_type": "boolean",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "xs:boolean",
+        "base_type": "boolean",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/pojisteni/slevaZamestnavatele/slevaZamestnavateleRozpad/duvodUplatneni": {
+      "2026": {
+        "xsd_type": "",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:znakType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/pojisteni/slevaZamestnavatele/slevaZamestnavateleRozpad/pracovniDobaKratsi": {
+      "2026": {
+        "xsd_type": "cislo4_2Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo4_2Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/vymerovaciZaklad/castkaOdvodPojistneho": {
+      "2026": {
+        "xsd_type": "cislo12Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo12Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/vymerovaciZakladParagraf5/pismenoA": {
+      "2026": {
+        "xsd_type": "cislo12Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo12Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/vymerovaciZakladParagraf5/pismenoB": {
+      "2026": {
+        "xsd_type": "cislo12Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo12Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/pojisteni/vymerovaciZakladParagraf5/pismenoC": {
+      "2026": {
+        "xsd_type": "cislo12Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo12Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/prijem/specifickaSkutecnost/vyplatniTermin": {
+      "2026": {
+        "xsd_type": "xs:date",
+        "base_type": "date",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "xs:date",
+        "base_type": "date",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/prubehZamestnani/neodpracovaneHodiny/hodinyNeodpracBezNahrady": {
+      "2026": {
+        "xsd_type": "cislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/prubehZamestnani/neodpracovaneHodiny/hodinyNeodpracCelkem": {
+      "2026": {
+        "xsd_type": "cislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/prubehZamestnani/neodpracovaneHodiny/hodinyNeodpracDovol": {
+      "2026": {
+        "xsd_type": "cislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/prubehZamestnani/neodpracovaneHodiny/hodinyNeodpracNahrada": {
+      "2026": {
+        "xsd_type": "cislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/prubehZamestnani/neodpracovaneHodiny/hodinyNeodpracNeschop": {
+      "2026": {
+        "xsd_type": "cislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/prubehZamestnani/neodpracovaneHodiny/hodinyNeodpracOcr": {
+      "2026": {
+        "xsd_type": "cislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/prubehZamestnani/odpracovaneDny/dnyEvidencniStav": {
+      "2026": {
+        "xsd_type": "cislo3Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo3Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/prubehZamestnani/odpracovaneHodiny/pocet": {
+      "2026": {
+        "xsd_type": "cislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/prubehZamestnani/odpracovaneHodiny/rozpad/hornictvi/smenyOstatni": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo3Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/prubehZamestnani/odpracovaneHodiny/rozpad/hornictvi/smenyUran": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo3Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/prubehZamestnani/odpracovaneHodiny/rozpad/prescas": {
+      "2026": {
+        "xsd_type": "cislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:cislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/prubehZamestnani/odpracovaneHodiny/rozpad/riziko/hodinyOdpracovanePocet": {
+      "2026": {
+        "xsd_type": "cislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/prubehZamestnani/prekazkyVPraci/prekazkaZamestnanec": {
+      "2026": {
+        "xsd_type": "cislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/prubehZamestnani/prekazkyVPraci/prekazkaZamestnavatel": {
+      "2026": {
+        "xsd_type": "cislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/mzdaCista/mzdaCista": {
+      "2026": {
+        "xsd_type": "cislo8Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo8Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/mzdaCista/srazky/srazkaPlneniZel": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/mzdaCista/srazky/srazkaSkodaZec": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/mzdaCista/srazky/srazkaStrava": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/mzdaCista/srazky/srazkaZavazkyZec": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/prijmy/osvobozenoCelkem": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/prijmy/zuctovanoCelkem": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/danSrazenaZvlSazba": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/prijemSrazkDanZvlSazba": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/prijemZdanitelnyCelkem": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/prijemZdanitelnyDoplatek": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/danBonusPreplatekRok": {
+      "2026": {
+        "xsd_type": "cisloN14Type",
+        "base_type": "int",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/danPreplatekRok": {
+      "2026": {
+        "xsd_type": "cisloN14Type",
+        "base_type": "int",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/slevaNaPartnera/partner/deti/dite/jmeno": {
+      "2026": {
+        "xsd_type": "jmenoType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:jmenoType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/slevaNaPartnera/partner/deti/dite/prijmeni": {
+      "2026": {
+        "xsd_type": "prijmeniType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:prijmeniType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/slevaNaPartnera/partner/deti/dite/rodneCislo": {
+      "2026": {
+        "xsd_type": "rodneCisloType",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:rodneCisloType",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/slevaNaPartnera/partner/partnerUdaje/jmeno": {
+      "2026": {
+        "xsd_type": "jmenoType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:jmenoType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/slevaNaPartnera/partner/partnerUdaje/prijmeni": {
+      "2026": {
+        "xsd_type": "prijmeniType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:prijmeniType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/slevaNaPartnera/partner/partnerUdaje/rodneCislo": {
+      "2026": {
+        "xsd_type": "rodneCisloType",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:rodneCisloType",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/slevaNaPartnera/partner/slevaPocetMesicu": {
+      "2026": {
+        "xsd_type": "cislo2Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo2Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/slevaNaPartnera/partner/slevaPocetMesicuZtpp": {
+      "2026": {
+        "xsd_type": "cislo2Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo2Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/zvyhodneniNaDeti/jineOsoby/jinaOsoba/mesiceVyzivovani": {
+      "2026": {
+        "xsd_type": "",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:rokLType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/zvyhodneniNaDeti/jineOsoby/jinaOsoba/osoba/jmeno": {
+      "2026": {
+        "xsd_type": "jmenoType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:jmenoType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/zvyhodneniNaDeti/jineOsoby/jinaOsoba/osoba/prijmeni": {
+      "2026": {
+        "xsd_type": "prijmeniType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:prijmeniType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/zvyhodneniNaDeti/jineOsoby/jinaOsoba/osoba/rodneCislo": {
+      "2026": {
+        "xsd_type": "rodneCisloType",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:rodneCisloType",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/zvyhodneniNaDeti/vyzivovaneDeti/vyzivovaneDite/dite/jmeno": {
+      "2026": {
+        "xsd_type": "jmenoType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:jmenoType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/zvyhodneniNaDeti/vyzivovaneDeti/vyzivovaneDite/dite/prijmeni": {
+      "2026": {
+        "xsd_type": "prijmeniType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:prijmeniType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/zvyhodneniNaDeti/vyzivovaneDeti/vyzivovaneDite/dite/rodneCislo": {
+      "2026": {
+        "xsd_type": "rodneCisloType",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:rodneCisloType",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/vysledekRocnihoZuctovani/zvyhodneniNaDeti/vyzivovaneDeti/vyzivovaneDite/prukazZtpp": {
+      "2026": {
+        "xsd_type": "",
+        "base_type": "string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:rokLType",
+        "base_type": "string",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/zalohaDoplatky": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/zalohaPrijmy": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/danBonus": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/danZalohaPoSleve": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/vypoctenaZaloha": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/zakladDane": {
+      "2026": {
+        "xsd_type": "cislo14Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo14Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/souhrnDataZec/zdravPojZamestnanec/zdravotniPojisteni": {
+      "2026": {
+        "xsd_type": "cislo12Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo12Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/souhrnDataZec/zdravPojZamestnavatel/zdravotniPojisteni": {
+      "2026": {
+        "xsd_type": "cislo12Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo12Type",
+        "base_type": "unsignedLong",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/vykonavanaPozice/docasnePrideleni/uzivatel/ico": {
+      "2026": {
+        "xsd_type": "icoType",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:icoType",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/vykonavanaPozice/docasnePrideleni/uzivatel/rodneCislo": {
+      "2026": {
+        "xsd_type": "rodneCisloType",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:rodneCisloType",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/vykonavanaPozice/docasnePrideleni/uzivatel/zahranicniOsoba/identifikace": {
+      "2026": {
+        "xsd_type": "icoType",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:icoZahranicniType",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/vykonavanaPozice/docasnePrideleni/uzivatel/zahranicniOsoba/kodStatu": {
+      "2026": {
+        "xsd_type": "kodStatuType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:kodStatuType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/vykonavanaPozice/docasnePrideleni/uzivatel/zahranicniOsoba/nazev": {
+      "2026": {
+        "xsd_type": "jmenoType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:jmenoType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/vykonavanaPozice/fondPracovniDoby/sjednanyFond": {
+      "2026": {
+        "xsd_type": "cislo7_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo7_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/vykonavanaPozice/fondPracovniDoby/stanovenaTydenniDoba": {
+      "2026": {
+        "xsd_type": "cislo7_2Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo7_2Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/vykonavanaPozice/fondPracovniDoby/stanovenyFond": {
+      "2026": {
+        "xsd_type": "cislo7_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo7_3Type",
+        "base_type": "decimal",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/kodObce": {
+      "2026": {
+        "xsd_type": "",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:kodObceType",
+        "base_type": "digit_string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/kodStatu": {
+      "2026": {
+        "xsd_type": "kodStatuType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:kodStatuType",
+        "base_type": "string",
+        "local_min_occurs": 0
+      }
+    },
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/obec": {
+      "2026": {
+        "xsd_type": "",
+        "base_type": "string",
+        "local_min_occurs": 1
+      },
+      "2027": {
+        "xsd_type": "st:obecType",
+        "base_type": "string",
+        "local_min_occurs": 1
+      }
+    },
+    "bezPriznaku/vykonavanaPozice/nastrojApzKod": {
+      "2026": {
+        "xsd_type": "cislo3Type",
+        "base_type": "digit_string",
+        "local_min_occurs": 0
+      },
+      "2027": {
+        "xsd_type": "st:nezaporneCislo3Type",
+        "base_type": "unsignedInt",
+        "local_min_occurs": 0
+      }
+    }
+  }
+}

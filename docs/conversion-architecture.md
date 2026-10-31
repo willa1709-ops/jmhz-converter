@@ -33,6 +33,8 @@ flowchart LR
 | `core.packages` | pasivní verzované ZIP mimo EXE, nezávislý pin manifestu, bezpečná instalace, kontrola souborů/API, zachování starších verzí |
 | `core.organizations` | registr, profil společný/odlišný, fyzicky oddělené databáze, neměnné importy a kontroly, pořadí interních verzí a pracovní XML v organizaci |
 | `core.workforce` | HPP/DPP/DPČ v lokálním modelu, požadavky identifikace/IN01 a podmíněné posouzení nulového příjmu bez vyřazování řádků |
+| `core.employee_schema` | konstrukční kontrakt odvozený z konkrétního hashově ověřeného `bezPriznaku`, pořadí, dědičnost, povinnosti a choice |
+| `core.employee_xml` | pracovní HPP/DPČ/DPP, skutečná XSD validace, výslovné vazby položek/výpočtů, podrozsah kontrol, blokující versus otevřené metodické nálezy; organizační CLI |
 
 Výchozí GUI je `ui.organizations_window`; staré `MainWindow` zůstává součástí
 kontextových nástrojů. Všechny persistentní mzdové operace nového workflow
@@ -71,3 +73,11 @@ python -m pytest -q tests/test_conversion_core.py tests/test_numbered_payroll.py
 jádra, nikoliv schopnost načíst Windows DLL nebo splnění metodiky JMHZ.
 V odděleném 3.8 prostředí byly použity lxml 5.3.2, openpyxl 3.1.5 a pytest 7.4.4;
 moderní prostředí a jeho uzamčené závislosti zůstávají oddělené.
+
+Nové zaměstnanecké jádro se ověřuje také přes `tests/test_employee_xml.py` na
+obou verzích Pythonu bez Qt. `definitions.employee_analysis` je samostatný
+autorský nástroj pro originální sešity a zdrojový audit, nikoliv runtime
+interpret excelových vzorců. Profily, parametry a výsledek zaměstnanecké kontroly
+jsou v tabulce `employee_checks` svázané s organizací, importem a kontrolou;
+pracovní XML uchovává vlastní bezpečný report. Původní tabulky se nedestruktivně
+rozšiřují. Šifrování současných databází zatím není implementované.

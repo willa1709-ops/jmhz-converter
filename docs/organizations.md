@@ -44,10 +44,11 @@ identifikátory zaměstnancům a nepodává hlášení. Finální export zůstá
    identifikace a metodiky nulového příjmu zápis blokují. Tato evidence není
    odesláním, tvorbou GUID ani opravným podáním JMHZ.
 
-Tlačítko pracovního XML zachovává výslovně zvolený dosavadní `jinyPrijem`, včetně
-kontroly VS, období, příznaků PP a skutečných XSD. **HPP/DPP/DPČ se nesmějí vydávat
-za `jinyPrijem`**. Jejich úplný XML generátor ještě chybí, takže takový požadavek
-zůstane zablokovaný s vysvětlením. Stejně je zablokovaný finální export.
+Tlačítko pracovního XML nabízí nový skutečný `bezPriznaku` pro doložený rozsah
+HPP/DPČ/DPP a zachovává původní `jinyPrijem`. Kontroluje VS, měsíc a konkrétní XSD;
+pracovní rozsah a omezení jsou v [návodu generátoru](employee-generator.md).
+**HPP/DPP/DPČ se nesmějí vydávat za `jinyPrijem`**. Nepokryté případy zůstávají
+blokované nebo výslovně označené k metodickému přezkumu. Finální export je blokovaný.
 Pracovní XML se uchovává jen u vlastní organizace a lze ho explicitně zapsat
 do její složky `drafts/` bez přepsání existujícího souboru.
 
@@ -109,7 +110,7 @@ organizace se k tomu automaticky neslévají.
 - Úplnost exportu, trvání zaměstnání, práce/absence, pojištění a registrace.
 - Doložený postup párování při neexistenci OIČ i RČ, účinnost a původ definic,
   referenční výstupy a životní cyklus oficiálních GUID/podání.
-- Úplný generátor HPP/DPP/DPČ se souhrnnou a pojistnou částí a metodickými
+- Dokončení generátoru HPP/DPP/DPČ se souhrnnou a pojistnou částí a metodickými
   kontrolami, navazující Qt5 adaptér a skutečná přejímka na Win7 SP1 x86 i W11.
 
 Podklady pro cizince a nulové příjmy jsou podrobně v

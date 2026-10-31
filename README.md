@@ -25,6 +25,8 @@ vyžadují doložený přezkum. Žádné smyšlené elementy JMHZ nejsou impleme
 - [Externí offline balíčky definic a jejich ověřování](docs/offline-definition-packages.md)
 - [Organizace, měsíční importy, oddělená data a historie](docs/organizations.md)
 - [Doložené alternativy identifikace cizinců a nulové příjmy](docs/workforce-evidence.md)
+- [Pracovní generátor HPP/DPČ/DPP, analýza obou verzí a otevřená pravidla](docs/employee-generator.md)
+- [Plán zabezpečení a šifrování lokálních mzdových databází](docs/payroll-database-security.md)
 
 ## Spuštění
 
@@ -60,8 +62,10 @@ databázi a historii; nový import nepřepisuje starší data. Období a identif
 zaměstnavatele v exportu se kontrolují proti výběru. Nulové a neznámé příjmy
 zůstávají v importu rozlišené. Podrobný postup a pracovní šablona pro
 HPP/DPP/DPČ jsou v [návodu organizací](docs/organizations.md).
-Úplný XML generátor těchto zaměstnání dosud chybí; scénář `jinyPrijem` je
-nenahrazuje a finální export je blokovaný.
+Volba Pracovní XML nyní nabízí `bezPriznaku` pro doložený rozsah HPP/DPČ/DPP
+s jedním ELDP úsekem na řádek. XSD kontrola obou verzí a část metodiky fungují,
+ale úplné podání, všechny interakce a potvrzené mzdové mapování ještě chybějí.
+Scénář `jinyPrijem` běžné zaměstnance nenahrazuje. Finální export je blokovaný.
 
 Původní nástroje lze otevřít nad vybraným importem; jejich pracovní postup zůstává:
 

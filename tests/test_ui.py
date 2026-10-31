@@ -1,10 +1,31 @@
 import os
 from pathlib import Path
+import pytest
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 from PySide6.QtWidgets import QApplication
 from app.ui.main_window import MainWindow
+
+
+@pytest.fixture(scope="module", autouse=True)
+def application_lifetime():
+    """Keep one QApplication alive until all widget tests have finished."""
+    application = QApplication.instance() or QApplication([])
+    yield application
+    application.closeAllWindows()
+    application.processEvents()
+
+
+@pytest.fixture(autouse=True)
+def dispose_widgets(application_lifetime):
+    from PySide6.QtCore import QCoreApplication, QEvent
+    yield
+    for widget in application_lifetime.topLevelWidgets():
+        widget.close()
+        widget.deleteLater()
+    QCoreApplication.sendPostedEvents(None, QEvent.Type.DeferredDelete)
+    application_lifetime.processEvents()
 
 
 def test_import_mapping_check_sums_and_error_navigation():
@@ -221,5 +242,29 @@ def test_organizations_dashboard_isolates_context_history_and_old_tools(tmp_path
     assert window.imported.import_index == 1
     assert window.import_history.count() == 2
     assert window.workspace.overview(Period(2026, 9))[1]["pp_count"] == 1
+    app.processEvents()
+    window.close()
+
+
+def test_employee_xml_ui_shows_real_payload_and_clears_it_between_organizations(tmp_path):
+    from test_employee_xml import case
+    from app.ui.organizations_window import OrganizationsWindow
+    from app.core.models import SourceTable, SourceRow
+    app = QApplication.instance() or QApplication([])
+    numbered, profile, row, context, parameters = case(2027)
+    window = OrganizationsWindow(tmp_path / "workspace")
+    org = window.workspace.register("Synthetic A", "00000001", parameters["employer_variable_symbol"])
+    other = window.workspace.register("Synthetic B", "00000002", "0000000002")
+    window.workspace.set_profile(numbered)
+    window.workspace.import_table(org.id, context.period, SourceTable(tuple(row), (SourceRow(2, row),)))
+    window.period.setText(context.period.iso)
+    window.refresh()
+    window.select_organization(org.id)
+    window.prepare_employee_xml(profile, parameters)
+    assert "bezPriznaku" in window.draft.toPlainText()
+    assert "XSD: PROŠLO" in window.status.text() and "Finální export NE" in window.status.text()
+    assert window.errors.rowCount() > 0
+    window.select_organization(other.id)
+    assert window.draft_id is None and not window.draft.toPlainText()
     app.processEvents()
     window.close()

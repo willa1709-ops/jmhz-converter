@@ -59,7 +59,7 @@ def parse_manifest(content: bytes, approved_sha256: str) -> dict:
             raise ValueError("Nepovolený soubor nebo hash.")
         seen.add(path.casefold())
     points = m["entry_points"]
-    allowed = {"numbered_profile", "conversion_profile", "bindings", "official_root", "employee_profile"}
+    allowed = {"numbered_profile", "conversion_profile", "bindings", "official_root", "employee_profile", "monthly_profile"}
     if not isinstance(points, dict) or "numbered_profile" not in points or set(points) - allowed:
         raise ValueError("Neplatné vstupní body.")
     for kind, path in points.items():
@@ -70,6 +70,8 @@ def parse_manifest(content: bytes, approved_sha256: str) -> dict:
         raise ValueError("Konverzní balíček musí mít vazby a úplný XSD root.")
     if "employee_profile" in points and "official_root" not in points:
         raise ValueError("Zaměstnanecký balíček vyžaduje úplný XSD root.")
+    if "monthly_profile" in points and "employee_profile" not in points:
+        raise ValueError("Měsíční balíček vyžaduje zaměstnanecký profil.")
     return m
 
 
@@ -140,6 +142,12 @@ def load_package(directory: Path, approved_sha256: str) -> CheckedPackage:
         from app.core.employee_xml import load_employee_profile
         profile = load_employee_profile(result.read_entry("employee_profile"))
         load_employee_profile(result.read_entry("employee_profile"), numbered, EmployeeContract(official, profile["bundle_id"]))
+    if "monthly_profile" in points:
+        from app.core.monthly_xml import load_monthly_profile
+        monthly = load_monthly_profile(result.read_entry("monthly_profile"))
+        if monthly["bundle_id"] != profile["bundle_id"]:
+            raise ValueError("Profily patří různým sadám.")
+        load_monthly_profile(result.read_entry("monthly_profile"), {n: EmployeeContract(official, monthly["bundle_id"], n) for n in ("souhrn", "PVPOJ")})
     return result
 
 
@@ -174,7 +182,7 @@ def install_package(archive_path: Path, store: Path, approved_sha256: str) -> Ch
 
 
 def build_package(profile: dict, output: Path, package_id: str, version: str, official_root: Path = None,
-                  conversion_profile: dict = None, bindings: dict = None, employee_profile: dict = None) -> dict:
+                  conversion_profile: dict = None, bindings: dict = None, employee_profile: dict = None, monthly_profile: dict = None) -> dict:
     profile = load_numbered_profile(json.dumps(profile))
     if output.exists():
         raise ValueError("Existující balíček se nepřepisuje.")
@@ -197,6 +205,11 @@ def build_package(profile: dict, output: Path, package_id: str, version: str, of
             employee_profile = load_employee_profile(json.dumps(employee_profile))
             points["employee_profile"] = "profiles/employee.json"
             (root / points["employee_profile"]).write_bytes(canonical_json(employee_profile))
+        if monthly_profile is not None:
+            from app.core.monthly_xml import load_monthly_profile
+            monthly_profile = load_monthly_profile(json.dumps(monthly_profile))
+            points["monthly_profile"] = "profiles/monthly.json"
+            (root / points["monthly_profile"]).write_bytes(canonical_json(monthly_profile))
         files = {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in root.rglob("*") if p.is_file()}
         manifest = {"format_version": 1, "package_id": package_id, "version": version, "logic_api": LOGIC_API, "files": files, "entry_points": points}
         data = canonical_json(manifest)
@@ -230,6 +243,7 @@ def main() -> int:
     build.add_argument("--conversion-profile", type=Path)
     build.add_argument("--bindings", type=Path)
     build.add_argument("--employee-profile", type=Path)
+    build.add_argument("--monthly-profile", type=Path)
     install = sub.add_parser("install")
     install.add_argument("archive", type=Path)
     install.add_argument("--store", type=Path, required=True)
@@ -243,7 +257,8 @@ def main() -> int:
             result = build_package(load_numbered_profile(args.profile.read_text(encoding="utf-8")), args.output, args.package_id, args.version,
                                    args.official_root, strict_json(args.conversion_profile.read_text(encoding="utf-8")) if args.conversion_profile else None,
                                    strict_json(args.bindings.read_text(encoding="utf-8")) if args.bindings else None,
-                                   strict_json(args.employee_profile.read_text(encoding="utf-8")) if args.employee_profile else None)
+                                   strict_json(args.employee_profile.read_text(encoding="utf-8")) if args.employee_profile else None,
+                                   strict_json(args.monthly_profile.read_text(encoding="utf-8")) if args.monthly_profile else None)
             print(json.dumps(result))
         else:
             package = install_package(args.archive, args.store, args.trusted_manifest_sha256) if args.command == "install" else load_package(args.directory, args.trusted_manifest_sha256)

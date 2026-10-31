@@ -81,3 +81,16 @@ interpret excelových vzorců. Profily, parametry a výsledek zaměstnanecké ko
 jsou v tabulce `employee_checks` svázané s organizací, importem a kontrolou;
 pracovní XML uchovává vlastní bezpečný report. Původní tabulky se nedestruktivně
 rozšiřují. Šifrování současných databází zatím není implementované.
+
+Měsíční etapa sdílí kontrakt i pro `souhrn`/`PVPOJ`; `core.monthly_xml` přidává
+doložené rovnice bez neověřených sazeb. `employer_imports` a `monthly_checks`
+uchovávají samostatné neměnné souhrnné vstupy a výsledky. `core.submission_plans`
+vede pracovní GUID návaznosti bez automatického opravného XML, s metadata
+claims v registru bez OIČ/RČ/částek. `core.backups` streamuje konzistentní snímek
+jedné organizace a všechny potřebné verze definic, vyžaduje hash při obnově
+a nic nepřepisuje. Archiv není šifrovaný.
+
+Hlavní `organizations_window` nyní používá `ui.qt_compat` pro Qt5/Qt6 a je
+importovatelné pod Pythonem 3.8. Původní moderní nástroje zůstávají pod Qt5
+vypnuté. Nové testy měsíčního paketu, obnovy a společného GUI se spouštějí pod
+oběma interpretery; tím stále není prokázaná Windows DLL/x86 kompatibilita.

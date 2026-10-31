@@ -4,6 +4,11 @@ Návrh před změnou platformy, 30. 10. 2026. Hlavní cílový počítač má Wi
 SP1 **32-bit**. Současný projekt vyžaduje Python 3.12 a PySide6; tato kombinace
 není cestou pro tento počítač. Moderní závislosti ani fungující UI se nesnižují.
 
+Aktualizace 31. 10.: hlavní organizační workflow nyní má sdílený Qt5/Qt6 adaptér
+ověřený na Linux Pythonu 3.8/3.12. Kandidátní onedir GUI build pro oba Windows,
+úplné hashové wheelhouse vstupy a cílová přejímka jsou v
+[novém postupu](windows-preview-build.md). Windows EXE zatím nebyly sestavené.
+
 ## Dvě běhové varianty a společné jádro
 
 | Součást | Windows 7 SP1 x86 – kandidát k ověření | Windows 10/11 x64 – stávající varianta |

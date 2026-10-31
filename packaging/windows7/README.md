@@ -1,6 +1,9 @@
 # Kandidátní sestavení pro Windows 7 SP1 x86
 
 Toto je ověřovací postup, **ne hotová Windows 7 sestava**.
+Pro nové hlavní Qt5 GUI a oddělený W11 build použijte
+[aktuální offline builder a přejímku](../../docs/windows-preview-build.md).
+Následující konzolové postupy zůstávají jako dřívější kandidátní vstupní body.
 [Technický návrh a zdroje](../../docs/windows7-design.md) popisují verze,
 KB2533623, UCRT, DLL a přejímku. Moderní `requirements.txt` ani pyproject se nemění.
 
@@ -17,8 +20,8 @@ py -3.8-32 -m venv .venv-win7
 
 Neinstalovat tento projekt pomocí `pip install .` do 3.8: balíček moderního UI
 má záměrně `requires-python >=3.12`. Testy a sdílený CLI modul se pouštějí přímo
-ze zdrojového checkoutu. PySide2 je kandidát pro pozdější Qt5 adaptér; aktuální
-PySide6 GUI na této konfiguraci neběží.
+ze zdrojového checkoutu. Hlavní workflow již má společný Qt5/Qt6 adaptér;
+staré doplňkové PySide6 nástroje se v Qt5 nepouštějí.
 
 Po úspěšné přejímce jádra lze jako první pokus sestavit **konzolové jádro**:
 
@@ -78,4 +81,5 @@ parametry, případně zaměstnanecký profil. U ověřeného offline balíčku 
 vlastní XSD a vstupní bod `employee_profile`.
 Postup je v [návodu generátoru](../../docs/employee-generator.md).
 I tento příkaz je pouze kandidát; Win7 x86 ani W11 x64 binárky zatím nebyly
-provozně otestovány. Nové hlavní GUI zůstává PySide6, Qt5 adaptér stále chybí.
+provozně otestovány. Nové hlavní GUI nyní funguje také s Qt5 na Linux Pythonu 3.8;
+skutečná Win7/W11 přejímka nadále chybí.

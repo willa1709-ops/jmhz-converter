@@ -1,8 +1,8 @@
 # JMHZ Converter
 
 Lokální desktopový **prototyp** pro moderní Windows, Python 3.12+, PySide6.
-Pro hlavní počítač Windows 7 SP1 x86 je připraven návrh oddělené varianty a
-společné jádro pro Python 3.8; funkční Windows 7 GUI/EXE zatím není prokázané.
+Pro Windows 7 SP1 x86 je připravené společné jádro a hlavní GUI Qt5 pro Python 3.8,
+ověřené zatím na Linuxu. Windows EXE ani provozní kompatibilita obou sestav nejsou potvrzené.
 Obsahuje první analýzu, pracovní návrh CSV a základ aplikace. **Není dokončené P0
 a nevytváří XML připravené k podání.** Dodané podklady 2026/2027 jsou evidované,
 porovnané a jejich XSD se lokálně kompilují. Původ a účinnost celých sad stále
@@ -27,6 +27,9 @@ vyžadují doložený přezkum. Žádné smyšlené elementy JMHZ nejsou impleme
 - [Doložené alternativy identifikace cizinců a nulové příjmy](docs/workforce-evidence.md)
 - [Pracovní generátor HPP/DPČ/DPP, analýza obou verzí a otevřená pravidla](docs/employee-generator.md)
 - [Plán zabezpečení a šifrování lokálních mzdových databází](docs/payroll-database-security.md)
+- [Celý pracovní měsíční paket, součty, plány oprav a zálohy](docs/monthly-stage.md)
+- [CSV Pascal/DOS bez zásahu do mzdové databáze](docs/pascal-dos-export.md)
+- [Dvě Windows sestavy: kandidátní verze, offline build a přejímka](docs/windows-preview-build.md)
 
 ## Spuštění
 
@@ -66,6 +69,11 @@ Volba Pracovní XML nyní nabízí `bezPriznaku` pro doložený rozsah HPP/DPČ/
 s jedním ELDP úsekem na řádek. XSD kontrola obou verzí a část metodiky fungují,
 ale úplné podání, všechny interakce a potvrzené mzdové mapování ještě chybějí.
 Scénář `jinyPrijem` běžné zaměstnance nenahrazuje. Finální export je blokovaný.
+Volba Celý měsíční paket přidává skutečné souhrny zaměstnavatele a PVPOJ,
+výslovně doložené součtové rovnice a jejich kontrolu. Výchozí CSV je Windows-1250
+s `;` podle potvrzeného Pascal/DOS zdroje. Databáze ani výpočetní jádro mzdového
+systému se nemění. Pracovní návaznosti oprav a nešifrovaná záloha/obnova jsou
+oddělené od skutečného podání a jeho přijetí.
 
 Původní nástroje lze otevřít nad vybraným importem; jejich pracovní postup zůstává:
 

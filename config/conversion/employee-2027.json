@@ -1,0 +1,113 @@
+{
+  "format_version": 1,
+  "scenario": "bezPriznaku",
+  "bundle_id": "jmhz-1.5.0.3",
+  "status": "working_unverified",
+  "fields": {
+    "bezPriznaku/souhrnDataZec/prijmy/zuctovanoCelkem": {
+      "column": "jmhz_10286",
+      "on": "primary"
+    },
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/prohlaseniPoplatnika": {
+      "column": "jmhz_10419",
+      "on": "primary"
+    },
+    "bezPriznaku/souhrnDataZec/mzdaCista/mzdaCista": {
+      "column": "jmhz_10344",
+      "on": "primary"
+    },
+    "bezPriznaku/souhrnDataZec/mzdaCista/srazkyZeMzdyEvidovany": {
+      "column": "jmhz_10116",
+      "on": "primary"
+    },
+    "bezPriznaku/souhrnDataZec/zdravPojZamestnavatel/zdravotniPojisteni": {
+      "column": "jmhz_10482",
+      "on": "primary"
+    },
+    "bezPriznaku/souhrnDataZec/zdravPojZamestnanec/zdravotniPojisteni": {
+      "column": "jmhz_10371",
+      "on": "primary"
+    },
+    "bezPriznaku/pojisteni/trvani/pojisteniOd": {
+      "column": "jmhz_10354"
+    },
+    "bezPriznaku/pojisteni/trvani/pojisteniDo": {
+      "column": "jmhz_10355"
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/pocetDnu": {
+      "column": "jmhz_10356"
+    },
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/obec": {
+      "column": "jmhz_10229"
+    },
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/kodObce": {
+      "column": "jmhz_10230"
+    },
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/kodStatu": {
+      "column": "jmhz_10231"
+    },
+    "bezPriznaku/vykonavanaPozice/uplatnujiPrispevekApz": {
+      "column": "jmhz_10232"
+    },
+    "bezPriznaku/vykonavanaPozice/funkcniPozitky": {
+      "column": "jmhz_10247"
+    },
+    "bezPriznaku/vykonavanaPozice/docasnePrideleniEvidovano": {
+      "column": "jmhz_10251"
+    },
+    "bezPriznaku/vykonavanaPozice/fondPracovniDoby/stanovenyFond": {
+      "column": "jmhz_10259"
+    },
+    "bezPriznaku/vykonavanaPozice/fondPracovniDoby/sjednanyFond": {
+      "column": "jmhz_10260"
+    },
+    "bezPriznaku/vykonavanaPozice/fondPracovniDoby/stanovenaTydenniDoba": {
+      "column": "jmhz_10261"
+    },
+    "bezPriznaku/prubehZamestnani/odpracovaneDny/dnyEvidencniStav": {
+      "column": "jmhz_10265"
+    },
+    "bezPriznaku/prubehZamestnani/odpracovaneHodiny/pocet": {
+      "column": "jmhz_10268"
+    },
+    "bezPriznaku/mzda/mzdaZuctovana": {
+      "column": "jmhz_10328"
+    },
+    "bezPriznaku/mzda/vydelek/vydelekPrumernyHod": {
+      "column": "jmhz_10345"
+    },
+    "bezPriznaku/pojisteni/slevaZamestnance/slevaZamestnanceEvidovana": {
+      "column": "jmhz_10490"
+    },
+    "bezPriznaku/pojisteni/slevaZamestnance/slevaZamestnanceOvoZelEvidovana": {
+      "column": "jmhz_10546"
+    },
+    "bezPriznaku/pojisteni/slevaZamestnavatele/slevaZamestnavateleEvidovana": {
+      "column": "jmhz_10372"
+    },
+    "bezPriznaku/prijem/dan/prijem": {
+      "column": "jmhz_10535"
+    },
+    "bezPriznaku/pojisteni/pojisteniZamestnavatel/socialniPojisteni": {
+      "column": "jmhz_10481"
+    },
+    "bezPriznaku/pojisteni/pojisteniZamestnanec/socialniPojisteni": {
+      "column": "jmhz_10370"
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/rocniZuctovaniZadost": {
+      "column": "jmhz_10319",
+      "on": "primary"
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/rocniZuctovaniProvedeno": {
+      "column": "jmhz_10320",
+      "on": "primary"
+    },
+    "bezPriznaku/prijem/dan/prijemPar6": {
+      "column": "jmhz_10555"
+    },
+    "bezPriznaku/souhrnDataZec/zalohaNaDan/zalohaPar38": {
+      "column": "jmhz_10579",
+      "on": "primary"
+    }
+  }
+}

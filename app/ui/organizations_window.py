@@ -29,7 +29,7 @@ class OrganizationsWindow(QMainWindow):
         layout = QVBoxLayout(central)
         layout.addWidget(QLabel("Organizace → měsíc → import → kontrola → pracovní XML. Finální export ZABLOKOVÁN.\n"
                                 "Importy a pracovní XML se ukládají lokálně odděleně pro každou organizaci; obsahují osobní údaje.\n"
-                                "HPP/DPP/DPČ: import a kontroly; úplný XML generátor těchto scénářů dosud není dokončen."))
+                                "Pracovní XML HPP/DPČ/DPP: běžný formulář s jedním ELDP úsekem; úplnost podání neověřena."))
         controls = QHBoxLayout()
         self.period = QLineEdit(date.today().strftime("%Y-%m"))
         self.period.setMaximumWidth(130)
@@ -304,6 +304,29 @@ class OrganizationsWindow(QMainWindow):
         if not self.imported:
             self.status.setText("Nejprve vyberte import.")
             return
+        scenario, ok = QInputDialog.getItem(self, "Pracovní XML", "Scénář:", ["HPP/DPČ/DPP – bezPriznaku", "Původní jinyPrijem"], 0, False)
+        if not ok:
+            return
+        if scenario.startswith("HPP"):
+            definition = self.imported.definition
+            if definition["kind"] == "pinned_package_manifest":
+                try:
+                    from app.core.packages import load_package
+                    package = load_package(Path(definition["directory"]), definition["sha256"])
+                    profile = strict_json(package.read_entry("employee_profile"))
+                    parameters, _ = QFileDialog.getOpenFileName(self, "Skutečné parametry podání", "", "JSON (*.json)")
+                    if parameters:
+                        self.prepare_employee_xml(profile, strict_json(Path(parameters).read_text(encoding="utf-8")))
+                except Exception:
+                    self.status.setText("Balíček nemá platný zaměstnanecký profil; zvolte ověřenou sadu pro tento scénář.")
+                return
+            profile, _ = QFileDialog.getOpenFileName(self, "Pracovní zaměstnanecký profil", "", "JSON (*.json)")
+            if not profile:
+                return
+            parameters, _ = QFileDialog.getOpenFileName(self, "Skutečné parametry podání", "", "JSON (*.json)")
+            if parameters:
+                self.prepare_employee_xml_paths(Path(profile), Path(parameters))
+            return
         paths = []
         for label in ("Pracovní konverzní profil jinyPrijem", "Pracovní vazby číslovaných položek", "Skutečné parametry podání"):
             path, _ = QFileDialog.getOpenFileName(self, label, "", "JSON (*.json)")
@@ -311,6 +334,31 @@ class OrganizationsWindow(QMainWindow):
                 return
             paths.append(Path(path))
         self.prepare_xml_paths(*paths)
+
+    def prepare_employee_xml_paths(self, profile, parameters):
+        try:
+            self.prepare_employee_xml(strict_json(profile.read_text(encoding="utf-8")), strict_json(parameters.read_text(encoding="utf-8")))
+        except Exception:
+            self.draft_id = None
+            self.draft.clear()
+            self.status.setText("Zaměstnanecké XML nelze připravit; ověřte profil, hlavičku a aktuální kontext.")
+
+    def prepare_employee_xml(self, profile, parameters):
+        self.draft_id = None
+        self.draft.clear()
+        if not self.imported or self.imported.period != self.selected_period():
+            raise ValueError("Chybí import aktuálního kontextu.")
+        identity, result = self.workspace.prepare_employee_draft(self.organization_id, self.imported.id, profile, parameters, self.official_root)
+        self.fill(self.errors, ["Řádek", "Pole", "Kód", "Požadavek", "Náprava"],
+                  [[i.row or "hlavička", i.field, i.code, i.message, i.remedy] for i in result.issues + result.review_issues])
+        if result.draft_xml:
+            self.draft_id = identity
+            self.draft.setPlainText(result.draft_xml.decode("utf-8"))
+            self.pages.setCurrentWidget(self.draft)
+        else:
+            self.pages.setCurrentWidget(self.errors)
+        self.status.setText("bezPriznaku | XSD: {0}; blokující nálezy {1}; otevřené metodické otázky {2}. Finální export NE.".format(
+            "PROŠLO" if result.xsd_valid else "NEPROŠLO", len(result.issues), len(result.review_issues)))
 
     def prepare_xml_paths(self, conversion, bindings, parameters):
         self.draft_id = None
@@ -369,13 +417,17 @@ class OrganizationsWindow(QMainWindow):
                 lines.extend("Řádek {0}: {1} {2}".format(i["row"] or "hlavička", i["message"], i["remedy"]) for i in snapshot["report"]["issues"])
                 lines.append("Uložené řádkové výpočty: " + json.dumps(snapshot["calculations"], ensure_ascii=False, indent=2))
                 lines.append("Uložené součty známých hodnot: " + json.dumps(snapshot["totals"], ensure_ascii=False, indent=2))
+                if snapshot.get("employee_validation"):
+                    lines.append("Kontrola zaměstnaneckého XML: " + json.dumps(snapshot["employee_validation"], ensure_ascii=False, indent=2))
                 preview.setPlainText("\n".join(lines))
             except Exception:
                 preview.setPlainText("Uložená kontrola není dostupná; žádné údaje jiné organizace se nenačítají.")
 
         def show_draft(row, column):
             try:
-                preview.setPlainText(self.workspace.draft_bytes(org, identity, drafts[row]["id"]).decode("utf-8"))
+                xml = self.workspace.draft_bytes(org, identity, drafts[row]["id"]).decode("utf-8")
+                validation = self.workspace.draft_validation(org, identity, drafts[row]["id"])
+                preview.setPlainText(json.dumps(validation, ensure_ascii=False, indent=2) + "\n\n" + xml)
             except Exception:
                 preview.setPlainText("Uložené pracovní XML není dostupné nebo nesouhlasí jeho hash.")
 

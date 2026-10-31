@@ -12,7 +12,7 @@ nejsou úplný platformní lock. Pip pro Python 3.8 musí být kompatibilní (na
 ```powershell
 py -3.8-32 -m venv .venv-win7
 .venv-win7\Scripts\python -m pip install --no-index --find-links wheelhouse -r packaging\windows7\requirements-candidate.txt
-.venv-win7\Scripts\python -m pytest -q tests\test_conversion_core.py tests\test_numbered_payroll.py tests\test_organizations.py
+.venv-win7\Scripts\python -m pytest -q tests\test_conversion_core.py tests\test_numbered_payroll.py tests\test_organizations.py tests\test_employee_xml.py
 ```
 
 Neinstalovat tento projekt pomocí `pip install .` do 3.8: balíček moderního UI
@@ -62,3 +62,20 @@ Příkazy `python -m app.core.payroll ...` z návodu pak nahradí
 PyInstaller/TEMP adresáře; změna definice musí zachovat předchozí verzi.
 Ani tento sestavovací příkaz nebyl otestován na Windows a nepředstavuje hotové
 GUI nebo potvrzení kompatibility Win7 x86. Závislosti se zde nemění.
+
+## Kandidát konzole běžných zaměstnanců
+
+Po přejímce stejných závislostí a přípravě resources lze zkusit nový organizačně
+vázaný vstupní bod bez Qt:
+
+```powershell
+.venv-win7\Scripts\python -m PyInstaller --noconfirm --clean --onedir --console --name JMHZ-Employees-Win7 --paths . --add-data "build/win7-resources/schemas/official;schemas/official" app\core\employee_xml.py
+```
+
+Přesná data patří do samostatného uživatelského `--workspace`, nikoliv do EXE
+nebo TEMP. Konzole vyžaduje již evidovanou organizaci/import a explicitní
+parametry, případně zaměstnanecký profil. U ověřeného offline balíčku používá
+vlastní XSD a vstupní bod `employee_profile`.
+Postup je v [návodu generátoru](../../docs/employee-generator.md).
+I tento příkaz je pouze kandidát; Win7 x86 ani W11 x64 binárky zatím nebyly
+provozně otestovány. Nové hlavní GUI zůstává PySide6, Qt5 adaptér stále chybí.

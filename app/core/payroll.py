@@ -15,7 +15,7 @@ LOGIC_API = 1
 META_FIELDS = {"internal_number", "period", "oic", "rc", "form_id", "id_ppv", "activity_code",
                "employment_type", "given_name", "surname", "birth_date", "employment_start", "employment_end",
                "registration_status", "work_performed", "income_amount", "absence_reason",
-               "employer_ico", "employer_variable_symbol"}
+               "employer_ico", "employer_variable_symbol", "employment_detail", "eldp_segments"}
 
 
 def strict_json(text: str):

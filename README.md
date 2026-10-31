@@ -30,6 +30,8 @@ vyžadují doložený přezkum. Žádné smyšlené elementy JMHZ nejsou impleme
 - [Celý pracovní měsíční paket, součty, plány oprav a zálohy](docs/monthly-stage.md)
 - [CSV Pascal/DOS bez zásahu do mzdové databáze](docs/pascal-dos-export.md)
 - [Dvě Windows sestavy: kandidátní verze, offline build a přejímka](docs/windows-preview-build.md)
+- [Český návod k prvnímu spuštění a syntetické ukázce](docs/first-run-windows.md)
+- [Krátká ruční přejímka Win7 x86 / Win11 x64](docs/windows-acceptance.md)
 
 ## Spuštění
 
@@ -55,6 +57,13 @@ python3 -m venv .venv
 V cloudu bez displeje použijte pro testy `QT_QPA_PLATFORM=offscreen`.
 Na Windows je nutné desktopové spuštění ověřit samostatně; zde byly ověřeny Linux
 a Qt offscreen. Linuxová sestava PyInstaller nevytváří Windows EXE.
+
+Izolovanou syntetickou ukázku lze otevřít také ze zdrojů:
+`python -m app --demo --demo-directory NOVY_ADRESAR`.
+`python -m app --self-test --report NOVY_REPORT.json` ověří zabalené zdroje,
+CP1250 importy, výpočty, organizace, historii, skutečná XSD, offline definice,
+zálohu/obnovu a GUI. Test používá pouze dočasná syntetická data a nečte běžnou DB.
+Stejné parametry jsou připravené pro oba cílové EXE; výsledky na Windows zatím chybějí.
 
 ## Práce s prototypem
 

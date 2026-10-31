@@ -22,7 +22,9 @@ def inventory(directory):
         if path.is_symlink() or not path.is_file() or path.suffix != ".whl":
             raise ValueError("Wheelhouse may contain only regular wheel files.")
         with ZipFile(path) as archive:
-            names = [i for i in archive.infolist() if i.filename.endswith(".dist-info/METADATA")]
+            # setuptools also vendors nested distributions. Only the wheel's
+            # single top-level dist-info describes the installed distribution.
+            names = [i for i in archive.infolist() if i.filename.count("/") == 1 and i.filename.endswith(".dist-info/METADATA")]
             if len(names) != 1 or names[0].file_size > 1024 * 1024:
                 raise ValueError("Invalid wheel metadata.")
             metadata = BytesParser().parsebytes(archive.read(names[0]))

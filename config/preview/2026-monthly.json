@@ -1,0 +1,103 @@
+{
+  "format_version": 1,
+  "bundle_id": "jmhz-1.4.3.6",
+  "status": "working_unverified",
+  "metadata": {
+    "period": "period",
+    "employer_ico": "employer_ico",
+    "employer_variable_symbol": "employer_variable_symbol"
+  },
+  "items": {},
+  "fields": {
+    "souhrn/danUdajeMesic/danZalohaPoSleve": {
+      "column": "employer_souhrn__danUdajeMesic__danZalohaPoSleve"
+    },
+    "souhrn/danUdajeMesic/danBonus": {
+      "column": "employer_souhrn__danUdajeMesic__danBonus"
+    },
+    "souhrn/danUdajeRok/danPreplatek": {
+      "column": "employer_souhrn__danUdajeRok__danPreplatek"
+    },
+    "souhrn/danUdajeRok/danBonusDoplatek": {
+      "column": "employer_souhrn__danUdajeRok__danBonusDoplatek"
+    },
+    "souhrn/zamestnavatelUdajeRok/formaVlastnictvi": {
+      "column": "employer_souhrn__zamestnavatelUdajeRok__formaVlastnictvi"
+    },
+    "souhrn/zamestnavatelUdajeRok/zamestnavaniOzp/zecPocetPrepRok": {
+      "column": "employer_souhrn__zamestnavatelUdajeRok__zamestnavaniOzp__zecPocetPrepRok"
+    },
+    "souhrn/zamestnavatelUdajeRok/zamestnavaniOzp/zecPocetPrepOzpRok": {
+      "column": "employer_souhrn__zamestnavatelUdajeRok__zamestnavaniOzp__zecPocetPrepOzpRok"
+    },
+    "souhrn/zamestnavatelUdajeRok/zamestnavaniOzp/podilZamZtp": {
+      "column": "employer_souhrn__zamestnavatelUdajeRok__zamestnavaniOzp__podilZamZtp"
+    },
+    "souhrn/zamestnavatelUdajeRok/kolektivniSmlouvy/kolektivniSmlouva/typKolektSmlouvy": {
+      "column": "employer_souhrn__zamestnavatelUdajeRok__kolektivniSmlouvy__kolektivniSmlouva__typKolektSmlouvy"
+    },
+    "souhrn/specifickaSkutecnost/typ": {
+      "column": "employer_souhrn__specifickaSkutecnost__typ"
+    },
+    "souhrn/specifickaSkutecnost/datum": {
+      "column": "employer_souhrn__specifickaSkutecnost__datum"
+    },
+    "PVPOJ/pojistne/zakladZamestnavateleA": {
+      "column": "employer_PVPOJ__pojistne__zakladZamestnavateleA"
+    },
+    "PVPOJ/pojistne/pojistneZamestnavateleA": {
+      "column": "employer_PVPOJ__pojistne__pojistneZamestnavateleA"
+    },
+    "PVPOJ/pojistne/zakladZamestnavateleB": {
+      "column": "employer_PVPOJ__pojistne__zakladZamestnavateleB"
+    },
+    "PVPOJ/pojistne/pojistneZamestnavateleB": {
+      "column": "employer_PVPOJ__pojistne__pojistneZamestnavateleB"
+    },
+    "PVPOJ/pojistne/zakladZamestnavateleC": {
+      "column": "employer_PVPOJ__pojistne__zakladZamestnavateleC"
+    },
+    "PVPOJ/pojistne/pojistneZamestnavateleC": {
+      "column": "employer_PVPOJ__pojistne__pojistneZamestnavateleC"
+    },
+    "PVPOJ/pojistne/pojistneZamestnavateleCelkem": {
+      "column": "employer_PVPOJ__pojistne__pojistneZamestnavateleCelkem"
+    },
+    "PVPOJ/pojistne/pojistneZamestnance": {
+      "column": "employer_PVPOJ__pojistne__pojistneZamestnance"
+    },
+    "PVPOJ/pojistne/pojistneCelkem": {
+      "column": "employer_PVPOJ__pojistne__pojistneCelkem"
+    },
+    "PVPOJ/slevaZamestnavatele/pocetZamestnancu": {
+      "column": "employer_PVPOJ__slevaZamestnavatele__pocetZamestnancu"
+    },
+    "PVPOJ/slevaZamestnavatele/uhrnVymerovacichZakladu": {
+      "column": "employer_PVPOJ__slevaZamestnavatele__uhrnVymerovacichZakladu"
+    },
+    "PVPOJ/slevaZamestnavatele/pojistneSleva": {
+      "column": "employer_PVPOJ__slevaZamestnavatele__pojistneSleva"
+    },
+    "PVPOJ/slevyZamestnancu/pocetZamestnancu": {
+      "column": "employer_PVPOJ__slevyZamestnancu__pocetZamestnancu"
+    },
+    "PVPOJ/slevyZamestnancu/uhrnVymerovacichZakladu": {
+      "column": "employer_PVPOJ__slevyZamestnancu__uhrnVymerovacichZakladu"
+    },
+    "PVPOJ/slevyZamestnancu/pojistneSleva": {
+      "column": "employer_PVPOJ__slevyZamestnancu__pojistneSleva"
+    },
+    "PVPOJ/slevyZamestnancuOvoZel/pocetZamestnancu": {
+      "column": "employer_PVPOJ__slevyZamestnancuOvoZel__pocetZamestnancu"
+    },
+    "PVPOJ/slevyZamestnancuOvoZel/uhrnVymerovacichZakladu": {
+      "column": "employer_PVPOJ__slevyZamestnancuOvoZel__uhrnVymerovacichZakladu"
+    },
+    "PVPOJ/slevyZamestnancuOvoZel/pojistneSleva": {
+      "column": "employer_PVPOJ__slevyZamestnancuOvoZel__pojistneSleva"
+    },
+    "PVPOJ/pojistneUhrada": {
+      "column": "employer_PVPOJ__pojistneUhrada"
+    }
+  }
+}

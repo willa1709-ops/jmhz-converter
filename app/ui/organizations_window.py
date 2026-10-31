@@ -28,9 +28,12 @@ class OrganizationsWindow(QMainWindow):
         central = QWidget()
         self.setCentralWidget(central)
         layout = QVBoxLayout(central)
-        layout.addWidget(QLabel("Organizace → měsíc → import → kontrola → pracovní XML. Finální export ZABLOKOVÁN.\n"
+        notice = QLabel("Organizace → měsíc → import → kontrola → pracovní XML. Finální export ZABLOKOVÁN.\n"
                                 "Importy a pracovní XML se ukládají lokálně odděleně pro každou organizaci; obsahují osobní údaje.\n"
-                                "Pracovní XML HPP/DPČ/DPP: běžný formulář s jedním ELDP úsekem; úplnost podání neověřena."))
+                                "Databáze a zálohy NEJSOU ŠIFROVANÉ. K přejímce používejte pouze syntetická data.\n"
+                                "Pracovní XML HPP/DPČ/DPP: běžný formulář s jedním ELDP úsekem; úplnost podání neověřena.")
+        notice.setWordWrap(True)
+        layout.addWidget(notice)
         controls = QHBoxLayout()
         self.period = QLineEdit(date.today().strftime("%Y-%m"))
         self.period.setMaximumWidth(130)
@@ -171,19 +174,23 @@ class OrganizationsWindow(QMainWindow):
         self.import_history.clear()
         self.import_history.blockSignals(False)
         try:
-            overview = self.workspace.overview(self.selected_period())
-            states = {"not_imported": "bez importu", "imported": "načteno, nekontrolováno",
-                      "checked_with_findings": "kontrola s nálezy", "technically_checked": "technická kontrola bez nálezů"}
-            self.fill(self.organizations, ["Organizace", "IČO", "VS", "Import", "Počet PP", "Chyby / požadavky", "Poslední interní verze"],
-                      [[r["organization"].name, r["organization"].ico, r["organization"].variable_symbol, states[r["status"]], r["pp_count"],
-                        "nekontrolováno" if r["error_count"] is None else r["error_count"], "—" if r["last_revision"] is None else r["last_revision"]] for r in overview])
-            for i, r in enumerate(overview):
-                self.organizations.item(i, 0).setData(enum(Qt, "ItemDataRole", "UserRole"), r["organization"].id)
+            self.update_overview()
             if self.organization_id:
                 self.select_organization(self.organization_id)
         except Exception:
             self.organizations.setRowCount(0)
             self.context.setText("Neplatný kontext; vyberte měsíc YY-MM nebo YYYY-MM.")
+
+    def update_overview(self):
+        """Refresh counts after checks without discarding the current XML/context."""
+        overview = self.workspace.overview(self.selected_period())
+        states = {"not_imported": "bez importu", "imported": "načteno, nekontrolováno",
+                  "checked_with_findings": "kontrola s nálezy", "technically_checked": "technická kontrola bez nálezů"}
+        self.fill(self.organizations, ["Organizace", "IČO", "VS", "Import", "Počet PP", "Chyby / požadavky", "Poslední interní verze"],
+                  [[r["organization"].name, r["organization"].ico, r["organization"].variable_symbol, states[r["status"]], r["pp_count"],
+                    "nekontrolováno" if r["error_count"] is None else r["error_count"], "—" if r["last_revision"] is None else r["last_revision"]] for r in overview])
+        for i, r in enumerate(overview):
+            self.organizations.item(i, 0).setData(enum(Qt, "ItemDataRole", "UserRole"), r["organization"].id)
 
     def select_row(self, row, column):
         self.select_organization(self.organizations.item(row, 0).data(enum(Qt, "ItemDataRole", "UserRole")))
@@ -311,6 +318,7 @@ class OrganizationsWindow(QMainWindow):
                       [[i.row or "hlavička", i.field, i.code, i.message, i.remedy] for i in self.analysis.issues])
             self.totals.setPlainText("Informativní součet známých řádkových výsledků, bez převodu neznámých na nulu:\n" + json.dumps(self.analysis.totals, ensure_ascii=False, indent=2))
             self.status.setText("Kontrola {0}: {1} nálezů. Všechny PP zachovány; finální export NE.".format(self.analysis.index, len(self.analysis.issues)))
+            self.update_overview()
         except Exception:
             self.invalidate_analysis()
             self.status.setText("Kontrola selhala. Ověřte integritu profilu/XSD a zdrojová data; identifikátory se nevypisují.")
@@ -384,6 +392,7 @@ class OrganizationsWindow(QMainWindow):
             self.pages.setCurrentWidget(self.errors)
         self.status.setText("bezPriznaku | XSD: {0}; blokující nálezy {1}; otevřené metodické otázky {2}. Finální export NE.".format(
             "PROŠLO" if result.xsd_valid else "NEPROŠLO", len(result.issues), len(result.review_issues)))
+        self.update_overview()
 
     def choose_monthly(self):
         if not self.imported or self.imported.period != self.selected_period():
@@ -481,6 +490,7 @@ class OrganizationsWindow(QMainWindow):
             else:
                 self.pages.setCurrentWidget(self.errors)
             self.status.setText("Souhrn + PVPOJ + PP | XSD {0}, blokující {1}, k přezkumu {2}. Finální export NE.".format(result.xsd_valid, len(result.issues), len(result.review_issues)))
+            self.update_overview()
         except Exception:
             self.status.setText("Měsíční paket nevytvořen. Ověřte organizaci, měsíc, souhrny Windows-1250, mapování a hlavičku.")
 

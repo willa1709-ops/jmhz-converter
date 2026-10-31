@@ -1,0 +1,106 @@
+{
+  "format_version": 1,
+  "scenario": "bezPriznaku",
+  "bundle_id": "jmhz-1.4.3.6",
+  "status": "working_unverified",
+  "fields": {
+    "bezPriznaku/souhrnDataZec/prijmy/zuctovanoCelkem": {
+      "on": "primary",
+      "item": "9210286"
+    },
+    "bezPriznaku/souhrnDataZec/prohlaseniPoplatnika": {
+      "on": "primary",
+      "item": "9210419"
+    },
+    "bezPriznaku/souhrnDataZec/mzdaCista/mzdaCista": {
+      "on": "primary",
+      "item": "9210344"
+    },
+    "bezPriznaku/souhrnDataZec/mzdaCista/srazkyZeMzdyEvidovany": {
+      "on": "primary",
+      "item": "9210116"
+    },
+    "bezPriznaku/souhrnDataZec/zdravPojZamestnavatel/zdravotniPojisteni": {
+      "on": "primary",
+      "item": "9210482"
+    },
+    "bezPriznaku/souhrnDataZec/zdravPojZamestnanec/zdravotniPojisteni": {
+      "on": "primary",
+      "item": "9210371"
+    },
+    "bezPriznaku/pojisteni/trvani/pojisteniOd": {
+      "item": "9210354"
+    },
+    "bezPriznaku/pojisteni/trvani/pojisteniDo": {
+      "item": "9210355"
+    },
+    "bezPriznaku/pojisteni/eldpSeznam/eldp/pocetDnu": {
+      "item": "9210356"
+    },
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/obec": {
+      "item": "9210229"
+    },
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/kodObce": {
+      "item": "9210230"
+    },
+    "bezPriznaku/vykonavanaPozice/mistoVykonuPrace/kodStatu": {
+      "item": "9210231"
+    },
+    "bezPriznaku/vykonavanaPozice/uplatnujiPrispevekApz": {
+      "item": "9210232"
+    },
+    "bezPriznaku/vykonavanaPozice/funkcniPozitky": {
+      "item": "9210247"
+    },
+    "bezPriznaku/vykonavanaPozice/docasnePrideleniEvidovano": {
+      "item": "9210251"
+    },
+    "bezPriznaku/vykonavanaPozice/fondPracovniDoby/stanovenyFond": {
+      "item": "9210259"
+    },
+    "bezPriznaku/vykonavanaPozice/fondPracovniDoby/sjednanyFond": {
+      "item": "9210260"
+    },
+    "bezPriznaku/vykonavanaPozice/fondPracovniDoby/stanovenaTydenniDoba": {
+      "item": "9210261"
+    },
+    "bezPriznaku/prubehZamestnani/odpracovaneDny/dnyEvidencniStav": {
+      "item": "9210265"
+    },
+    "bezPriznaku/prubehZamestnani/odpracovaneHodiny/pocet": {
+      "item": "9210268"
+    },
+    "bezPriznaku/mzda/mzdaZuctovana": {
+      "calculation": "row_total"
+    },
+    "bezPriznaku/mzda/vydelek/vydelekPrumernyHod": {
+      "item": "9210345"
+    },
+    "bezPriznaku/pojisteni/slevaZamestnance/slevaZamestnanceEvidovana": {
+      "item": "9210490"
+    },
+    "bezPriznaku/pojisteni/slevaZamestnance/slevaZamestnanceOvoZelEvidovana": {
+      "item": "9210546"
+    },
+    "bezPriznaku/pojisteni/slevaZamestnavatele/slevaZamestnavateleEvidovana": {
+      "item": "9210372"
+    },
+    "bezPriznaku/prijem/dan/zakladDane": {
+      "item": "9210535"
+    },
+    "bezPriznaku/pojisteni/pojisteniZamestnavatel/socialniPojisteni": {
+      "item": "9210481"
+    },
+    "bezPriznaku/pojisteni/pojisteniZamestnanec/socialniPojisteni": {
+      "item": "9210370"
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/rocniZuctovaniZadost": {
+      "item": "9210319",
+      "on": "primary"
+    },
+    "bezPriznaku/souhrnDataZec/rocniUhrny/rocniZuctovaniProvedeno": {
+      "item": "9210320",
+      "on": "primary"
+    }
+  }
+}

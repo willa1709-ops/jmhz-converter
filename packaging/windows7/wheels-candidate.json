@@ -1,0 +1,120 @@
+{
+  "format_version": 1,
+  "origin_review": "required_separately",
+  "wheels": [
+    {
+      "filename": "PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32.whl",
+      "name": "PySide2",
+      "version": "5.15.2.1",
+      "sha256": "439509e53cfe05abbf9a99422a2cbad086408b0f9bf5e6f642ff1b13b1f8b055"
+    },
+    {
+      "filename": "altgraph-0.17.4-py2.py3-none-any.whl",
+      "name": "altgraph",
+      "version": "0.17.4",
+      "sha256": "642743b4750de17e655e6711601b077bc6598dbfa3ba5fa2b2a35ce12b508dff"
+    },
+    {
+      "filename": "colorama-0.4.6-py2.py3-none-any.whl",
+      "name": "colorama",
+      "version": "0.4.6",
+      "sha256": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"
+    },
+    {
+      "filename": "et_xmlfile-2.0.0-py3-none-any.whl",
+      "name": "et_xmlfile",
+      "version": "2.0.0",
+      "sha256": "7a91720bc756843502c3b7504c77b8fe44217c85c537d85037f0f536151b2caa"
+    },
+    {
+      "filename": "exceptiongroup-1.2.2-py3-none-any.whl",
+      "name": "exceptiongroup",
+      "version": "1.2.2",
+      "sha256": "3111b9d131c238bec2f8f516e123e14ba243563fb135d3fe885990585aa7795b"
+    },
+    {
+      "filename": "iniconfig-2.0.0-py3-none-any.whl",
+      "name": "iniconfig",
+      "version": "2.0.0",
+      "sha256": "b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"
+    },
+    {
+      "filename": "lxml-5.3.2-cp38-cp38-win32.whl",
+      "name": "lxml",
+      "version": "5.3.2",
+      "sha256": "d8f74ef8aacdf6ee5c07566a597634bb8535f6b53dc89790db43412498cf6026"
+    },
+    {
+      "filename": "openpyxl-3.1.5-py2.py3-none-any.whl",
+      "name": "openpyxl",
+      "version": "3.1.5",
+      "sha256": "5282c12b107bffeef825f4617dc029afaf41d0ea60823bbb665ef3079dc79de2"
+    },
+    {
+      "filename": "packaging-24.2-py3-none-any.whl",
+      "name": "packaging",
+      "version": "24.2",
+      "sha256": "09abb1bccd265c01f4a3aa3f7a7db064b36514d2cba19a2f694fe6150451a759"
+    },
+    {
+      "filename": "pefile-2023.2.7-py3-none-any.whl",
+      "name": "pefile",
+      "version": "2023.2.7",
+      "sha256": "da185cd2af68c08a6cd4481f7325ed600a88f6a813bad9dea07ab3ef73d8d8d6"
+    },
+    {
+      "filename": "pip-25.0.1-py3-none-any.whl",
+      "name": "pip",
+      "version": "25.0.1",
+      "sha256": "c46efd13b6aa8279f33f2864459c8ce587ea6a1a59ee20de055868d8f7688f7f"
+    },
+    {
+      "filename": "pluggy-1.5.0-py3-none-any.whl",
+      "name": "pluggy",
+      "version": "1.5.0",
+      "sha256": "44e1ad92c8ca002de6377e165f3e0f1be63266ab4d554740532335b9d75ea669"
+    },
+    {
+      "filename": "pyinstaller-5.13.2-py3-none-win32.whl",
+      "name": "pyinstaller",
+      "version": "5.13.2",
+      "sha256": "421cd24f26144f19b66d3868b49ed673176765f92fa9f7914cd2158d25b6d17e"
+    },
+    {
+      "filename": "pyinstaller_hooks_contrib-2023.10-py2.py3-none-any.whl",
+      "name": "pyinstaller-hooks-contrib",
+      "version": "2023.10",
+      "sha256": "6dc1786a8f452941245d5bb85893e2a33632ebdcbc4c23eea41f2ee08281b0c0"
+    },
+    {
+      "filename": "pytest-7.4.4-py3-none-any.whl",
+      "name": "pytest",
+      "version": "7.4.4",
+      "sha256": "b090cdf5ed60bf4c45261be03239c2c1c22df034fbffe691abe93cd80cea01d8"
+    },
+    {
+      "filename": "pywin32_ctypes-0.2.2-py3-none-any.whl",
+      "name": "pywin32-ctypes",
+      "version": "0.2.2",
+      "sha256": "bf490a1a709baf35d688fe0ecf980ed4de11d2b3e37b51e5442587a75d9957e7"
+    },
+    {
+      "filename": "setuptools-69.5.1-py3-none-any.whl",
+      "name": "setuptools",
+      "version": "69.5.1",
+      "sha256": "c636ac361bc47580504644275c9ad802c50415c7522212252c033bd15f301f32"
+    },
+    {
+      "filename": "shiboken2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win32.whl",
+      "name": "shiboken2",
+      "version": "5.15.2.1",
+      "sha256": "eb0da44b6fa60c6bd317b8f219e500595e94e0322b33ec5b4e9f406bedaee555"
+    },
+    {
+      "filename": "tomli-2.0.1-py3-none-any.whl",
+      "name": "tomli",
+      "version": "2.0.1",
+      "sha256": "939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"
+    }
+  ]
+}

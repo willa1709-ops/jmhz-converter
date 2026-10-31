@@ -1,2 +1,8 @@
 # Official artifact hashes must survive checkout on Windows unchanged.
 schemas/official/** -text
+# Byte-pinned synthetic CP1250/CRLF data and candidate manifests must survive
+# Windows core.autocrlf too; hashes refer to bytes, not normalized text.
+config/preview/** -text
+config/preview/*.csv whitespace=cr-at-eol
+packaging/windows7/wheels-candidate.json -text
+packaging/windows11/wheels-candidate.json -text

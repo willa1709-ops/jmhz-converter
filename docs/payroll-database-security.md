@@ -4,7 +4,10 @@ Stav k 31. 10. 2026: organizační SQLite, zdrojové snímky, hlavičky, pracovn
 žurnály a zálohy **nejsou šifrované aplikací**. Samostatné databáze a kontrola
 vlastníka brání chybám v aplikaci, nejsou ochranou proti čtení souborů jiným
 procesem pod stejným účtem nebo správcem počítače. Žádná následující fáze není
-označena jako hotová. Finální export je stále blokovaný nezávisle na zabezpečení.
+označena jako plně přijatá na Windows. Aktuální etapa implementuje konzistentní
+nešifrované zálohy/obnovu, ochranné POSIX režimy nových složek a připravuje
+samostatný Windows ACL skript. Šifrování ani jeho přejímka hotové nejsou.
+Finální export je stále blokovaný nezávisle na zabezpečení.
 
 ## Rozsah a hrozby
 

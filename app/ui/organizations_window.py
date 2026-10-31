@@ -3,11 +3,12 @@ from datetime import date
 import json
 from pathlib import Path
 
-from PySide6.QtCore import QStandardPaths, Qt
-from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
-                               QLineEdit, QTableWidget, QTableWidgetItem, QAbstractItemView, QFileDialog,
-                               QComboBox, QPlainTextEdit, QSpinBox, QDialog, QFormLayout, QDialogButtonBox,
-                               QInputDialog, QTabWidget)
+from app.ui.qt_compat import QtCore, QtWidgets, QT_API, enum, run
+QStandardPaths, Qt = QtCore.QStandardPaths, QtCore.Qt
+for _name in ("QMainWindow", "QWidget", "QVBoxLayout", "QHBoxLayout", "QLabel", "QPushButton", "QLineEdit", "QTableWidget",
+              "QTableWidgetItem", "QAbstractItemView", "QFileDialog", "QComboBox", "QPlainTextEdit", "QSpinBox", "QDialog",
+              "QFormLayout", "QDialogButtonBox", "QInputDialog", "QTabWidget"):
+    globals()[_name] = getattr(QtWidgets, _name)
 
 from app.core.organizations import OrganizationWorkspace
 from app.core.payroll import load_numbered_profile, strict_json
@@ -20,7 +21,7 @@ class OrganizationsWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("JMHZ Converter – organizace a měsíční importy")
         self.resize(1200, 850)
-        root = root or Path(QStandardPaths.writableLocation(QStandardPaths.StandardLocation.AppDataLocation)) / "workspace"
+        root = root or Path(QStandardPaths.writableLocation(enum(QStandardPaths, "StandardLocation", "AppDataLocation"))) / "workspace"
         self.workspace = OrganizationWorkspace(Path(root))
         self.organization_id = self.imported = self.analysis = self.draft_id = None
         self.tools = None
@@ -41,29 +42,51 @@ class OrganizationsWindow(QMainWindow):
         self.button(controls, "Společný profil JSON…", lambda: self.choose_profile(False))
         self.button(controls, "Offline definice ZIP…", self.choose_package)
         layout.addLayout(controls)
+        csv_controls = QHBoxLayout()
+        csv_controls.addWidget(QLabel("CSV z Pascalu/DOSu – kódování a oddělovač:"))
+        self.csv_encoding = QComboBox()
+        self.csv_encoding.addItems(["cp1250", "utf-8-sig", "auto"])
+        self.csv_delimiter = QComboBox()
+        self.csv_delimiter.addItems([";", "auto", ",", "\t", "|"])
+        csv_controls.addWidget(self.csv_encoding)
+        csv_controls.addWidget(self.csv_delimiter)
+        self.button(csv_controls, "Nešifrovaná záloha…", self.choose_backup)
+        self.button(csv_controls, "Obnovit novou organizaci…", self.choose_restore)
+        layout.addLayout(csv_controls)
         self.organizations = QTableWidget()
-        self.organizations.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
-        self.organizations.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
-        self.organizations.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.organizations.setEditTriggers(enum(QAbstractItemView, "EditTrigger", "NoEditTriggers"))
+        self.organizations.setSelectionBehavior(enum(QAbstractItemView, "SelectionBehavior", "SelectRows"))
+        self.organizations.setSelectionMode(enum(QAbstractItemView, "SelectionMode", "SingleSelection"))
         self.organizations.cellClicked.connect(self.select_row)
         self.organizations.setMaximumHeight(200)
         layout.addWidget(self.organizations)
         self.context = QLabel("Vyberte organizaci. Poslední verze znamená interní přípravu, nikoliv odeslané podání.")
+        self.context.setWordWrap(True)
         layout.addWidget(self.context)
         actions = QHBoxLayout()
         self.button(actions, "Profil této organizace…", lambda: self.choose_profile(True))
         self.button(actions, "Použít společný profil", self.use_shared_profile)
         self.button(actions, "Import CSV/XLSX…", self.choose_import)
         self.button(actions, "Kontrola a výpočty", self.check)
+        layout.addLayout(actions)
+        actions = QHBoxLayout()
         self.button(actions, "Pracovní XML…", self.choose_xml)
+        self.button(actions, "Celý měsíční paket…", self.choose_monthly)
         self.button(actions, "Historie kontrol / XML…", self.open_audit_history)
-        self.button(actions, "Původní nástroje…", self.open_tools)
+        self.button(actions, "Plán podání / opravy…", self.choose_plan)
+        tools_button = self.button(actions, "Původní nástroje…", self.open_tools)
+        tools_button.setEnabled(QT_API == "PySide6")
+        tools_button.setToolTip("Starší doplňkové nástroje vyžadují moderní variantu; hlavní workflow je společný.")
         layout.addLayout(actions)
         history = QHBoxLayout()
         history.addWidget(QLabel("Historie importů (oprava dat není opravné podání)"))
         self.import_history = QComboBox()
         self.import_history.currentIndexChanged.connect(self.open_history)
         history.addWidget(self.import_history)
+        self.import_history.setSizeAdjustPolicy(enum(QComboBox, "SizeAdjustPolicy", "AdjustToMinimumContentsLengthWithIcon"))
+        self.import_history.setMinimumContentsLength(20)
+        layout.addLayout(history)
+        history = QHBoxLayout()
         self.bundle = QComboBox()
         self.official_root = default_official_root()
         for b in strict_json((self.official_root / "bundles.json").read_text(encoding="utf-8"))["bundles"]:
@@ -76,7 +99,7 @@ class OrganizationsWindow(QMainWindow):
         self.rows = QTableWidget()
         self.errors = QTableWidget()
         for table in (self.rows, self.errors):
-            table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+            table.setEditTriggers(enum(QAbstractItemView, "EditTrigger", "NoEditTriggers"))
         self.pages.addTab(self.rows, "Pracovní poměry a výpočty")
         self.pages.addTab(self.errors, "Požadavky na doplnění")
         self.totals = QPlainTextEdit()
@@ -92,6 +115,8 @@ class OrganizationsWindow(QMainWindow):
         revisions.addWidget(QLabel("Interní pořadí přípravy (0, 1, …), oddělené od GUID"))
         revisions.addWidget(self.revision)
         self.button(revisions, "Zapsat interní verzi", self.record_version)
+        layout.addLayout(revisions)
+        revisions = QHBoxLayout()
         self.button(revisions, "Uložit pracovní XML v organizaci", self.write_draft)
         final = QPushButton("Finální export – blokováno")
         final.setEnabled(False)
@@ -153,7 +178,7 @@ class OrganizationsWindow(QMainWindow):
                       [[r["organization"].name, r["organization"].ico, r["organization"].variable_symbol, states[r["status"]], r["pp_count"],
                         "nekontrolováno" if r["error_count"] is None else r["error_count"], "—" if r["last_revision"] is None else r["last_revision"]] for r in overview])
             for i, r in enumerate(overview):
-                self.organizations.item(i, 0).setData(Qt.ItemDataRole.UserRole, r["organization"].id)
+                self.organizations.item(i, 0).setData(enum(Qt, "ItemDataRole", "UserRole"), r["organization"].id)
             if self.organization_id:
                 self.select_organization(self.organization_id)
         except Exception:
@@ -161,7 +186,7 @@ class OrganizationsWindow(QMainWindow):
             self.context.setText("Neplatný kontext; vyberte měsíc YY-MM nebo YYYY-MM.")
 
     def select_row(self, row, column):
-        self.select_organization(self.organizations.item(row, 0).data(Qt.ItemDataRole.UserRole))
+        self.select_organization(self.organizations.item(row, 0).data(enum(Qt, "ItemDataRole", "UserRole")))
 
     def select_organization(self, organization_id):
         self.clear_data()
@@ -197,11 +222,11 @@ class OrganizationsWindow(QMainWindow):
         for key, label in [("name", "Název"), ("ico", "IČO (8 číslic)"), ("variable_symbol", "VS zaměstnavatele (10 číslic)"),
                            ("dic", "DIČ – volitelná metadata"), ("data_box_id", "Datová schránka – volitelná metadata")]:
             form.addRow(label, fields[key])
-        buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        buttons = QDialogButtonBox(enum(QDialogButtonBox, "StandardButton", "Ok") | enum(QDialogButtonBox, "StandardButton", "Cancel"))
         buttons.accepted.connect(dialog.accept)
         buttons.rejected.connect(dialog.reject)
         form.addRow(buttons)
-        if dialog.exec() == QDialog.DialogCode.Accepted:
+        if run(dialog) == enum(QDialog, "DialogCode", "Accepted"):
             try:
                 org = self.workspace.register(fields["name"].text(), fields["ico"].text(), fields["variable_symbol"].text(),
                                               {k: fields[k].text() for k in ("dic", "data_box_id") if fields[k].text()})
@@ -252,7 +277,7 @@ class OrganizationsWindow(QMainWindow):
     def import_path(self, path):
         self.clear_data()
         try:
-            imported = self.workspace.import_file(self.organization_id, self.selected_period(), path)
+            imported = self.workspace.import_file(self.organization_id, self.selected_period(), path, self.csv_encoding.currentText(), self.csv_delimiter.currentText())
             self.refresh()
             assert self.imported.id == imported.id
             self.status.setText("Uložen nový import {0}. Starší importy ani interní verze se nepřepisují.".format(imported.import_index))
@@ -360,6 +385,105 @@ class OrganizationsWindow(QMainWindow):
         self.status.setText("bezPriznaku | XSD: {0}; blokující nálezy {1}; otevřené metodické otázky {2}. Finální export NE.".format(
             "PROŠLO" if result.xsd_valid else "NEPROŠLO", len(result.issues), len(result.review_issues)))
 
+    def choose_monthly(self):
+        if not self.imported or self.imported.period != self.selected_period():
+            self.status.setText("Nejprve vyberte organizaci, měsíc a import PP.")
+            return
+        paths = []
+        for label, pattern in [("Zaměstnanecký profil", "JSON (*.json)"), ("Profil souhrnů zaměstnavatele", "JSON (*.json)"),
+                               ("Souhrny zaměstnavatele – jeden řádek Windows-1250", "CSV (*.csv)"), ("Skutečná hlavička podání", "JSON (*.json)")]:
+            path, _ = QFileDialog.getOpenFileName(self, label, "", pattern)
+            if not path:
+                return
+            paths.append(Path(path))
+        self.prepare_monthly_paths(*paths)
+
+    def choose_backup(self):
+        if not self.organization_id:
+            self.status.setText("Nejprve vyberte organizaci.")
+            return
+        path, _ = QFileDialog.getSaveFileName(self, "Nešifrovaná záloha obsahuje citlivá data – zvolte chráněné umístění", "", "ZIP (*.zip)")
+        if path:
+            try:
+                from app.core.backups import create_backup
+                result = create_backup(self.workspace, self.organization_id, Path(path))
+                self.status.setText("NEŠIFROVANÁ záloha vytvořena. Hash uložte nezávisle: " + result["sha256"])
+            except Exception:
+                self.status.setText("Záloha nevytvořena. Ověřte přístup, integritu definic a nový cílový soubor; nic se nepřepisuje.")
+
+    def choose_restore(self):
+        path, _ = QFileDialog.getOpenFileName(self, "Obnova samostatné organizace – bez přepsání existujících dat", "", "ZIP (*.zip)")
+        if not path:
+            return
+        pin, ok = QInputDialog.getText(self, "Nezávislý hash zálohy", "SHA-256 uložený mimo archiv:")
+        if ok:
+            try:
+                from app.core.backups import restore_backup
+                org = restore_backup(self.workspace, Path(path), pin.strip())
+                self.organization_id = org.id
+                self.refresh()
+                self.status.setText("Organizace obnovena bez přepsání ostatních. Úložiště ani archiv nejsou šifrované.")
+            except Exception:
+                self.status.setText("Obnova odmítnuta: ověřte hash, integritu, potřebné definice a nepřítomnost cílové organizace.")
+
+    def choose_plan(self):
+        if not self.imported or not self.draft_id:
+            self.status.setText("Plán vyžaduje vybraný import a pracovní XML. Nejde o odeslání podání.")
+            return
+        from app.core.submission_plans import history, record_plan
+        plans = history(self.workspace, self.organization_id, self.imported.period)
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Pracovní návaznost – bez odeslání a bez tvorby opravného XML")
+        layout = QFormLayout(dialog)
+        layout.addRow(QLabel("GUID jsou převzata z explicitních vstupů XML. Revize neurčuje typ podání.\nPřijetí původního podání, účinnost a výjimky nejsou potvrzeny."))
+        mode, reason, base = QComboBox(), QComboBox(), QComboBox()
+        mode.addItem("R – řádný plán", "R")
+        mode.addItem("O – opravný plán", "O")
+        for label, key in [("Řádný návrh", "regular"), ("Oprava z iniciativy zaměstnavatele", "employer_initiated"),
+                           ("Náhrada nepropustně vadné součásti", "rejected_component"), ("Oprava souhrnu/pojistné části", "summary_or_insurance")]:
+            reason.addItem(label, key)
+        base.addItem("Bez návaznosti", None)
+        for item in plans:
+            base.addItem("Revize {0}, režim {1}".format(item["revision_index"], item["mode"]), item["id"])
+        revision = QSpinBox()
+        revision.setRange(0, 1_000_000)
+        revision.setValue(len(plans))
+        for label, widget in [("Výslovný režim plánu", mode), ("Důvod dle metodiky", reason), ("Původní plán", base), ("Interní pořadí plánu", revision)]:
+            layout.addRow(label, widget)
+        buttons = QDialogButtonBox(enum(QDialogButtonBox, "StandardButton", "Ok") | enum(QDialogButtonBox, "StandardButton", "Cancel"))
+        buttons.accepted.connect(dialog.accept)
+        buttons.rejected.connect(dialog.reject)
+        layout.addRow(buttons)
+        if run(dialog) == enum(QDialog, "DialogCode", "Accepted"):
+            try:
+                record_plan(self.workspace, self.organization_id, self.imported.id, self.draft_id, revision.value(), mode.currentData(), base.currentData(), reason.currentData())
+                self.status.setText("Pracovní plán uložen. XML zůstává řádným pracovním návrhem; oprava ani odeslání nebyly provedeny.")
+            except Exception:
+                self.status.setText("Návaznost odmítnuta. Ověřte pořadí, původní organizaci/měsíc, důvod a vazby GUID; revize není automatická oprava.")
+
+    def prepare_monthly_paths(self, employee_profile, monthly_profile, employer_csv, parameters):
+        self.draft_id = None
+        self.draft.clear()
+        try:
+            from app.core.input import read_csv
+            if not self.imported or self.imported.period != self.selected_period():
+                raise ValueError("Chybí kontext.")
+            profile = strict_json(monthly_profile.read_text(encoding="utf-8"))
+            employer_id = self.workspace.import_employer_table(self.organization_id, self.imported.id, read_csv(employer_csv, "cp1250", ";"), profile)
+            identity, result = self.workspace.prepare_monthly_draft(self.organization_id, self.imported.id, employer_id,
+                strict_json(employee_profile.read_text(encoding="utf-8")), strict_json(parameters.read_text(encoding="utf-8")), self.official_root)
+            self.fill(self.errors, ["Řádek", "Pole", "Kód", "Požadavek", "Náprava"],
+                      [[i.row or "zaměstnavatel", i.field, i.code, i.message, i.remedy] for i in result.issues + result.review_issues])
+            if identity:
+                self.draft_id = identity
+                self.draft.setPlainText(result.draft_xml.decode("utf-8"))
+                self.pages.setCurrentWidget(self.draft)
+            else:
+                self.pages.setCurrentWidget(self.errors)
+            self.status.setText("Souhrn + PVPOJ + PP | XSD {0}, blokující {1}, k přezkumu {2}. Finální export NE.".format(result.xsd_valid, len(result.issues), len(result.review_issues)))
+        except Exception:
+            self.status.setText("Měsíční paket nevytvořen. Ověřte organizaci, měsíc, souhrny Windows-1250, mapování a hlavičku.")
+
     def prepare_xml_paths(self, conversion, bindings, parameters):
         self.draft_id = None
         self.draft.clear()
@@ -400,7 +524,7 @@ class OrganizationsWindow(QMainWindow):
         tabs = QTabWidget()
         check_table, draft_table = QTableWidget(), QTableWidget()
         for table in (check_table, draft_table):
-            table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+            table.setEditTriggers(enum(QAbstractItemView, "EditTrigger", "NoEditTriggers"))
         self.fill(check_table, ["Kontrola", "Čas UTC", "Počet nálezů"], [[r["analysis_index"], r["created_at"], r["error_count"]] for r in checks])
         self.fill(draft_table, ["Interní UUID", "Čas UTC", "SHA-256"], [[r["id"], r["created_at"], r["sha256"]] for r in drafts])
         tabs.addTab(check_table, "Kontroly a výpočty")
@@ -419,6 +543,8 @@ class OrganizationsWindow(QMainWindow):
                 lines.append("Uložené součty známých hodnot: " + json.dumps(snapshot["totals"], ensure_ascii=False, indent=2))
                 if snapshot.get("employee_validation"):
                     lines.append("Kontrola zaměstnaneckého XML: " + json.dumps(snapshot["employee_validation"], ensure_ascii=False, indent=2))
+                if snapshot.get("monthly_validation"):
+                    lines.append("Kontrola všech částí paketu: " + json.dumps(snapshot["monthly_validation"], ensure_ascii=False, indent=2))
                 preview.setPlainText("\n".join(lines))
             except Exception:
                 preview.setPlainText("Uložená kontrola není dostupná; žádné údaje jiné organizace se nenačítají.")
@@ -434,9 +560,12 @@ class OrganizationsWindow(QMainWindow):
         check_table.cellClicked.connect(show_check)
         draft_table.cellClicked.connect(show_draft)
         tabs.currentChanged.connect(lambda *args: preview.clear())
-        dialog.exec()
+        run(dialog)
 
     def open_tools(self):
+        if QT_API != "PySide6":
+            self.status.setText("Hlavní workflow Qt5 je dostupný; doplňkové starší nástroje vyžadují moderní variantu.")
+            return
         if not self.imported or self.imported.period != self.selected_period():
             self.status.setText("Nejprve vyberte import aktuální organizace a měsíce.")
             return

@@ -77,7 +77,7 @@ class Analysis:
 class OrganizationWorkspace:
     def __init__(self, root: Path):
         self.root = root.resolve()
-        self.root.mkdir(parents=True, exist_ok=True)
+        self.root.mkdir(mode=0o700, parents=True, exist_ok=True)
         self.registry = self.root / "registry.sqlite3"
         if self.registry.is_symlink():
             raise ValueError("Registr nesmí být symlink.")
@@ -127,7 +127,7 @@ class OrganizationWorkspace:
             raise ValueError("Datový prostor organizace uniká mimo kořen.") from None
         if any(p.is_symlink() for p in (directory, directory.parent)):
             raise ValueError("Datový prostor nesmí být symlink.")
-        directory.mkdir(parents=True, exist_ok=True)
+        directory.mkdir(mode=0o700, parents=True, exist_ok=True)
         return directory
 
     @contextmanager
@@ -153,6 +153,8 @@ class OrganizationWorkspace:
             if "validation" not in {r[1] for r in db.execute("PRAGMA table_info(drafts)")}:
                 db.execute("ALTER TABLE drafts ADD COLUMN validation TEXT")
             db.execute("CREATE TABLE IF NOT EXISTS employee_checks (import_id TEXT NOT NULL, analysis_index INTEGER NOT NULL, profile TEXT NOT NULL, parameters TEXT NOT NULL, report TEXT NOT NULL, PRIMARY KEY(import_id,analysis_index), FOREIGN KEY(import_id,analysis_index) REFERENCES analyses(import_id,analysis_index))")
+            db.execute("CREATE TABLE IF NOT EXISTS employer_imports (id TEXT PRIMARY KEY, import_id TEXT NOT NULL REFERENCES imports(id), import_index INTEGER NOT NULL, created_at TEXT NOT NULL, source_sha256 TEXT NOT NULL, profile TEXT NOT NULL, source TEXT NOT NULL, UNIQUE(import_id,import_index))")
+            db.execute("CREATE TABLE IF NOT EXISTS monthly_checks (import_id TEXT NOT NULL, analysis_index INTEGER NOT NULL, employer_id TEXT NOT NULL REFERENCES employer_imports(id), profile TEXT NOT NULL, parameters TEXT NOT NULL, report TEXT NOT NULL, PRIMARY KEY(import_id,analysis_index), FOREIGN KEY(import_id,analysis_index) REFERENCES analyses(import_id,analysis_index))")
             db.commit()
             yield db
 
@@ -298,10 +300,12 @@ class OrganizationWorkspace:
         with self._data(organization_id) as db:
             row = db.execute("SELECT report,totals,calculations FROM analyses WHERE import_id=? AND analysis_index=?", (import_id, analysis_index)).fetchone()
             employee = db.execute("SELECT report FROM employee_checks WHERE import_id=? AND analysis_index=?", (import_id, analysis_index)).fetchone()
+            monthly = db.execute("SELECT report FROM monthly_checks WHERE import_id=? AND analysis_index=?", (import_id, analysis_index)).fetchone()
         if row is None:
             raise ValueError("Kontrola není dostupná v této organizaci a importu.")
         return {"report": strict_json(row[0]), "totals": strict_json(row[1]), "calculations": strict_json(row[2]) if row[2] else {},
-                "employee_validation": strict_json(employee[0]) if employee else None}
+                "employee_validation": strict_json(employee[0]) if employee else None,
+                "monthly_validation": strict_json(monthly[0]) if monthly else None}
 
     def draft_history(self, organization_id, import_id):
         self.get_import(organization_id, import_id)
@@ -324,9 +328,10 @@ class OrganizationWorkspace:
                     count = db.execute("SELECT record_count FROM imports WHERE id=? AND organization_id=?", (last["id"], org.id)).fetchone()[0]
                     analysis = db.execute("SELECT error_count,analysis_index FROM analyses WHERE import_id=? ORDER BY analysis_index DESC LIMIT 1", (last["id"],)).fetchone()
                     employee = db.execute("SELECT report FROM employee_checks WHERE import_id=? AND analysis_index=?", (last["id"], analysis[1])).fetchone() if analysis else None
+                    monthly = db.execute("SELECT report FROM monthly_checks WHERE import_id=? AND analysis_index=?", (last["id"], analysis[1])).fetchone() if analysis else None
                 data.update(status="imported", pp_count=count if count is not None else len(self.get_import(org.id, last["id"]).source.rows))
                 if analysis:
-                    employee_report = strict_json(employee[0]) if employee else {}
+                    employee_report = strict_json(monthly[0]) if monthly else strict_json(employee[0]) if employee else {}
                     count = analysis[0] + len(employee_report.get("issues", [])) + len(employee_report.get("review_issues", []))
                     data.update(status="checked_with_findings" if count else "technically_checked", error_count=count)
             result.append(data)
@@ -343,6 +348,8 @@ class OrganizationWorkspace:
             if latest_import != import_id or latest is None or latest[0] != analysis_index or latest[1]:
                 raise ValueError("Použijte poslední import a jeho poslední kontrolu bez nálezů.")
             employee = db.execute("SELECT report FROM employee_checks WHERE import_id=? AND analysis_index=?", (import_id, analysis_index)).fetchone()
+            monthly = db.execute("SELECT report FROM monthly_checks WHERE import_id=? AND analysis_index=?", (import_id, analysis_index)).fetchone()
+            employee = monthly or employee
             if employee:
                 report = strict_json(employee[0])
                 if report["issues"] or report["review_issues"]:
@@ -413,6 +420,62 @@ class OrganizationWorkspace:
         with self._data(organization_id) as db:
             row = db.execute("SELECT validation FROM drafts WHERE id=? AND import_id=?", (draft_id, import_id)).fetchone()
         return strict_json(row[0]) if row[0] else {"legacy_draft": True, "submission_ready": False}
+
+    def import_employer_table(self, organization_id, import_id, source, profile):
+        from app.core.monthly_xml import load_monthly_profile
+        imported = self.get_import(organization_id, import_id)
+        org = self.organization(organization_id)
+        profile = load_monthly_profile(dumps(profile))
+        if len(source.rows) != 1:
+            raise ValueError("Souhrn zaměstnavatele musí obsahovat právě jeden řádek.")
+        row = source.rows[0]
+        for field_name, expected in [("employer_ico", org.ico), ("employer_variable_symbol", org.variable_symbol)]:
+            column = profile["metadata"][field_name]
+            if column in row.numeric_columns or row.values.get(column) != expected:
+                raise ValueError("Souhrn není doložen pro tuto organizaci; identifikátory musí být textové.")
+        if Period.parse(row.values.get(profile["metadata"]["period"], ""), imported.profile["period_century"]) != imported.period:
+            raise ValueError("Souhrn patří jinému měsíci.")
+        payload = dumps({"columns": source.columns, "rows": [{"number": row.number, "values": row.values, "numeric_columns": sorted(row.numeric_columns)}]})
+        with self._data(organization_id) as db:
+            db.execute("BEGIN IMMEDIATE")
+            index = db.execute("SELECT COALESCE(MAX(import_index),-1)+1 FROM employer_imports WHERE import_id=?", (import_id,)).fetchone()[0]
+            identity = str(uuid5(UUID(organization_id), "employer:" + import_id + ":" + str(index)))
+            db.execute("INSERT INTO employer_imports VALUES (?,?,?,?,?,?,?)", (identity, import_id, index, now(), hashlib.sha256(payload.encode("utf-8")).hexdigest(), dumps(profile), payload))
+        return identity
+
+    def prepare_monthly_draft(self, organization_id, import_id, employer_id, employee_profile, parameters, official_root):
+        from app.core.monthly_xml import prepare_monthly_xml
+        imported = self.get_import(organization_id, import_id)
+        org = self.organization(organization_id)
+        if str(parameters.get("employer_variable_symbol", "")) != org.variable_symbol:
+            raise ValueError("Hlavička neodpovídá organizaci.")
+        with self._data(organization_id) as db:
+            row = db.execute("SELECT * FROM employer_imports WHERE id=? AND import_id=?", (employer_id, import_id)).fetchone()
+        if row is None:
+            raise ValueError("Souhrn není dostupný pro tuto organizaci a import.")
+        profile, payload = strict_json(row["profile"]), strict_json(row["source"])
+        if self._definition_profile(imported.definition) != imported.profile:
+            raise ValueError("Definice importu se změnila.")
+        if imported.definition["kind"] == "pinned_package_manifest":
+            from app.core.packages import load_package
+            package = load_package(Path(imported.definition["directory"]), imported.definition["sha256"])
+            if (strict_json(package.read_entry("employee_profile")) != employee_profile
+                    or strict_json(package.read_entry("monthly_profile")) != profile):
+                raise ValueError("Profil nepatří ke schválenému balíčku.")
+            official_root = package.directory / package.manifest["entry_points"]["official_root"]
+        analysis = self.analyze(organization_id, import_id, official_root, employee_profile["bundle_id"])
+        source = SourceTable(tuple(payload["columns"]), tuple(SourceRow(r["number"], r["values"], frozenset(r["numeric_columns"])) for r in payload["rows"]))
+        result = prepare_monthly_xml(imported.source, imported.profile, employee_profile, SubmissionContext(imported.period, 0), parameters, source, profile, official_root)
+        report = result.safe_report()
+        report.update(definition_sha256=imported.definition["sha256"], employer_import_id=employer_id,
+                      employee_profile_sha256=hashlib.sha256(dumps(employee_profile).encode()).hexdigest(),
+                      monthly_profile_sha256=hashlib.sha256(dumps(profile).encode()).hexdigest())
+        identity = str(uuid5(UUID(organization_id), "monthly:" + import_id + ":" + str(analysis.index))) if result.draft_xml else None
+        with self._data(organization_id) as db:
+            db.execute("INSERT INTO monthly_checks VALUES (?,?,?,?,?,?)", (import_id, analysis.index, employer_id, dumps(employee_profile), dumps(parameters), dumps(report)))
+            if identity:
+                db.execute("INSERT INTO drafts VALUES (?,?,?,?,?,?)", (identity, import_id, now(), result.draft_xml, hashlib.sha256(result.draft_xml).hexdigest(), dumps(report)))
+        return identity, result
 
     def draft_bytes(self, organization_id, import_id, draft_id):
         self.get_import(organization_id, import_id)

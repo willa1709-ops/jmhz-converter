@@ -1,6 +1,6 @@
 def main() -> int:
-    from PySide6.QtWidgets import QApplication
-    from PySide6.QtCore import QCoreApplication, QEvent
+    from app.ui.qt_compat import QtWidgets, run, dispose_window
+    QApplication = QtWidgets.QApplication
     from app.ui.organizations_window import OrganizationsWindow
 
     application = QApplication.instance() or QApplication([])
@@ -8,12 +8,10 @@ def main() -> int:
     window = OrganizationsWindow()
     window.show()
     try:
-        return application.exec()
+        return run(application)
     finally:
         # Destroy widgets while QApplication and its native resources still exist.
-        window.close()
-        window.deleteLater()
-        QCoreApplication.sendPostedEvents(None, QEvent.Type.DeferredDelete)
+        dispose_window(window)
 
 
 if __name__ == "__main__":

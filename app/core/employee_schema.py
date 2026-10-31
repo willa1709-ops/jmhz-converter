@@ -39,7 +39,9 @@ class Particle:
 
 
 class EmployeeContract:
-    def __init__(self, official_root: Path, bundle_id: str):
+    def __init__(self, official_root: Path, bundle_id: str, component="bezPriznaku"):
+        if component not in {"bezPriznaku", "souhrn", "PVPOJ"}:
+            raise ValueError("Nepodporovaný kořen kontraktu.")
         self.validator = registered_validator(official_root, bundle_id)
         self.bundle = next(b for b in json.loads((official_root / "bundles.json").read_text(encoding="utf-8"))["bundles"] if b["id"] == bundle_id)
         self.types, self.elements, self.origins = {}, {}, {}
@@ -56,7 +58,7 @@ class EmployeeContract:
                     target[(namespace, node.get("name"))] = node
             for node in document.iter():
                 self.origins[node] = (name, namespace)
-        root = next(n for (ns, name), n in self.elements.items() if name == "bezPriznaku")
+        root = next(n for (ns, name), n in self.elements.items() if name == component)
         self.plan = self._node(root, "", (), 0)
         self.namespace = etree.QName(self.plan.qname).namespace
         self.fields = {p.path: p for p in self.plan.leaves()}

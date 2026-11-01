@@ -42,8 +42,8 @@ def analyze(root: Path) -> dict:
     root = root.resolve()
     output = root / "analysis"
     output.mkdir(exist_ok=True)
-    intake = json.loads((root / "intake.json").read_text())
-    extracted = json.loads((root / "extraction.json").read_text())
+    intake = json.loads((root / "intake.json").read_text(encoding="utf-8"))
+    extracted = json.loads((root / "extraction.json").read_text(encoding="utf-8"))
     inventory, tables, bundles = [], {}, []
     for item in intake["documents"]:
         path = root / item["file"]
@@ -139,7 +139,7 @@ def analyze(root: Path) -> dict:
         version = parse_local_xml(path.read_bytes()).get("version") if path.suffix == ".xsd" else parent["version"]
         register(root, path, member["source_url"], version or parent["version"], "xsd" if path.suffix == ".xsd" else "archive")
 
-    manifest = json.loads((root / "manifest.json").read_text())
+    manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     members = {m["file"]: m for m in extracted["published"]}
     for record in manifest["documents"]:
         source = originals.get(record["file"])
@@ -161,7 +161,7 @@ def analyze(root: Path) -> dict:
     write(root / "bundles.json", {"bundles": bundles})
     write(output / "inventory.json", {"documents": inventory})
     differences = {family: record_changes(tables[(family, "2026")], tables[(family, "2027")]) for family in ("dictionary", "controls", "interactions")}
-    codes = {year: json.loads((output / f"codelists-{year}.json").read_text())["sheets"] for year in ("2026", "2027")}
+    codes = {year: json.loads((output / f"codelists-{year}.json").read_text(encoding="utf-8"))["sheets"] for year in ("2026", "2027")}
     differences["codelists"] = {"added_sheets": sorted(codes["2027"].keys() - codes["2026"].keys()),
                                   "removed_sheets": sorted(codes["2026"].keys() - codes["2027"].keys()),
                                   "changed_sheets": sorted(k for k in codes["2026"].keys() & codes["2027"].keys() if codes["2026"][k] != codes["2027"][k])}

@@ -25,14 +25,24 @@ def archive(members):
     stream = BytesIO()
     with ZipFile(stream, "w") as zipped:
         for name, content in members:
-            zipped.writestr(name, content)
+            if isinstance(name, str):
+                item = ZipInfo(name)
+                # ZipInfo.__init__ changes os.sep to '/' on Windows. Assign
+                # after construction so malicious ZIP names survive unchanged.
+                item.filename = name
+            else:
+                item = name
+            zipped.writestr(item, content)
     return stream.getvalue()
 
 
-@pytest.mark.parametrize("name", ["../escape.xsd", "/absolute.xsd", "C:/evil", "a\\evil", "CON.txt", "file:stream", "dir/../../x"])
+@pytest.mark.parametrize("name", ["../escape.xsd", "/absolute.xsd", "C:/evil", "a\\evil", "CON.txt", "file:stream", "dir/../../x", "good\x00evil"])
 def test_zip_escape_is_rejected_before_writing(tmp_path, name):
+    content = archive([("good.xsd", "synthetic"), (name, "bad")])
+    with ZipFile(BytesIO(content)) as zipped:
+        assert [item.orig_filename for item in zipped.infolist()] == ["good.xsd", name]
     with pytest.raises(ValueError):
-        extract_zip(archive([("good.xsd", "synthetic"), (name, "bad")]), tmp_path / "out")
+        extract_zip(content, tmp_path / "out")
     assert not (tmp_path / "out").exists()
 
 
@@ -70,7 +80,7 @@ def test_unpack_rejects_tampered_source_and_escape_metadata(tmp_path):
     content = archive([("test.xsd", "synthetic")])
     p.write_bytes(content)
     record = {"file": "2026/test.zip", "source_url": "https://example.invalid/test.zip", "sha256": "bad"}
-    (root / "intake.json").write_text(json.dumps({"documents": [record]}))
+    (root / "intake.json").write_text(json.dumps({"documents": [record]}), encoding="utf-8")
     with pytest.raises(ValueError):
         unpack_archives(root, tmp_path / "staging")
     assert not (tmp_path / "staging").exists()
@@ -147,7 +157,7 @@ def synthetic_header_xml(bundle):
 
 
 def official_bundles():
-    return json.loads((OFFICIAL / "bundles.json").read_text())["bundles"]
+    return json.loads((OFFICIAL / "bundles.json").read_text(encoding="utf-8"))["bundles"]
 
 
 @pytest.mark.parametrize("cohort", ["2026", "2027"])
@@ -176,9 +186,9 @@ def test_actual_bundle_validates_generated_xml_and_rejects_changes(tmp_path, coh
 def test_resolver_blocks_external_locations(tmp_path, location):
     root = tmp_path / "bundle"
     root.mkdir()
-    (tmp_path / "outside.xsd").write_text('<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"/>')
+    (tmp_path / "outside.xsd").write_text('<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"/>', encoding="utf-8")
     entry = root / "root.xsd"
-    entry.write_text(f'<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:include schemaLocation="{location}"/></xs:schema>')
+    entry.write_text(f'<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:include schemaLocation="{location}"/></xs:schema>', encoding="utf-8")
     with pytest.raises((ValueError, etree.XMLSchemaParseError)):
         BundleValidator(entry, root)
 
@@ -187,11 +197,11 @@ def test_resolver_rejects_tampered_dependency_and_imported_dtd(tmp_path):
     root = tmp_path
     entry = root / "root.xsd"
     dependency = root / "types.xsd"
-    entry.write_text('<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:include schemaLocation="types.xsd"/></xs:schema>')
-    dependency.write_text('<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"/>')
+    entry.write_text('<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:include schemaLocation="types.xsd"/></xs:schema>', encoding="utf-8")
+    dependency.write_text('<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"/>', encoding="utf-8")
     hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in [entry, dependency]}
     assert BundleValidator(entry, root, hashes)
-    dependency.write_text('<!DOCTYPE schema><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"/>')
+    dependency.write_text('<!DOCTYPE schema><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"/>', encoding="utf-8")
     with pytest.raises((ValueError, etree.XMLSchemaParseError)):
         BundleValidator(entry, root, hashes)
     with pytest.raises((ValueError, etree.XMLSchemaParseError)):
@@ -199,19 +209,19 @@ def test_resolver_rejects_tampered_dependency_and_imported_dtd(tmp_path):
 
 
 def test_delivered_documents_registered_without_mutating_originals():
-    intake = json.loads((OFFICIAL / "intake.json").read_text())["documents"]
-    manifest = json.loads((OFFICIAL / "manifest.json").read_text())["documents"]
+    intake = json.loads((OFFICIAL / "intake.json").read_text(encoding="utf-8"))["documents"]
+    manifest = json.loads((OFFICIAL / "manifest.json").read_text(encoding="utf-8"))["documents"]
     by_file = {d["file"]: d for d in manifest}
     assert len(intake) == 13
     for record in intake:
         assert hashlib.sha256((OFFICIAL / record["file"]).read_bytes()).hexdigest() == record["sha256"]
         assert by_file[record["file"]]["sha256"] == record["sha256"]
         assert by_file[record["file"]]["origin_review"]["status"] == "unverified"
-    extracted = json.loads((OFFICIAL / "extraction.json").read_text())["published"]
+    extracted = json.loads((OFFICIAL / "extraction.json").read_text(encoding="utf-8"))["published"]
     for record in extracted:
         assert by_file[record["file"]]["sha256"] == record["sha256"]
     assert verify(OFFICIAL) == []
-    inventory = json.loads((OFFICIAL / "analysis/inventory.json").read_text())["documents"]
+    inventory = json.loads((OFFICIAL / "analysis/inventory.json").read_text(encoding="utf-8"))["documents"]
     instructions = next(d for d in inventory if d["file"].endswith("hlaseni-1.5.pdf"))
     assert instructions["effective_from"] == "2027-01-01"
     assert instructions["effective_evidence"].startswith("PDF strana 1")

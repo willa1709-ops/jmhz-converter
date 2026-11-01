@@ -15,6 +15,7 @@ import re
 import sqlite3
 from uuid import UUID, uuid4, uuid5
 
+from app.core.database import database
 from app.core.models import SourceRow, SourceTable
 from app.core.identities import numeric_key
 from app.core.payroll import load_numbered_profile, prepare_payroll, strict_json
@@ -28,18 +29,6 @@ def now():
 
 def dumps(value):
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-
-
-@contextmanager
-def database(path):
-    connection = sqlite3.connect(str(path))
-    connection.row_factory = sqlite3.Row
-    connection.execute("PRAGMA foreign_keys=ON")
-    try:
-        with connection:
-            yield connection
-    finally:
-        connection.close()
 
 
 @dataclass(frozen=True)

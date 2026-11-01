@@ -3,6 +3,9 @@ import os
 
 
 def configure_qt(QtCore, QtWidgets, binding):
+    if binding == "PySide2" and QtWidgets.QApplication.instance() is None:
+        QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+        QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
     if os.name == "nt" and binding == "PySide2" and QtWidgets.QApplication.instance() is None:
         # This application uses raster table/text widgets, not OpenGL/QtQuick.
         # Avoid Qt's optional ANGLE/shader runtimes from the Win32 wheel.

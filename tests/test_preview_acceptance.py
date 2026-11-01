@@ -52,11 +52,12 @@ def test_source_and_frozen_resource_layouts_ignore_working_directory(tmp_path, m
 
 
 def test_command_line_self_test_from_foreign_cwd_and_no_report_overwrite(tmp_path):
-    env = dict(os.environ, PYTHONPATH=str(ROOT), QT_QPA_PLATFORM="offscreen")
+    env = dict(os.environ, PYTHONPATH=str(ROOT), QT_QPA_PLATFORM="windows" if os.name == "nt" else "offscreen")
     report = tmp_path / "report.json"
     args = [sys.executable, "-m", "app", "--self-test", "--report", str(report)]
     result = subprocess.run(args, cwd=str(tmp_path), env=env, capture_output=True, timeout=90)
     assert result.returncode == 0, result.stderr.decode("utf-8", errors="replace")
+    assert b"Cannot find font directory" not in result.stderr
     data = json.loads(report.read_text(encoding="utf-8"))
     assert data["status"] == "passed" and data["frozen"] is False
     assert "final_export_blocked" in data["checks"]
@@ -78,7 +79,7 @@ def test_platform_sets_reject_extra_qt_and_wrong_architecture():
     policy = module("windows_policy")
     for folder, legacy in (("windows7", True), ("windows11", False)):
         required = policy.requirements(ROOT / "packaging" / folder / "requirements-candidate.txt")
-        manifest = json.loads((ROOT / "packaging" / folder / "wheels-candidate.json").read_text())
+        manifest = json.loads((ROOT / "packaging" / folder / "wheels-candidate.json").read_text(encoding="utf-8"))
         policy.check_wheels(manifest, required, legacy)
         changed = json.loads(json.dumps(manifest))
         changed["wheels"].append({"name": "PySide6" if legacy else "PySide2", "version": "0", "filename": "unapproved-any.whl"})

@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 import re
-import sqlite3
+from app.core.database import database
 
 
 @dataclass(frozen=True)
@@ -47,7 +47,7 @@ class RevisionRegistry:
     def __init__(self, path: Path):
         path.parent.mkdir(parents=True, exist_ok=True)
         self.path = path
-        with sqlite3.connect(path) as db:
+        with database(path) as db:
             db.execute("CREATE TABLE IF NOT EXISTS revisions (scope TEXT, period TEXT, revision INTEGER, definition_sha256 TEXT, definition_kind TEXT, created_at TEXT, PRIMARY KEY(scope,period,revision))")
 
     def record(self, scope: str, context: SubmissionContext, definition_sha256: str, definition_kind: str = "pinned_package_manifest") -> None:
@@ -55,7 +55,7 @@ class RevisionRegistry:
             raise ValueError("Použijte neosobní alias a ověřený hash definic.")
         if definition_kind not in {"pinned_package_manifest", "local_working_profile"}:
             raise ValueError("Neznámý druh definice.")
-        with sqlite3.connect(self.path) as db:
+        with database(self.path) as db:
             db.execute("BEGIN IMMEDIATE")
             maximum = db.execute("SELECT MAX(revision) FROM revisions WHERE scope=? AND period=?", (scope, context.period.iso)).fetchone()[0]
             expected = 0 if maximum is None else maximum + 1

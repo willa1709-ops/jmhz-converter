@@ -22,7 +22,7 @@ BUNDLES = {2026: "jmhz-1.4.3.6", 2027: "jmhz-1.5.0.3"}
 
 def case(year=2026, kind="HPP", zero=False):
     contract = EmployeeContract(OFFICIAL, BUNDLES[year])
-    numbered = load_numbered_profile((ROOT / "config/payroll/numbered.template.json").read_text())
+    numbered = load_numbered_profile((ROOT / "config/payroll/numbered.template.json").read_text(encoding="utf-8"))
     numbered["controls"] = []
     numbered["calculations"] = {}
     # A financial item ID is intentionally unrelated to the JMHZ ID; its real number is unknown.
@@ -227,7 +227,7 @@ def test_organization_history_package_and_cli_keep_employee_xml_isolated(tmp_pat
     with pytest.raises(ValueError):
         workspace.draft_validation(other.id, imported.id, identity)
     params = tmp_path / "params.json"
-    params.write_text(json.dumps(parameters))
+    params.write_text(json.dumps(parameters), encoding="utf-8")
     completed = subprocess.run([sys.executable, "-m", "app.core.employee_xml", "--workspace", str(workspace.root), "--organization", org.id,
         "--import-id", imported.id, "--parameters", str(params), "--write-draft"], cwd=str(ROOT), capture_output=True, text=True)
     assert completed.returncode == 0, completed.stderr

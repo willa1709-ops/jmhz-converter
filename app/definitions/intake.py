@@ -1,4 +1,6 @@
 """Normalizace nahraných názvů a dohledatelné rozbalení dodaných archivů."""
+from __future__ import annotations
+
 import argparse
 import hashlib
 import json
@@ -8,6 +10,7 @@ import unicodedata
 from urllib.parse import quote
 
 from app.definitions.archives import extract_zip
+from app.core.schemas import is_below
 
 
 def digest(path: Path) -> str:
@@ -17,14 +20,14 @@ def digest(path: Path) -> str:
 def normalize_uploads(root: Path) -> dict:
     root = root.resolve()
     index = root / "intake.json"
-    records = json.loads(index.read_text()) if index.exists() else {"format_version": 1, "documents": []}
+    records = json.loads(index.read_text(encoding="utf-8")) if index.exists() else {"format_version": 1, "documents": []}
     pattern = re.compile(r"https___developers\.mpsv\.cz_assets_documents_([a-f0-9-]{36})_(.+)")
     planned = []
     for path in sorted(root.glob("20*/*")):
         match = pattern.fullmatch(path.name)
         if not match:
             continue
-        if path.is_symlink() or not path.resolve().is_relative_to(root):
+        if path.is_symlink() or not is_below(path.resolve(), root):
             raise ValueError("Nahraný dokument nesmí být symlink mimo úložiště.")
         uuid, original_name = match.groups()
         ascii_name = unicodedata.normalize("NFKD", original_name).encode("ascii", "ignore").decode().lower()
@@ -57,7 +60,7 @@ def unpack_archives(root: Path, staging: Path) -> list[dict]:
     AppleDouble metadata is inventoried, never treated as an XML schema.
     """
     root, staging = root.resolve(), staging.resolve()
-    intake = json.loads((root / "intake.json").read_text())
+    intake = json.loads((root / "intake.json").read_text(encoding="utf-8"))
     published, archives = [], []
     budget = 0
 
@@ -88,7 +91,7 @@ def unpack_archives(root: Path, staging: Path) -> list[dict]:
             if suffix not in {".xsd", ".zip"}:
                 continue
             target = root / target_base / member["path"]
-            if not target.resolve().is_relative_to(root):
+            if not is_below(target.resolve(), root):
                 raise ValueError("Cílová cesta uniká z úložiště.")
             target.parent.mkdir(parents=True, exist_ok=True)
             if target.exists() and digest(target) != member["sha256"]:
@@ -103,7 +106,7 @@ def unpack_archives(root: Path, staging: Path) -> list[dict]:
 
     for source in intake["documents"]:
         path = (root / source["file"]).resolve()
-        if not path.is_relative_to(root) or digest(path) != source["sha256"]:
+        if not is_below(path, root) or digest(path) != source["sha256"]:
             raise ValueError("Zdrojový archiv je mimo úložiště nebo byl změněn.")
         if path.suffix == ".zip":
             visit(path, source, [], Path(source["file"]).parent / "extracted" / path.stem, 0)

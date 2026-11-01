@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from app.xml.bundle import BundleValidator, registered_validator
+from app.core.schemas import is_below
 
 
 def main() -> int:
@@ -25,9 +26,9 @@ def main() -> int:
             if args.manifest:
                 manifest_root = args.manifest.resolve().parent
                 hashes = {}
-                for item in json.loads(args.manifest.read_text())["documents"]:
+                for item in json.loads(args.manifest.read_text(encoding="utf-8"))["documents"]:
                     path = (manifest_root / item["file"]).resolve()
-                    if path.is_relative_to(args.bundle_root.resolve()) and path.suffix == ".xsd":
+                    if is_below(path, args.bundle_root.resolve()) and path.suffix == ".xsd":
                         hashes[path.relative_to(args.bundle_root.resolve()).as_posix()] = item["sha256"]
             validator = BundleValidator(args.schema, args.bundle_root, hashes)
         else:

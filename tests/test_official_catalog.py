@@ -11,15 +11,15 @@ from app.definitions.library import DefinitionLibrary
 
 def test_register_and_verify_separate_origin_and_technical_validation(tmp_path):
     path = tmp_path / "synthetic.xsd"
-    path.write_text('<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="test" type="xs:string"/></xs:schema>')
+    path.write_text('<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="test" type="xs:string"/></xs:schema>', encoding="utf-8")
     record = register(tmp_path, path, "https://example.invalid/test.xsd", "synthetic-1", "xsd")
     assert record["technical_status"] == "standalone_xsd_valid"
     assert record["origin_review"]["status"] == "unverified"
     assert record["origin_review"]["reviewer"] is None
     assert verify(tmp_path) == []
     assert register(tmp_path, path, record["source_url"], "synthetic-1", "xsd") == record
-    assert len(json.loads((tmp_path / "manifest.json").read_text())["documents"]) == 1
-    path.write_text("changed")
+    assert len(json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))["documents"]) == 1
+    path.write_text("changed", encoding="utf-8")
     assert len(verify(tmp_path)) == 1
     path.unlink()
     assert len(verify(tmp_path)) == 1
@@ -27,7 +27,7 @@ def test_register_and_verify_separate_origin_and_technical_validation(tmp_path):
 
 def test_register_dependency_xsd_does_not_claim_full_validation(tmp_path):
     path = tmp_path / "dependency.xsd"
-    path.write_text('<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:include schemaLocation="https://example.invalid/not-downloaded.xsd"/></xs:schema>')
+    path.write_text('<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:include schemaLocation="https://example.invalid/not-downloaded.xsd"/></xs:schema>', encoding="utf-8")
     record = register(tmp_path, path, "https://example.invalid/dependency.xsd", "synthetic-1", "xsd")
     assert record["technical_status"] == "dependencies_unchecked"
     assert record["status"] == "unverified"
@@ -43,7 +43,7 @@ def test_codelist_and_methodology_retained_and_compared_as_data(tmp_path):
     assert library.get(old).artifact.technical_status == "csv_parsed"
     assert library.compare(old, new)
     method = tmp_path / "method.json"
-    method.write_text('{"synthetic_note":"__import__(not_executed)"}')
+    method.write_text('{"synthetic_note":"__import__(not_executed)"}', encoding="utf-8")
     method_id = library.import_document(method, "https://example.invalid/method.json", "v1", "methodology")
     assert library.get(method_id).artifact.technical_status == "json_parsed"
     assert library.get(method_id).snapshot["interpretation"] == "not_implemented"
@@ -59,30 +59,45 @@ def test_catalog_rejects_escape_and_preserves_unknown_manifest(tmp_path):
     root = tmp_path / "official"
     root.mkdir()
     outside = tmp_path / "outside.txt"
-    outside.write_text("synthetic")
+    outside.write_text("synthetic", encoding="utf-8")
     with pytest.raises(ValueError):
         register(root, outside, "https://example.invalid/a.txt", "v", "methodology")
-    link = root / "linked.txt"
-    link.symlink_to(outside)
-    with pytest.raises(ValueError):
-        register(root, link, "https://example.invalid/a.txt", "v", "methodology")
     path = root / "inside.txt"
-    path.write_text("synthetic")
+    path.write_text("synthetic", encoding="utf-8")
     manifest = root / "manifest.json"
-    manifest.write_text('{"format_version":99,"documents":[]}')
+    manifest.write_text('{"format_version":99,"documents":[]}', encoding="utf-8")
     before = manifest.read_bytes()
     with pytest.raises(ValueError):
         register(root, path, "https://example.invalid/a.txt", "v", "methodology")
     assert manifest.read_bytes() == before
 
 
+def test_catalog_rejects_symlink_escape(tmp_path):
+    root = tmp_path / "official"
+    root.mkdir()
+    outside = tmp_path / "outside.txt"
+    outside.write_text("synthetic", encoding="utf-8")
+    link = root / "linked.txt"
+    try:
+        link.symlink_to(outside)
+    except OSError as error:
+        if getattr(error, "winerror", None) == 1314:
+            pytest.skip("Windows odmítl symlink (WinError 1314): účet nemá oprávnění "
+                        "SeCreateSymbolicLinkPrivilege ani dostupný Developer Mode. "
+                        "Kontrola přímého úniku cesty běží v samostatném testu.")
+        raise
+    with pytest.raises(ValueError):
+        register(root, link, "https://example.invalid/a.txt", "v", "methodology")
+    assert not (root / "manifest.json").exists()
+
+
 def test_catalog_cli_register_and_verify(tmp_path):
     path = tmp_path / "synthetic.txt"
-    path.write_text("synthetic methodology")
+    path.write_text("synthetic methodology", encoding="utf-8")
     base = [sys.executable, "-m", "app.definitions.catalog", "--root", str(tmp_path)]
     result = subprocess.run(base + ["register", str(path), "--source", "https://example.invalid/method.txt", "--version", "synthetic-1", "--kind", "methodology"], capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
     assert json.loads(result.stdout)["technical_status"] == "text_decoded"
     assert subprocess.run(base + ["verify"], capture_output=True).returncode == 0
-    path.write_text("changed")
+    path.write_text("changed", encoding="utf-8")
     assert subprocess.run(base + ["verify"], capture_output=True).returncode == 1

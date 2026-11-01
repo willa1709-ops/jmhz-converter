@@ -16,7 +16,7 @@ ROOT = Path(__file__).parents[1]
 
 
 def employer_case(year, variable_symbol="0000000001", ico="00000001"):
-    profile = json.loads((ROOT / "config/conversion/monthly-{}.json".format(year)).read_text())
+    profile = json.loads((ROOT / "config/conversion/monthly-{}.json".format(year)).read_text(encoding="utf-8"))
     values = {c: "" for c in [r['column'] for r in profile['fields'].values()]}
     values.update(period="{}-09".format(year), employer_ico=ico, employer_variable_symbol=variable_symbol)
     for path, ref in profile["fields"].items():

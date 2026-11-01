@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from contextlib import closing
+
 import json
 from pathlib import Path
 import shutil
@@ -114,7 +116,7 @@ def test_selected_approved_package_supplies_identity_xsd_and_is_rechecked_on_use
     assert checked.report["validation_evidence"]["xsd_dependency_hashes"]
     assert checked.report["validation_evidence"]["bundle_id"] == "jmhz-1.5.0.3"
     numbered = package.directory / package.manifest["entry_points"]["numbered_profile"]
-    numbered.write_text("{}")
+    numbered.write_text("{}", encoding="utf-8")
     with pytest.raises(ValueError):
         work.analyze(a.id, imported.id, OFFICIAL, "jmhz-1.5.0.3")
 
@@ -123,7 +125,7 @@ def test_shipped_workforce_package_matches_template_and_preserves_old_package(tm
     from app.core.packages import install_package
     pin = "541b7563f0146a4edcba889ac6aa1e9a3c83d48088f5c4df095729a9d72dbfab"
     package = install_package(ROOT / "definition-packages/working-workforce-1.0.zip", tmp_path / "store", pin)
-    assert package.profile == load_numbered_profile((ROOT / "config/payroll/workforce.template.json").read_text())
+    assert package.profile == load_numbered_profile((ROOT / "config/payroll/workforce.template.json").read_text(encoding="utf-8"))
     assert (ROOT / "definition-packages/working-payroll-2027-1.0.zip").exists()
 
 
@@ -256,17 +258,17 @@ def test_copied_database_with_another_owner_is_rejected(workspace):
         work.get_import(b.id, imported.id)
 
 
-def test_additive_database_upgrade_preserves_old_imports_and_checks(workspace):
+def test_additive_database_upgrade_preserves_old_imports_and_checks(workspace, tracked_sqlite_connections):
     work, a, _ = workspace
     imported = work.import_table(a.id, Period(2026, 9), source(values()))
     checked = work.analyze(a.id, imported.id)
     path = work.organization_directory(a.id) / "workspace.sqlite3"
     # Recreate the first workspace layout, which did not cache counts or row calculations.
-    with sqlite3.connect(str(path)) as db:
+    with closing(sqlite3.connect(str(path))) as db, db:
         old_import = db.execute("SELECT id,organization_id,period,import_index,created_at,source_sha256,profile,definition,source FROM imports").fetchone()
         old_check = db.execute("SELECT import_id,analysis_index,created_at,error_count,report,totals FROM analyses").fetchone()
     path.unlink()
-    with sqlite3.connect(str(path)) as db:
+    with closing(sqlite3.connect(str(path))) as db, db:
         db.execute("CREATE TABLE owner (organization_id TEXT PRIMARY KEY)")
         db.execute("INSERT INTO owner VALUES (?)", (a.id,))
         db.execute("CREATE TABLE imports (id TEXT PRIMARY KEY, organization_id TEXT NOT NULL, period TEXT NOT NULL, import_index INTEGER NOT NULL, created_at TEXT NOT NULL, source_sha256 TEXT NOT NULL, profile TEXT NOT NULL, definition TEXT NOT NULL, source TEXT NOT NULL, UNIQUE(organization_id,period,import_index))")
@@ -287,8 +289,8 @@ def test_additive_database_upgrade_preserves_old_imports_and_checks(workspace):
 def test_org_xml_checks_employer_and_keeps_private_artifacts_in_scoped_storage(workspace):
     work, a, b = workspace
     work.set_profile(profile(False))
-    conversion = json.loads((ROOT / "config/conversion/jiny-prijem-2027.json").read_text())
-    bindings = json.loads((ROOT / "config/payroll/jiny-prijem-2027.bindings.json").read_text())
+    conversion = json.loads((ROOT / "config/conversion/jiny-prijem-2027.json").read_text(encoding="utf-8"))
+    bindings = json.loads((ROOT / "config/payroll/jiny-prijem-2027.bindings.json").read_text(encoding="utf-8"))
     imported = work.import_table(a.id, Period(2027, 9), source(values(period="27-09")))
     parameters = {"submission_id": "00000000-0000-4000-8000-000000000002", "employer_variable_symbol": a.variable_symbol,
                   "year": 2027, "month": 9, "filled_at": "2026-10-30T12:00:00"}

@@ -29,14 +29,14 @@ def test_csv_encodings_delimiters(tmp_path, encoding, delimiter):
 @pytest.mark.parametrize("text", ["id;id\na;b\n", "id; \na;b\n", "id;name\na;b;c\n", "", "id;name\n"])
 def test_bad_csv(tmp_path, text):
     path = tmp_path / "bad.csv"
-    path.write_text(text)
+    path.write_text(text, encoding="utf-8")
     with pytest.raises(ValueError):
         read_csv(path, delimiter=";")
 
 
 def test_csv_quoted_decimal_and_multiline(tmp_path):
     path = tmp_path / "quoted.csv"
-    path.write_text('id,amount,note\n0001,"10,25","first\nsecond"\n0002,2.00,last\n')
+    path.write_text('id,amount,note\n0001,"10,25","first\nsecond"\n0002,2.00,last\n', encoding="utf-8")
     data = read_csv(path, delimiter=",")
     assert [r.number for r in data.rows] == [2, 4]
     assert decimal_value(data.rows[0].values["amount"]) == Decimal("10.25")
@@ -94,7 +94,7 @@ def test_mapping_operations_and_profile_roundtrip(tmp_path):
     profile = Profile("example", DRAFT_VERSION, {"income": expr})
     path = tmp_path / "profile.json"
     profile.save(path)
-    assert Profile.loads(path.read_text()) == profile
+    assert Profile.loads(path.read_text(encoding="utf-8")) == profile
     with pytest.raises(ValueError):
         evaluate({"op": "eval", "value": "__import__('os')"}, {})
     with pytest.raises(ValueError):
@@ -141,7 +141,7 @@ def test_end_to_end_example():
         generate_final_xml(mapped)
 
 
-def test_definition_hash_diff_and_sqlite(tmp_path):
+def test_definition_hash_diff_and_sqlite(tmp_path, tracked_sqlite_connections):
     path = tmp_path / "definition.txt"
     path.write_bytes(b"synthetic definition")
     artifact = Artifact.capture(path, "https://example.invalid/definition", "synthetic-1")
@@ -157,6 +157,7 @@ def test_definition_hash_diff_and_sqlite(tmp_path):
     store.save_artifact(artifact)
     with pytest.raises(ValueError):
         store.load_profile("absent")
+    (tmp_path / "config.sqlite3").unlink()
 
 
 def test_synthetic_xsd_validation_and_xxe_rejection():

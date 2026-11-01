@@ -244,7 +244,7 @@ def test_resource_staging_rejects_roundtrip_traversal_in_manifest(tmp_path):
     (source / "schema.xsd").write_bytes(content)
     # Resolves back inside the SOURCE, but is not safe relative to another destination.
     manifest = {"format_version": 1, "documents": [{"kind": "xsd", "file": "../official/schema.xsd", "sha256": hashlib.sha256(content).hexdigest()}]}
-    (source / "manifest.json").write_text(json.dumps(manifest))
+    (source / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
     destination = tmp_path / "runtime" / "official"
     with pytest.raises(ValueError):
         stage_schemas(source, destination)

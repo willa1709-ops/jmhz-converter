@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from contextlib import closing
+
 from decimal import Decimal, localcontext
 import hashlib
 from io import BytesIO
@@ -190,7 +192,7 @@ def test_period_policy_changes_and_revision_registry_do_not_create_or_store_guid
             registry.record("employer_a", context(revision=revision), fingerprint)
     registry.record("employer_a", context("26-10"), fingerprint)
     registry.record("employer_b", context(), fingerprint)
-    with sqlite3.connect(db_path) as db:
+    with closing(sqlite3.connect(db_path)) as db, db:
         dump = "\n".join(db.iterdump())
         assert len(db.execute("SELECT * FROM revisions").fetchall()) == 4
     assert OIC not in dump and RC not in dump and "guid" not in dump.lower()
@@ -251,7 +253,7 @@ def test_package_tampering_extra_code_and_unsupported_logic_are_rejected(tmp_pat
     path3 = tmp_path / "valid.zip"
     pin3 = build_package(profile(), path3, "payroll", "3")["manifest_sha256"]
     installed = install_package(path3, tmp_path / "store", pin3)
-    (installed.directory / "profiles/numbered.json").write_text("{}")
+    (installed.directory / "profiles/numbered.json").write_text("{}", encoding="utf-8")
     with pytest.raises(ValueError):
         load_package(installed.directory, pin3)
     with pytest.raises(ValueError):
@@ -283,7 +285,7 @@ def test_profile_duplicate_json_keys_unknown_controls_and_long_precision_are_rej
 @pytest.mark.parametrize("year", [2026, 2027])
 def test_external_package_and_numbered_items_feed_existing_jiny_prijem_with_primary_flags(tmp_path, year):
     conversion = json.loads((ROOT / "config/conversion/jiny-prijem-{}.json".format(year)).read_text(encoding="utf-8"))
-    bindings = json.loads((ROOT / "config/payroll/jiny-prijem-2027.bindings.json").read_text())
+    bindings = json.loads((ROOT / "config/payroll/jiny-prijem-2027.bindings.json").read_text(encoding="utf-8"))
     if year == 2026:
         del bindings["tax_income_10555"]
     package_path = tmp_path / "full.zip"
@@ -321,15 +323,15 @@ def test_safe_cli_diagnostics_and_explicit_revision_recording(tmp_path):
 def test_cli_uses_external_xsd_package_for_a_draft_but_never_final_export(tmp_path):
     from app.core.conversion import export_final, FinalExportBlocked
     package_path = tmp_path / "package.zip"
-    conversion = json.loads((ROOT / "config/conversion/jiny-prijem-2027.json").read_text())
-    bindings = json.loads((ROOT / "config/payroll/jiny-prijem-2027.bindings.json").read_text())
+    conversion = json.loads((ROOT / "config/conversion/jiny-prijem-2027.json").read_text(encoding="utf-8"))
+    bindings = json.loads((ROOT / "config/payroll/jiny-prijem-2027.bindings.json").read_text(encoding="utf-8"))
     pin = build_package(profile(), package_path, "working", "1", ROOT / "schemas/official", conversion, bindings)["manifest_sha256"]
     installed = install_package(package_path, tmp_path / "store", pin)
     row = values(period="27-09", p100="100", p110="10", p120="5", p190="105")
     csv = tmp_path / "synthetic.csv"
     csv.write_text(";".join(row) + "\n" + ";".join(row.values()) + "\n", encoding="utf-8")
     params = tmp_path / "params.json"
-    params.write_text(json.dumps({"submission_id": "00000000-0000-4000-8000-000000000002", "employer_variable_symbol": "0000000000", "year": 2027, "month": 9, "filled_at": "2026-10-30T12:00:00"}))
+    params.write_text(json.dumps({"submission_id": "00000000-0000-4000-8000-000000000002", "employer_variable_symbol": "0000000000", "year": 2027, "month": 9, "filled_at": "2026-10-30T12:00:00"}), encoding="utf-8")
     draft = tmp_path / "output.draft.xml"
     completed = subprocess.run([sys.executable, "-m", "app.core.payroll", str(csv), "--package", str(installed.directory),
         "--trusted-manifest-sha256", pin, "--period", "27-09", "--revision", "0", "--parameters", str(params), "--draft-output", str(draft)],

@@ -446,6 +446,12 @@ class OrganizationsWindow(QMainWindow):
             except Exception:
                 self.status.setText("Záloha nevytvořena. Ověřte přístup, integritu definic a nový cílový soubor; nic se nepřepisuje.")
 
+    def workflow_message(self, title, message, failure=False):
+        """Critical workflow outcomes must remain visible below the scroll fold."""
+        self.status.setText(message)
+        method = QtWidgets.QMessageBox.warning if failure else QtWidgets.QMessageBox.information
+        method(self, title, message)
+
     def choose_restore(self):
         path, _ = QFileDialog.getOpenFileName(self, "Obnova samostatné organizace – bez přepsání existujících dat", "", "ZIP (*.zip)")
         if not path:
@@ -457,14 +463,24 @@ class OrganizationsWindow(QMainWindow):
                 org = restore_backup(self.workspace, Path(path), pin.strip())
                 self.organization_id = org.id
                 self.refresh()
-                self.status.setText("Organizace obnovena bez přepsání ostatních. Úložiště ani archiv nejsou šifrované.")
-            except Exception:
-                self.status.setText("Obnova odmítnuta: ověřte hash, integritu, potřebné definice a nepřítomnost cílové organizace.")
+                self.workflow_message("Obnova dokončena", "Organizace obnovena a zapsána do registru bez přepsání ostatních. Úložiště ani archiv nejsou šifrované.")
+            except Exception as error:
+                detail = str(error) if isinstance(error, ValueError) else "Archiv nelze přečíst nebo zapsat, má neplatnou strukturu, případně selhal zápis registru."
+                self.workflow_message("Obnova selhala", "Obnova nebyla dokončena. " + detail, True)
 
     def choose_plan(self):
-        if not self.imported or not self.draft_id:
-            self.status.setText("Plán vyžaduje vybraný import a pracovní XML. Nejde o odeslání podání.")
-            return
+        try:
+            if not self.imported or self.imported.organization_id != self.organization_id or self.imported.period != self.selected_period():
+                raise ValueError("Vyberte organizaci, vykazovaný měsíc a jeho import.")
+            if not self.draft_id:
+                raise ValueError("Nejprve vytvořte pracovní XML pro vybraný import tlačítkem Pracovní XML nebo Celý měsíční paket. GUID musí být explicitně zadána ve vstupech XML.")
+            self.workspace.draft_bytes(self.organization_id, self.imported.id, self.draft_id)
+            self.open_plan_dialog()
+        except Exception as error:
+            detail = str(error) if isinstance(error, ValueError) else "Nelze načíst pracovní XML nebo historii plánů. Ověřte dostupnost úložiště a integritu dat."
+            self.workflow_message("Plán nelze otevřít", detail + " Nejde o odeslání podání.", True)
+
+    def open_plan_dialog(self):
         from app.core.submission_plans import history, record_plan
         plans = history(self.workspace, self.organization_id, self.imported.period)
         dialog = QDialog(self)
@@ -492,9 +508,10 @@ class OrganizationsWindow(QMainWindow):
         if run(dialog) == enum(QDialog, "DialogCode", "Accepted"):
             try:
                 record_plan(self.workspace, self.organization_id, self.imported.id, self.draft_id, revision.value(), mode.currentData(), base.currentData(), reason.currentData())
-                self.status.setText("Pracovní plán uložen. XML zůstává řádným pracovním návrhem; oprava ani odeslání nebyly provedeny.")
-            except Exception:
-                self.status.setText("Návaznost odmítnuta. Ověřte pořadí, původní organizaci/měsíc, důvod a vazby GUID; revize není automatická oprava.")
+                self.workflow_message("Plán uložen", "Pracovní plán uložen. XML zůstává řádným pracovním návrhem; oprava ani odeslání nebyly provedeny.")
+            except Exception as error:
+                detail = str(error) if isinstance(error, ValueError) else "Nelze zapsat evidenci plánu; ověřte dostupnost úložiště."
+                self.workflow_message("Plán neuložen", detail + " Revize není automatická oprava.", True)
 
     def prepare_monthly_paths(self, employee_profile, monthly_profile, employer_csv, parameters):
         self.draft_id = None

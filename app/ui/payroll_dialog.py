@@ -116,7 +116,7 @@ class PayrollDialog(QDialog):
                        for r in self.result.rows])
             self.fill(self.errors, ["Řádek", "Pole", "Kód", "Problém", "Náprava"],
                       [[i.row or "hlavička", i.field, i.code, i.message, i.remedy] for i in self.result.issues])
-            self.summary.setText("Období {0}, interní revize {1}; nálezy {2}. Finální export NE.".format(context.period.iso, context.revision_index, len(self.result.issues)))
+            self.summary.setText("Období {0}, interní revize {1}; nálezy {2}. Finální export NE. Výpočet nezapisuje historii organizace; v hlavním okně použijte Kontrola a výpočty → Zapsat interní verzi.".format(context.period.iso, context.revision_index, len(self.result.issues)))
         except Exception:
             self.result = None
             self.summary.setText("Kontrola selhala. Ověřte kontext a profil; identifikátory se do diagnostiky nevypisují.")

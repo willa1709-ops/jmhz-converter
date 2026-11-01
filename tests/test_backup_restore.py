@@ -44,7 +44,7 @@ def test_changed_archive_or_wrong_hash_never_creates_an_organization(tmp_path):
     assert not restored.organizations()
 
 
-def test_backup_preserves_old_offline_definitions_and_relocates_only_storage_paths(tmp_path):
+def test_backup_preserves_old_offline_definitions_and_relocates_only_storage_paths(tmp_path, monkeypatch):
     from app.core.packages import build_package, install_package
     from app.core.models import SourceRow, SourceTable
     from test_employee_xml import case, OFFICIAL
@@ -60,6 +60,17 @@ def test_backup_preserves_old_offline_definitions_and_relocates_only_storage_pat
     backup = tmp_path / "backup.zip"
     report = create_backup(workspace, org.id, backup)
     restored = OrganizationWorkspace(tmp_path / "restored")
+    original = Path.rename
+    def fail_snapshot(path, target):
+        if path.name == "workspace.sqlite3":
+            raise OSError("synthetic disk failure")
+        return original(path, target)
+    monkeypatch.setattr(Path, "rename", fail_snapshot)
+    with pytest.raises(OSError):
+        restore_backup(restored, backup, report["sha256"])
+    assert not restored.organizations()
+    assert not list((restored.root / "definition-packages").rglob("manifest.json"))
+    monkeypatch.setattr(Path, "rename", original)
     restore_backup(restored, backup, report["sha256"])
     shutil.rmtree(workspace.root)  # Recovery must not depend on the original absolute paths.
     copied = restored.get_import(org.id, imported.id)
@@ -69,3 +80,23 @@ def test_backup_preserves_old_offline_definitions_and_relocates_only_storage_pat
     employer_id = restored.import_employer_table(org.id, imported.id, employer, monthly)
     _, result = restored.prepare_monthly_draft(org.id, imported.id, employer_id, data[1], data[4], OFFICIAL)
     assert result.xsd_valid  # Uses the recovered, pinned XSD/profile set.
+
+
+def test_failed_registry_write_rolls_back_files_and_organization(tmp_path, monkeypatch):
+    source, org, _, _, imported, draft = workspace_case(tmp_path / 'source')
+    archive = tmp_path / 'backup.zip'
+    pin = create_backup(source, org.id, archive)['sha256']
+    restored = OrganizationWorkspace(tmp_path / 'restored')
+    original = Path.rename
+    def fail_snapshot(path, target):
+        if path.name == 'workspace.sqlite3':
+            raise OSError('synthetic disk failure')
+        return original(path, target)
+    monkeypatch.setattr(Path, 'rename', fail_snapshot)
+    with pytest.raises(OSError):
+        restore_backup(restored, archive, pin)
+    assert not restored.organizations()
+    assert not (restored.root / 'organizations' / org.id).exists()
+    assert not list(restored.root.glob('.restore-*'))
+    monkeypatch.setattr(Path, 'rename', original)
+    assert restore_backup(restored, archive, pin) == org

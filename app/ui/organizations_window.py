@@ -20,13 +20,21 @@ class OrganizationsWindow(QMainWindow):
     def __init__(self, root=None):
         super().__init__()
         self.setWindowTitle("JMHZ Converter – organizace a měsíční importy")
-        self.resize(1200, 850)
+        self.resize(1000, 720)
+        screen = QtWidgets.QApplication.primaryScreen()
+        if screen is not None:
+            available = screen.availableGeometry()
+            self.resize(min(1000, max(320, available.width() - 40)),
+                        min(720, max(240, available.height() - 80)))
         root = root or Path(QStandardPaths.writableLocation(enum(QStandardPaths, "StandardLocation", "AppDataLocation"))) / "workspace"
         self.workspace = OrganizationWorkspace(Path(root))
         self.organization_id = self.imported = self.analysis = self.draft_id = None
         self.tools = None
         central = QWidget()
-        self.setCentralWidget(central)
+        self.scroll = QtWidgets.QScrollArea()
+        self.scroll.setWidgetResizable(True)
+        self.scroll.setWidget(central)
+        self.setCentralWidget(self.scroll)
         layout = QVBoxLayout(central)
         notice = QLabel("Organizace → měsíc → import → kontrola → pracovní XML. Finální export ZABLOKOVÁN.\n"
                                 "Importy a pracovní XML se ukládají lokálně odděleně pro každou organizaci; obsahují osobní údaje.\n"
@@ -34,9 +42,9 @@ class OrganizationsWindow(QMainWindow):
                                 "Pracovní XML HPP/DPČ/DPP: běžný formulář s jedním ELDP úsekem; úplnost podání neověřena.")
         notice.setWordWrap(True)
         layout.addWidget(notice)
-        controls = QHBoxLayout()
+        controls = self.control_grid()
         self.period = QLineEdit(date.today().strftime("%Y-%m"))
-        self.period.setMaximumWidth(130)
+        self.period.setMaxLength(7)
         self.period.editingFinished.connect(self.refresh)
         controls.addWidget(QLabel("Vykazovaný měsíc"))
         controls.addWidget(self.period)
@@ -45,16 +53,18 @@ class OrganizationsWindow(QMainWindow):
         self.button(controls, "Společný profil JSON…", lambda: self.choose_profile(False))
         self.button(controls, "Offline definice ZIP…", self.choose_package)
         layout.addLayout(controls)
-        csv_controls = QHBoxLayout()
-        csv_controls.addWidget(QLabel("CSV z Pascalu/DOSu – kódování a oddělovač:"))
+        csv_controls = self.control_grid()
+        csv_label = QLabel("CSV z Pascalu/DOSu – kódování a oddělovač:")
+        csv_label.setWordWrap(True)
+        csv_controls.addWidget(csv_label, 0, 0, 1, 2)
         self.csv_encoding = QComboBox()
         self.csv_encoding.addItems(["cp1250", "utf-8-sig", "auto"])
         self.csv_delimiter = QComboBox()
         self.csv_delimiter.addItems([";", "auto", ",", "\t", "|"])
-        csv_controls.addWidget(self.csv_encoding)
-        csv_controls.addWidget(self.csv_delimiter)
-        self.button(csv_controls, "Nešifrovaná záloha…", self.choose_backup)
-        self.button(csv_controls, "Obnovit novou organizaci…", self.choose_restore)
+        csv_controls.addWidget(self.csv_encoding, 1, 0)
+        csv_controls.addWidget(self.csv_delimiter, 1, 1)
+        self.button(csv_controls, "Nešifrovaná záloha…", self.choose_backup, 2, 0)
+        self.button(csv_controls, "Obnovit novou organizaci…", self.choose_restore, 2, 1)
         layout.addLayout(csv_controls)
         self.organizations = QTableWidget()
         self.organizations.setEditTriggers(enum(QAbstractItemView, "EditTrigger", "NoEditTriggers"))
@@ -66,13 +76,13 @@ class OrganizationsWindow(QMainWindow):
         self.context = QLabel("Vyberte organizaci. Poslední verze znamená interní přípravu, nikoliv odeslané podání.")
         self.context.setWordWrap(True)
         layout.addWidget(self.context)
-        actions = QHBoxLayout()
+        actions = self.control_grid()
         self.button(actions, "Profil této organizace…", lambda: self.choose_profile(True))
         self.button(actions, "Použít společný profil", self.use_shared_profile)
         self.button(actions, "Import CSV/XLSX…", self.choose_import)
         self.button(actions, "Kontrola a výpočty", self.check)
         layout.addLayout(actions)
-        actions = QHBoxLayout()
+        actions = self.control_grid()
         self.button(actions, "Pracovní XML…", self.choose_xml)
         self.button(actions, "Celý měsíční paket…", self.choose_monthly)
         self.button(actions, "Historie kontrol / XML…", self.open_audit_history)
@@ -81,7 +91,7 @@ class OrganizationsWindow(QMainWindow):
         tools_button.setEnabled(QT_API == "PySide6")
         tools_button.setToolTip("Starší doplňkové nástroje vyžadují moderní variantu; hlavní workflow je společný.")
         layout.addLayout(actions)
-        history = QHBoxLayout()
+        history = QVBoxLayout()
         history.addWidget(QLabel("Historie importů (oprava dat není opravné podání)"))
         self.import_history = QComboBox()
         self.import_history.currentIndexChanged.connect(self.open_history)
@@ -89,16 +99,20 @@ class OrganizationsWindow(QMainWindow):
         self.import_history.setSizeAdjustPolicy(enum(QComboBox, "SizeAdjustPolicy", "AdjustToMinimumContentsLengthWithIcon"))
         self.import_history.setMinimumContentsLength(20)
         layout.addLayout(history)
-        history = QHBoxLayout()
+        history = QVBoxLayout()
         self.bundle = QComboBox()
         self.official_root = default_official_root()
         for b in strict_json((self.official_root / "bundles.json").read_text(encoding="utf-8"))["bundles"]:
             self.bundle.addItem(b["id"], b["id"])
         self.bundle.currentIndexChanged.connect(self.invalidate_analysis)
+        self.bundle.setSizeAdjustPolicy(enum(QComboBox, "SizeAdjustPolicy", "AdjustToMinimumContentsLengthWithIcon"))
+        self.bundle.setMinimumContentsLength(20)
         history.addWidget(QLabel("XSD k technické kontrole, účinnost nepotvrzena"))
         history.addWidget(self.bundle)
         layout.addLayout(history)
         self.pages = QTabWidget()
+        self.pages.setUsesScrollButtons(True)
+        self.pages.setElideMode(enum(Qt, "TextElideMode", "ElideRight"))
         self.rows = QTableWidget()
         self.errors = QTableWidget()
         for table in (self.rows, self.errors):
@@ -112,14 +126,16 @@ class OrganizationsWindow(QMainWindow):
         self.draft.setReadOnly(True)
         self.pages.addTab(self.draft, "Pracovní XML")
         layout.addWidget(self.pages)
-        revisions = QHBoxLayout()
+        revisions = self.control_grid()
         self.revision = QSpinBox()
         self.revision.setRange(0, 1_000_000)
-        revisions.addWidget(QLabel("Interní pořadí přípravy (0, 1, …), oddělené od GUID"))
+        revision_label = QLabel("Interní pořadí přípravy (0, 1, …), oddělené od GUID")
+        revision_label.setWordWrap(True)
+        revisions.addWidget(revision_label)
         revisions.addWidget(self.revision)
         self.button(revisions, "Zapsat interní verzi", self.record_version)
         layout.addLayout(revisions)
-        revisions = QHBoxLayout()
+        revisions = self.control_grid()
         self.button(revisions, "Uložit pracovní XML v organizaci", self.write_draft)
         final = QPushButton("Finální export – blokováno")
         final.setEnabled(False)
@@ -132,10 +148,20 @@ class OrganizationsWindow(QMainWindow):
         self.refresh()
 
     @staticmethod
-    def button(layout, label, handler):
+    def control_grid():
+        # Keep full Czech labels. Two columns fit smaller screens; the outer
+        # scroll area keeps every control reachable at larger DPI/font sizes.
+        grid = QtWidgets.QGridLayout()
+        grid.setDefaultPositioning(2, enum(Qt, "Orientation", "Horizontal"))
+        grid.setColumnStretch(0, 1)
+        grid.setColumnStretch(1, 1)
+        return grid
+
+    @staticmethod
+    def button(layout, label, handler, *position):
         button = QPushButton(label)
         button.clicked.connect(handler)
-        layout.addWidget(button)
+        layout.addWidget(button, *position)
         return button
 
     @staticmethod

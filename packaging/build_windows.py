@@ -16,7 +16,7 @@ from windows_policy import requirements, check_wheels, check_installed, audit_bi
 REPO = Path(__file__).resolve().parents[1]
 CORE_TESTS = ["test_conversion_core.py", "test_numbered_payroll.py", "test_organizations.py", "test_employee_xml.py",
               "test_monthly_packet.py", "test_backup_restore.py", "test_qt_workflow.py", "test_packaging_tools.py",
-              "test_preview_acceptance.py"]
+              "test_preview_acceptance.py", "test_windows_regressions.py"]
 
 
 def command(args, env=None, cwd=None, timeout=None):
@@ -64,7 +64,9 @@ def build(args):
     env["PIP_CONFIG_FILE"] = os.devnull
     env["PIP_DISABLE_PIP_VERSION_CHECK"] = "1"
     env["PYTEST_DISABLE_PLUGIN_AUTOLOAD"] = "1"
-    env["QT_QPA_PLATFORM"] = "offscreen"
+    # The Windows plugin uses system fonts. The generic offscreen plugin asks
+    # for a Qt lib/fonts directory that Windows wheels no longer ship.
+    env["QT_QPA_PLATFORM"] = "windows"
     for dependencies in (bootstrap, lock):
         command([sys.executable, "-m", "pip", "install", "--force-reinstall", "--no-deps", "--no-index", "--find-links", args.wheelhouse,
                  "--require-hashes", "-r", dependencies], env)

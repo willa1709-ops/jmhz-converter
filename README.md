@@ -32,6 +32,7 @@ vyžadují doložený přezkum. Žádné smyšlené elementy JMHZ nejsou impleme
 - [Dvě Windows sestavy: kandidátní verze, offline build a přejímka](docs/windows-preview-build.md)
 - [Český návod k prvnímu spuštění a syntetické ukázce](docs/first-run-windows.md)
 - [Krátká ruční přejímka Win7 x86 / Win11 x64](docs/windows-acceptance.md)
+- [Opravy prvního testu Windows 11, výsledky a opakování sestavení](docs/windows11-test-fixes.md)
 
 ## Spuštění
 

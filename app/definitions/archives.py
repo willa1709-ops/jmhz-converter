@@ -21,7 +21,10 @@ def zip_inventory(content: bytes) -> list[dict]:
         if len(archive.infolist()) > MAX_MEMBERS:
             raise ValueError("ZIP obsahuje příliš mnoho položek.")
         for item in archive.infolist():
-            name = unicodedata.normalize("NFC", item.filename)
+            # ZipInfo also sanitizes names while *reading*: on Windows it
+            # replaces backslashes, and on every OS it truncates at NUL.
+            # Validate the decoded name from the ZIP header before that change.
+            name = unicodedata.normalize("NFC", item.orig_filename)
             parts = PurePosixPath(name).parts
             if (not parts or name.startswith("/") or "\\" in name or "\x00" in name
                     or any(p in {".", ".."} or ":" in p or p.endswith((" ", "."))

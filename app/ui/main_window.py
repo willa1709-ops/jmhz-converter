@@ -103,7 +103,7 @@ class MainWindow(QMainWindow):
         bundle_index = self.official_root / "bundles.json"
         if bundle_index.is_file():
             try:
-                for bundle in json.loads(bundle_index.read_text())["bundles"]:
+                for bundle in json.loads(bundle_index.read_text(encoding="utf-8"))["bundles"]:
                     self.bundle_choice.addItem(bundle["id"], bundle["id"])
             except (ValueError, KeyError, TypeError):
                 self.bundle_choice.clear()

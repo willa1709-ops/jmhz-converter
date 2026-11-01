@@ -22,3 +22,8 @@ def dispose_window(window):
     window.close()
     window.deleteLater()
     QtCore.QCoreApplication.sendPostedEvents(None, enum(QtCore.QEvent, "Type", "DeferredDelete"))
+
+
+# Configure before any caller creates QApplication, including the shared tests.
+from app.platforms.qt_startup import configure_qt
+configure_qt(QtCore, QtWidgets, QT_API)

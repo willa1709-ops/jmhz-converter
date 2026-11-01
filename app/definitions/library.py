@@ -4,7 +4,7 @@ from datetime import date, datetime, timezone
 import hashlib
 import json
 from pathlib import Path
-import sqlite3
+from app.core.database import database
 from urllib.parse import urlsplit
 
 from lxml import etree
@@ -122,7 +122,7 @@ class DefinitionLibrary:
     def __init__(self, path: Path):
         path.parent.mkdir(parents=True, exist_ok=True)
         self.path = path
-        with sqlite3.connect(path) as db:
+        with database(path) as db:
             db.execute("""CREATE TABLE IF NOT EXISTS definition_library (
                 id INTEGER PRIMARY KEY, sha256 TEXT NOT NULL, version TEXT NOT NULL,
                 source_url TEXT NOT NULL, metadata TEXT NOT NULL, snapshot TEXT NOT NULL,
@@ -156,7 +156,7 @@ class DefinitionLibrary:
                             effective_from, effective_until, hashlib.sha256(content).hexdigest(),
                             technical_status=technical, kind=kind)
         snapshot["document_suffix"] = path.suffix.lower()
-        with sqlite3.connect(self.path) as db:
+        with database(self.path) as db:
             # Reimport preserves the original acquisition timestamp and metadata.
             db.execute("INSERT OR IGNORE INTO definition_library (sha256,version,source_url,metadata,snapshot,content) VALUES (?,?,?,?,?,?)",
                        (artifact.sha256, artifact.version, source_url, json.dumps(artifact.as_dict()), json.dumps(snapshot), content))
@@ -167,7 +167,7 @@ class DefinitionLibrary:
             return found[0]
 
     def list_definitions(self) -> list[StoredDefinition]:
-        with sqlite3.connect(self.path) as db:
+        with database(self.path) as db:
             rows = db.execute("SELECT id, metadata, snapshot FROM definition_library ORDER BY id").fetchall()
         return [StoredDefinition(id_, Artifact(**json.loads(metadata)), json.loads(snapshot)) for id_, metadata, snapshot in rows]
 
@@ -176,7 +176,7 @@ class DefinitionLibrary:
         official_root = official_root.resolve()
         if verify(official_root):
             raise ValueError("Manifest má chybějící nebo pozměněné soubory.")
-        records = json.loads((official_root / "manifest.json").read_text())["documents"]
+        records = json.loads((official_root / "manifest.json").read_text(encoding="utf-8"))["documents"]
         for record in records:
             path = (official_root / record["file"]).resolve()
             if not path.is_relative_to(official_root):
@@ -186,7 +186,7 @@ class DefinitionLibrary:
         return len(records)
 
     def get(self, id_: int) -> StoredDefinition:
-        with sqlite3.connect(self.path) as db:
+        with database(self.path) as db:
             row = db.execute("SELECT metadata,snapshot,content FROM definition_library WHERE id=?", (id_,)).fetchone()
         if row is None:
             raise ValueError("Definice neexistuje.")

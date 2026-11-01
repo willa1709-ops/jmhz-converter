@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 import pytest
 
-os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+os.environ.setdefault("QT_QPA_PLATFORM", "windows" if os.name == "nt" else "offscreen")
 
 from PySide6.QtWidgets import QApplication
 from app.ui.main_window import MainWindow
@@ -57,7 +57,7 @@ def test_manual_definition_import_compare_and_reopen(tmp_path):
     path = tmp_path / "synthetic.xsd"
     for version, type_ in [("v1", "string"), ("v2", "decimal")]:
         page.version.setText(version)
-        path.write_text(f'<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="synthetic" type="xs:{type_}"/></xs:schema>')
+        path.write_text(f'<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="synthetic" type="xs:{type_}"/></xs:schema>', encoding="utf-8")
         page.import_path(path)
     page.before.setCurrentIndex(0)
     page.after.setCurrentIndex(1)
@@ -81,7 +81,7 @@ def test_codelist_and_methodology_import_ui(tmp_path):
     for kind, filename, content in [("codelist", "codes.csv", "code;name\n01;Synthetic\n"),
                                      ("methodology", "method.txt", "Synthetic instructions")]:
         path = tmp_path / filename
-        path.write_text(content)
+        path.write_text(content, encoding="utf-8")
         page.kind.setCurrentIndex(page.kind.findData(kind))
         page.source.setText(f"https://example.invalid/{filename}")
         page.import_path(path)
@@ -98,7 +98,7 @@ def test_ui_xml_validation_uses_registered_official_bundle(tmp_path):
     from lxml import etree
     app = QApplication.instance() or QApplication([])
     window = MainWindow()
-    bundle = json.loads((window.official_root / "bundles.json").read_text())["bundles"][0]
+    bundle = json.loads((window.official_root / "bundles.json").read_text(encoding="utf-8"))["bundles"][0]
     window.bundle_choice.setCurrentIndex(window.bundle_choice.findData(bundle["id"]))
     ns = bundle["namespace"]
     root = etree.Element(f"{{{ns}}}jmhz", nsmap={None: ns})
@@ -125,11 +125,11 @@ def test_ui_prepares_employee_draft_and_clears_it_on_missing_values(tmp_path):
     root = Path(__file__).parents[1]
     source = tmp_path / "synthetic.csv"
     source.write_text("form_id;period;activity_code;ik_mpsv;id_ppv;tax_income_10535;tax_income_10555\n"
-                      "00000000-0000-4000-8000-000000000002;2027-01;11;0000000000;000001;123;0\n")
+                      "00000000-0000-4000-8000-000000000002;2027-01;11;0000000000;000001;123;0\n", encoding="utf-8")
     parameters = tmp_path / "parameters.json"
     parameters.write_text(json.dumps({"submission_id": "00000000-0000-4000-8000-000000000001",
                                       "employer_variable_symbol": "0000000000", "year": 2027, "month": 1,
-                                      "filled_at": "2026-10-30T12:00:00"}))
+                                      "filled_at": "2026-10-30T12:00:00"}), encoding="utf-8")
     profile = root / "config/conversion/jiny-prijem-2027.json"
     window.load_path(source)
     window.prepare_conversion_paths(profile, parameters)
@@ -137,7 +137,7 @@ def test_ui_prepares_employee_draft_and_clears_it_on_missing_values(tmp_path):
     assert window.generated_draft is not None
     assert "jinyPrijem" in window.draft_preview.toPlainText()
     assert "XSD: PROŠLO" in window.conversion_status.text()
-    source.write_text(source.read_text().replace(";123;0", ";;0"))
+    source.write_text(source.read_text(encoding="utf-8").replace(";123;0", ";;0"), encoding="utf-8")
     window.load_path(source)
     assert window.generated_draft is None
     window.prepare_conversion_paths(profile, parameters)
@@ -188,7 +188,7 @@ def test_organizations_dashboard_isolates_context_history_and_old_tools(tmp_path
     window.period.setText("26-09")
     a = window.workspace.register("Synthetic A", "00000001", "0000000001")
     b = window.workspace.register("Synthetic B", "00000002", "0000000002")
-    p = json.loads((Path(__file__).parents[1] / "config/payroll/numbered.template.json").read_text())
+    p = json.loads((Path(__file__).parents[1] / "config/payroll/numbered.template.json").read_text(encoding="utf-8"))
     p["metadata"].update(employment_type={"column": "kind"}, income_amount={"item": "190"})
     window.workspace.set_profile(p)
     row = {"internal_number": "2", "period": "26-09", "oic": "1234567890", "rc": "", "form_id": "", "id_ppv": "1", "activity_code": "11",
@@ -237,7 +237,7 @@ def test_organizations_dashboard_isolates_context_history_and_old_tools(tmp_path
     window.period.setText("26-09")
     window.select_organization(a.id)
     csv = tmp_path / "repeat.csv"
-    csv.write_text(";".join(row) + "\n" + ";".join(row.values()) + "\n")
+    csv.write_text(";".join(row) + "\n" + ";".join(row.values()) + "\n", encoding="utf-8")
     window.import_path(csv)
     assert window.imported.import_index == 1
     assert window.import_history.count() == 2

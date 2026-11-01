@@ -1,3 +1,4 @@
+from contextlib import closing
 import hashlib
 import sqlite3
 
@@ -20,7 +21,7 @@ def schema(version=1, prefix="xs"):
     </{prefix}:schema>'''.encode()
 
 
-def test_import_retains_hash_content_metadata_and_reimport(tmp_path):
+def test_import_retains_hash_content_metadata_and_reimport(tmp_path, tracked_sqlite_connections):
     path = tmp_path / "synthetic.xsd"
     path.write_bytes(schema())
     library = DefinitionLibrary(tmp_path / "definitions.sqlite3")
@@ -94,13 +95,13 @@ def test_bad_or_external_schemas_rejected_without_partial_entry(tmp_path, conten
     assert not library.list_definitions()
 
 
-def test_tamper_detection_and_missing_id(tmp_path):
+def test_tamper_detection_and_missing_id(tmp_path, tracked_sqlite_connections):
     db_path = tmp_path / "definitions.sqlite3"
     library = DefinitionLibrary(db_path)
     path = tmp_path / "schema.xsd"
     path.write_bytes(schema())
     id_ = library.import_xsd(path, "https://example.invalid/schema.xsd", "v")
-    with sqlite3.connect(db_path) as db:
+    with closing(sqlite3.connect(db_path)) as db, db:
         db.execute("UPDATE definition_library SET content=? WHERE id=?", (schema(2), id_))
     with pytest.raises(ValueError, match="hash"):
         library.get(id_)

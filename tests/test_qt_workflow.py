@@ -3,7 +3,7 @@ import os
 import csv
 import json
 from lxml import etree
-os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+os.environ.setdefault("QT_QPA_PLATFORM", "windows" if os.name == "nt" else "offscreen")
 
 from app.ui.qt_compat import QtWidgets, QT_API, dispose_window
 from app.ui.organizations_window import OrganizationsWindow

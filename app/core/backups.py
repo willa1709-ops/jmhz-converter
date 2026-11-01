@@ -102,6 +102,17 @@ def create_backup(workspace, organization_id, destination):
 
 
 def restore_backup(workspace, archive_path, approved_sha256):
+    created_packages = []
+    try:
+        return _restore_backup(workspace, archive_path, approved_sha256, created_packages)
+    except Exception:
+        # Only remove directories installed by this attempt; existing definitions stay.
+        for path in reversed(created_packages):
+            shutil.rmtree(path)
+        raise
+
+
+def _restore_backup(workspace, archive_path, approved_sha256, created_packages):
     archive_path = Path(archive_path)
     if (not isinstance(approved_sha256, str) or not re.fullmatch(r"[0-9a-f]{64}", approved_sha256)
             or archive_path.stat().st_size > MAX_BYTES or digest(archive_path) != approved_sha256):
@@ -167,6 +178,7 @@ def restore_backup(workspace, archive_path, approved_sha256):
             else:
                 target.parent.mkdir(parents=True, exist_ok=True)
                 staged.rename(target)
+                created_packages.append(target)
             relocations[(entry["old_directory"], entry["pin"])] = str(target)
 
         def relocate(definition):

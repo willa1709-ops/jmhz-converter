@@ -34,6 +34,8 @@ vyžadují doložený přezkum. Žádné smyšlené elementy JMHZ nejsou impleme
 - [Krátká ruční přejímka Win7 x86 / Win11 x64](docs/windows-acceptance.md)
 - [Opravy prvního testu Windows 11, výsledky a opakování sestavení](docs/windows11-test-fixes.md)
 
+- [PR #10: obnova, interní verze a plány – příčiny a ruční ověření](docs/windows11-pr10.md)
+
 ## Spuštění
 
 Windows 10/11 x64 PowerShell (z kořene repozitáře; ne pro Windows 7):

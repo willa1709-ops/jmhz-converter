@@ -30,8 +30,9 @@ Finální JMHZ export zůstává blokovaný v GUI i jádře.
 - GUI test při `QT_SCALE_FACTOR=1.5` prošel pod Qt6 i Qt5.
 - Samostatný `--self-test` z `/tmp` prošel pod oběma Python/Qt variantami;
   reporty obsahují `status: passed` a `final_export: blocked`.
-  Linuxový `offscreen` hlásí pouze nepodporované `propagateSizeHints()`;
-  upozornění na chybějící fontový adresář se neobjevilo.
+  Linuxový `offscreen` hlásí nepodporované `propagateSizeHints()`; Qt5 navíc
+  upozorní na nenastavený `XDG_RUNTIME_DIR` a použije dočasný adresář.
+  Upozornění na chybějící fontový adresář se neobjevilo.
 - `pip check` moderního prostředí a `git diff --check` prošly.
 - Nové regrese byly spuštěny také na původním zdroji: **6 selhání a 1 chyba**
   reprodukují poškození Unicode, načítání manifestu, únik SQLite spojení,

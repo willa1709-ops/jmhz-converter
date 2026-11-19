@@ -16,7 +16,7 @@ from windows_policy import requirements, check_wheels, check_installed, audit_bi
 REPO = Path(__file__).resolve().parents[1]
 CORE_TESTS = ["test_conversion_core.py", "test_numbered_payroll.py", "test_organizations.py", "test_employee_xml.py",
               "test_monthly_packet.py", "test_backup_restore.py", "test_qt_workflow.py", "test_packaging_tools.py",
-              "test_preview_acceptance.py", "test_windows_regressions.py", "test_receipts.py"]
+              "test_preview_acceptance.py", "test_windows_regressions.py", "test_receipts.py", "test_completeness_receipts.py"]
 
 
 def command(args, env=None, cwd=None, timeout=None):

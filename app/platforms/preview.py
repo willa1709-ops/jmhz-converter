@@ -166,11 +166,26 @@ def self_test():
         else:
             require(False)
         archive = temporary / "synthetic-backup.zip"
+        from app.core.receipts import import_receipt, receipt_detail
+        from app.core.xml_support import parse_local_xml
+        from lxml import etree
+        receipt = etree.Element("ProcessingResult", type="CSSZ_JMHZ", version="1,0", result="OK")
+        details = etree.SubElement(receipt, "Details")
+        etree.SubElement(details, "Item", subtype="", sqnr="", identifier="", result="OK")
+        for subtype in ("SOUHRN", "PVPOJ"):
+            etree.SubElement(details, "Item", subtype=subtype, sqnr="", identifier="", result="OK")
+        sent = parse_local_xml(workspace.draft_bytes(org.id, repeated.id, repeated_draft))
+        for form in sent.xpath("//*[local-name()='idFormulare']/text()"):
+            etree.SubElement(details, "Item", subtype="FORM", sqnr=form, identifier=";", result="OK")
+        receipt_id = import_receipt(workspace, org.id, repeated.id, repeated_draft, etree.tostring(receipt), True)
+        require(receipt_detail(workspace, org.id, repeated.id, receipt_id)["report"]["outcome"] == "accepted_for_processing")
+        passed("cssz_dis_receipt_not_monthly_completeness")
         backup = create_backup(workspace, org.id, archive)
         restored = OrganizationWorkspace(temporary / "restored")
         restore_backup(restored, archive, backup["sha256"])
         require(len(restored.organizations()) == 1)
         require(restored.draft_bytes(org.id, repeated.id, repeated_draft) == workspace.draft_bytes(org.id, repeated.id, repeated_draft))
+        require(receipt_detail(restored, org.id, repeated.id, receipt_id) == receipt_detail(workspace, org.id, repeated.id, receipt_id))
         passed("unencrypted_organization_backup_restore")
         # GUI gets its own clean seed so the deliberate invalid import does not mask it.
         gui_workspace, gui_entries = seed_workspace(temporary / "gui")

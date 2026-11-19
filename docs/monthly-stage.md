@@ -94,7 +94,10 @@ identifikátoru konkrétní zprávy v protokolu (str. 96). Tato aplikace je nesm
 Tlačítko `Plán podání / opravy…` ukládá **pouze pracovní metadata návaznosti**.
 Původní XML se nemění z R na O, opravné XML se tím nevytváří a nic se neodesílá.
 Plán není dokladem přijetí původního podání. Stav protokolů zůstává
-`not_recorded`, připravenost `unverified`. Interní pořadí plánu navazuje od nuly
+`not_recorded` jako neměnný snímek plánu, připravenost `unverified`.
+Nově lze načíst [protokoly ČSSZ](cssz-receipts.md) do samostatné historie
+u konkrétního importu/XML; tím se plán ani připravenost podání nepřepisují.
+Interní pořadí plánu navazuje od nuly
 pro organizaci/měsíc; starší pořadí importů, kontrol a příprav zůstávají zachovaná.
 První důvod se vztahuje ke všem součástem zahrnutým v tomto pracovním plánu;
 výběrové kombinace nahrazovaných/nezměněných součástí ještě nejsou implementované.

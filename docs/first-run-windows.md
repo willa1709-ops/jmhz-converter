@@ -80,6 +80,11 @@ mzdový systém, jeho DB a výpočetní jádro se touto přejímkou nemění.
 
 ## Automatická kontrola EXE
 
+K původnímu importu a uloženému XML lze přes **Protokoly ČSSZ…** načíst odpověď
+DIS nebo nevyhodnocenou PDF/XML přílohu. Konkrétní kontext je nutné potvrdit;
+DIS přijetí není potvrzení úplnosti měsíčního hlášení. Podrobný postup je v
+[návodu protokolů](cssz-receipts.md). Načtení ani odpověď neodblokují export.
+
 Z PowerShellu spusťte EXE s plnou cestou, počkejte a otevřete JSON výsledek:
 
 ```powershell

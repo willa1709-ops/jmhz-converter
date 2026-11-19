@@ -108,7 +108,10 @@ class ReceiptsDialog(QtWidgets.QDialog):
             self.refresh()
             row = next(i for i, record in enumerate(self.records) if record["id"] == identity)
             self.show_detail(row, 0)
-            self.status.setText("Protokol uložen v organizaci. Opakované načtení stejných bajtů nepřepisuje historii. Finální export NE.")
+            from app.core.remediation import reply_binding
+            binding = reply_binding(self.workspace, self.organization_id, identity)
+            message = "Odpověď navázána na interní opravu {0}.".format(binding["run_index"]) if binding else "Protokol zatím není navázán na evidovanou opravu."
+            self.status.setText(message + " Nálezy jsou dostupné přes Chyby a opravy. Finální export NE.")
             return identity
         except ReceiptError as error:
             self.status.setText(str(error))

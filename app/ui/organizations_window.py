@@ -88,6 +88,7 @@ class OrganizationsWindow(QMainWindow):
         self.button(actions, "Historie kontrol / XML…", self.open_audit_history)
         self.button(actions, "Plán podání / opravy…", self.choose_plan)
         self.button(actions, "Protokoly ČSSZ…", self.open_receipts)
+        self.button(actions, "Chyby a opravy…", self.open_remediation)
         tools_button = self.button(actions, "Původní nástroje…", self.open_tools)
         tools_button.setEnabled(QT_API == "PySide6")
         tools_button.setToolTip("Starší doplňkové nástroje vyžadují moderní variantu; hlavní workflow je společný.")
@@ -513,6 +514,17 @@ class OrganizationsWindow(QMainWindow):
             except Exception as error:
                 detail = str(error) if isinstance(error, ValueError) else "Nelze zapsat evidenci plánu; ověřte dostupnost úložiště."
                 self.workflow_message("Plán neuložen", detail + " Revize není automatická oprava.", True)
+
+    def open_remediation(self):
+        if not self.organization_id:
+            self.status.setText("Nejprve vyberte organizaci a období.")
+            return
+        try:
+            from app.ui.remediation_dialog import RemediationDialog
+            dialog = RemediationDialog(self.workspace, self.organization_id, self.selected_period(), self)
+            run(dialog)
+        except Exception:
+            self.status.setText("Evidenci oprav nelze otevřít. Ověřte zvolené období a integritu dat organizace.")
 
     def open_receipts(self):
         if not self.imported or self.imported.period != self.selected_period():

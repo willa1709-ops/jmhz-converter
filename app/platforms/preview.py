@@ -200,6 +200,20 @@ def self_test():
         completeness_id = import_receipt(workspace, org.id, repeated.id, repeated_draft, etree.tostring(complete), True)
         require(receipt_detail(workspace, org.id, repeated.id, completeness_id)["report"]["outcome"] == "monthly_partially_accepted")
         passed("cjmhz_completeness_reported_state_not_final_export")
+        from app.core.remediation import cases, prepare_correction, register_dispatch, close_after_review
+        finding = next(c for c in cases(workspace, org.id, imported.period) if c["source_receipt_id"] == completeness_id)
+        repair = prepare_correction(workspace, org.id, imported.period, [finding["id"]], repeated.id, repeated_draft,
+                                    "Syntetický záznam opravy pro ověření evidence, bez změny mzdových dat.", True)
+        register_dispatch(workspace, org.id, repair, "cjmhz_completeness", "b" * 32, True)
+        complete.find(q + "idKonkretnihoPodani").text = "b" * 32
+        complete.find(q + "datumProtokolu").text = "2026-10-03T12:00:00+02:00"
+        error.find(q + "kod").text = "TEST-OTHER"
+        followup = import_receipt(workspace, org.id, repeated.id, repeated_draft, etree.tostring(complete), True)
+        require(next(c for c in cases(workspace, org.id, imported.period) if c["id"] == finding["id"])["state"] == "review_required")
+        close_after_review(workspace, org.id, finding["id"], repair, repeated.id, followup,
+                           "Výslovný syntetický přezkum konkrétního nálezu a navázané odpovědi.", True)
+        require(next(c for c in cases(workspace, org.id, imported.period) if c["id"] == finding["id"])["state"] == "closed_by_review")
+        passed("correction_ledger_reference_pairing_explicit_review")
         backup = create_backup(workspace, org.id, archive)
         restored = OrganizationWorkspace(temporary / "restored")
         restore_backup(restored, archive, backup["sha256"])
@@ -207,6 +221,7 @@ def self_test():
         require(restored.draft_bytes(org.id, repeated.id, repeated_draft) == workspace.draft_bytes(org.id, repeated.id, repeated_draft))
         require(receipt_detail(restored, org.id, repeated.id, receipt_id) == receipt_detail(workspace, org.id, repeated.id, receipt_id))
         require(receipt_detail(restored, org.id, repeated.id, completeness_id) == receipt_detail(workspace, org.id, repeated.id, completeness_id))
+        require(next(c for c in cases(restored, org.id, imported.period) if c["id"] == finding["id"])["state"] == "closed_by_review")
         passed("unencrypted_organization_backup_restore")
         # GUI gets its own clean seed so the deliberate invalid import does not mask it.
         gui_workspace, gui_entries = seed_workspace(temporary / "gui")

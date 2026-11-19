@@ -33,6 +33,7 @@ vyžadují doložený přezkum. Žádné smyšlené elementy JMHZ nejsou impleme
 - [Český návod k prvnímu spuštění a syntetické ukázce](docs/first-run-windows.md)
 - [Krátká ruční přejímka Win7 x86 / Win11 x64](docs/windows-acceptance.md)
 - [Načítání odpovědí ČSSZ: protokoly DIS a přílohy](docs/cssz-receipts.md)
+- [Sledování nálezů, oprav a navazujících odpovědí](docs/correction-tracking.md)
 - [Opravy prvního testu Windows 11, výsledky a opakování sestavení](docs/windows11-test-fixes.md)
 
 - [PR #10: obnova, interní verze a plány – příčiny a ruční ověření](docs/windows11-pr10.md)

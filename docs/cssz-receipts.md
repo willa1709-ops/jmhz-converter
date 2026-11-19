@@ -10,6 +10,8 @@ Aplikace podporuje ruční offline import:
 - PDF a jiné/nepodporované XML jako nevyhodnocené přílohy.
 
 Nic nestahuje, neodesílá a neodblokuje finální export.
+Navazující pracovní postup pro záznam opravy, párování další odpovědi a ruční
+uzavření konkrétního nálezu je v [evidenci oprav](correction-tracking.md).
 
 ## Postup
 
@@ -113,6 +115,19 @@ nikoliv úřední původ, pravost doručení nebo přijetí. PDF není obsahově
 Pro další stavy/verze je třeba oficiální schéma/číselník nebo další doložený
 protokol. Jiné typy odpovědí zůstávají nevyhodnocenou přílohou.
 
+Pro načítání dodaných protokolů a sledování oprav již další vzorek není nutný.
+Chybějící XSD protokolu znamená, že jeho strukturu čteme podle doložených
+vzorků, nikoliv že soubor musí být chybný. Později lze doplnit oficiální XSD
+právě tohoto typu odpovědi. Neověřený podpis znamená, že aplikace zatím
+kryptograficky neověřuje původ souboru; netvrdí tím, že podpis je neplatný.
+
+Blokování finálního exportu se týká vytvářeného mzdového hlášení, nikoliv
+načítání odpovědí. K doložení správnosti převodu nadále chybí skutečný
+anonymizovaný export mzdového systému s významem číslovaných položek a
+ověření výsledného XML podle metodiky (například referenční správné XML
+nebo přezkum mzdovým specialistou). Samotné protokolové XSD či ověření podpisu
+tuto správnost neprokáže a export neodblokuje.
+
 Parser odmítá DTD, externí entity/zdroje, nejednoznačná či duplicitní skalární
 pole a nadlimitní obsah. Společný limit je 10 MiB a 30000 XML uzlů. DIS má limit
 1500 individuálních FORM. cJMHZ má samostatný lokální limit 3000 nálezů; nejde
@@ -129,12 +144,14 @@ samotná aktualizace datových definic nové funkce kódu nepřidá.
 
 ## Výsledek ověření 19. 11. 2026
 
-Celá moderní sada: **291 testů prošlo**, Linux Python 3.12.14 / PySide6 6.12.0.
-Kompatibilní sada jádra a GUI: **209 testů prošlo**, Linux Python 3.8.20 /
-PySide2 5.15.2.1. Obsahuje 16 nových testů cJMHZ a zachovaných 20 testů DIS,
+Celá moderní sada: **306 testů prošlo**, Linux Python 3.12.14 / PySide6 6.12.0.
+Kompatibilní sada jádra a GUI: **224 testů prošlo**, Linux Python 3.8.20 /
+PySide2 5.15.2.1. Obsahuje 16 testů cJMHZ, zachovaných 20 testů DIS a 15 testů
+evidence oprav a navazujících odpovědí,
 izolaci VS/období/GUID, různé technické identifikátory, neznámé stavy, nejednoznačné
 XML, nepřiřazené či opakované nálezy, zálohu/obnovu a společný GUI náhled.
-Tři poskytnuté originály byly místně načteny bez výpisu osobních/mzdových údajů;
+Tři poskytnuté originály byly v předchozí etapě místně načteny bez výpisu osobních/mzdových údajů;
 žádný originál není testovacím souborem nebo součástí distribuce. Prošly kontroly
 hashů oficiálních podkladů a relativních odkazů. Windows běh této etapy nebyl
-proveden; zabalený syntetický self-test je rozšířený i o cJMHZ a obnovu protokolu.
+proveden; zabalený syntetický self-test zahrnuje cJMHZ, navázání opravy,
+výslovný ruční přezkum a obnovu historie ze zálohy.

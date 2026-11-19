@@ -361,13 +361,16 @@ def import_receipt(workspace, organization_id, import_id, draft_id, content, con
         context["expected_concrete_id"] = expected_concrete_id
     sha = hashlib.sha256(content).hexdigest()
     identity = str(uuid5(UUID(org.id), "receipt:" + draft_id + ":" + sha))
+    from app.core.remediation import ingest_receipt
     with workspace._data(org.id) as db:
         previous = db.execute("SELECT id,context FROM processing_receipts WHERE draft_id=? AND sha256=?", (draft_id, sha)).fetchone()
         if previous:
             if previous["context"] != dumps(context):
                 raise ReceiptError("Tento protokol je již uložen s jiným kontextem; historie se nepřepisuje.")
+            ingest_receipt(db, org.id, imported.period.iso, previous["id"], draft_id, report)
             return previous["id"]
         db.execute("INSERT INTO processing_receipts VALUES (?,?,?,?,?,?,?,?,?)", (identity, import_id, draft_id, now(), sha, parsed.kind, dumps(context), dumps(report), content))
+        ingest_receipt(db, org.id, imported.period.iso, identity, draft_id, report)
     return identity
 
 

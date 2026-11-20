@@ -146,6 +146,8 @@ class OrganizationWorkspace:
             db.execute("CREATE TABLE IF NOT EXISTS monthly_checks (import_id TEXT NOT NULL, analysis_index INTEGER NOT NULL, employer_id TEXT NOT NULL REFERENCES employer_imports(id), profile TEXT NOT NULL, parameters TEXT NOT NULL, report TEXT NOT NULL, PRIMARY KEY(import_id,analysis_index), FOREIGN KEY(import_id,analysis_index) REFERENCES analyses(import_id,analysis_index))")
             db.execute("CREATE UNIQUE INDEX IF NOT EXISTS drafts_id_import ON drafts(id,import_id)")
             db.execute("CREATE TABLE IF NOT EXISTS processing_receipts (id TEXT PRIMARY KEY, import_id TEXT NOT NULL REFERENCES imports(id), draft_id TEXT NOT NULL, created_at TEXT NOT NULL, sha256 TEXT NOT NULL, kind TEXT NOT NULL, context TEXT NOT NULL, report TEXT NOT NULL, content BLOB NOT NULL, UNIQUE(draft_id,sha256), FOREIGN KEY(draft_id,import_id) REFERENCES drafts(id,import_id))")
+            from app.core.remediation import ensure_tables
+            ensure_tables(db)
             db.commit()
             yield db
 

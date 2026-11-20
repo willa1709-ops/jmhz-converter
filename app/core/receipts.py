@@ -1,11 +1,13 @@
-"""Offline DIS ProcessingResult (supplied protocol documentation v1.5).
+"""Offline DIS ProcessingResult and observed cJMHZ completeness protocols.
 
 Origin/signatures and cJMHZ completeness are NOT proved by parsing a receipt.
 All source text and identifiers stay in the private organization database/UI.
 """
 from dataclasses import dataclass, field
+from datetime import datetime
 import hashlib
 from pathlib import Path
+import re
 from uuid import uuid5, UUID
 
 from lxml import etree
@@ -17,10 +19,13 @@ from app.core.xml_support import parse_local_xml
 MAX_RECEIPT = 10 * 1024 * 1024
 CSSZ = "http://www.cssz.cz/XMLSchema/envelope"
 GOV = "http://www.govtalk.gov.uk/CM/envelope"
+CJMHZ = "http://schemas.cssz.cz/JMHZ/ProtokolOZpracovani/2026"
 OUTCOMES = {"accepted_for_processing": "DIS: přijato do dalšího zpracování",
             "partially_accepted": "DIS: částečně přijato do dalšího zpracování",
             "rejected": "DIS: dílčí podání zamítnuto", "unresolved": "Výsledek vyžaduje přezkum",
-            "not_interpreted": "Příloha – obsah se strojově nevyhodnocuje"}
+            "not_interpreted": "Příloha – obsah se strojově nevyhodnocuje",
+            "monthly_partially_accepted": "cJMHZ: hlášení je částečně přijato (dle XML)",
+            "monthly_with_errors": "cJMHZ: hlášení obsahuje propustné chyby (dle XML)"}
 
 
 class ReceiptError(ValueError):
@@ -51,6 +56,103 @@ class ParsedReceipt:
                 "origin_verified": False, "signature_verified": False, "submission_ready": False}
 
 
+def _completeness(root):
+    """Only the structure and code/name pairs observed in supplied samples.
+
+    Error text is data, never a payroll rule or instruction. No XSD/origin claim.
+    """
+    from app.core.periods import Period
+    q = "{" + CJMHZ + "}"
+    notes = []
+
+    def fields(node, allowed):
+        if any(isinstance(n.tag, str) and n.tag not in {q + name for name in allowed} for n in node):
+            notes.append("completeness_structure_unreviewed")
+        if any(k != "{http://www.w3.org/2001/XMLSchema-instance}schemaLocation" for k in node.attrib):
+            notes.append("completeness_attributes_unreviewed")
+
+    def one(node, name, required=True):
+        found = node.findall(q + name)
+        if len(found) > 1 or required and len(found) != 1:
+            fail()
+        return found[0] if found else None
+
+    def text(node, name, required=True):
+        found = one(node, name, required)
+        if found is None:
+            return ""
+        if len(found) or found.attrib:
+            fail()
+        value = (found.text or "").strip()
+        if len(value) > 65536 or required and not value:
+            fail()
+        return value
+
+    fields(root, {"datumProtokolu", "variabilniSymbol", "idKonkretnihoPodani", "datumPodani",
+                  "idPodani", "mesic", "rok", "stavMH", "chybySeznam"})
+    variable_symbol = text(root, "variabilniSymbol")
+    year, month = text(root, "rok"), text(root, "mesic")
+    if not re.fullmatch(r"[0-9]{10}", variable_symbol) or not re.fullmatch(r"[0-9]{4}", year) or not re.fullmatch(r"(?:0?[1-9]|1[0-2])", month):
+        fail()
+    try:
+        period = Period(int(year), int(month)).iso
+        for name in ("datumProtokolu", "datumPodani"):
+            stamp = text(root, name)
+            if "T" not in stamp:
+                fail()
+            datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+    except ValueError:
+        fail()
+    monthly_guid = canonical_guid(text(root, "idPodani"))
+    # Supplied files contain both 36-character and 32-character technical IDs.
+    # Preserve this identifier as returned; it is not the monthly GUID.
+    concrete_id = text(root, "idKonkretnihoPodani")
+    state = one(root, "stavMH")
+    fields(state, {"kod", "nazev"})
+    code, name = text(state, "kod"), text(state, "nazev")
+    observed = {"4": ("Hlášení je částečně přijato", "monthly_partially_accepted"),
+                "6": ("Hlášení obsahuje propustné chyby", "monthly_with_errors")}
+    outcome = "unresolved"
+    if code in observed and name == observed[code][0]:
+        outcome = observed[code][1]
+    else:
+        notes.append("monthly_state_unreviewed")
+    items = []
+    errors = one(root, "chybySeznam", False)
+    if errors is not None:
+        fields(errors, {"chyba"})
+        for error in errors.findall(q + "chyba"):
+            if len(items) >= 3000:  # Local resource bound, not a claimed official limit.
+                fail()
+            fields(error, {"id", "typChyby", "castPodani", "idFormulare", "kod", "popis"})
+            form = text(error, "idFormulare", False)
+            form = canonical_guid(form) if form else ""
+            part = text(error, "castPodani", False)
+            item = {"error_id": text(error, "id", False), "error_type": text(error, "typChyby", False),
+                    "part_as_received": part, "form_guid": form,
+                    "subtype": "FORM" if form or part == "form" else "",
+                    "identifier": "", "result": "per_form_result_not_supplied",
+                    "error_code": text(error, "kod"), "message": text(error, "popis", False)}
+            if not form:
+                item["link_status"] = "no_form_guid_supplied"
+            items.append(item)
+    if not items:
+        notes.append("no_error_details_supplied")
+    if any(n.startswith("completeness_") for n in notes):
+        outcome = "unresolved"
+    return ParsedReceipt("cjmhz_completeness", outcome, {
+        "items": items, "notes": sorted(set(notes)), "variable_symbol": variable_symbol,
+        "period": period, "monthly_submission_guid": monthly_guid, "concrete_submission_id": concrete_id,
+        "protocol_time": text(root, "datumProtokolu"), "submission_time": text(root, "datumPodani"),
+        "monthly_state": {"code": code, "name": name}, "monthly_completeness": "reported_state_only",
+        # No independent completeness boolean exists in the observed format.
+        # Passable errors in particular must not be turned into rejection.
+        "fully_complete": None,
+        "concrete_submission_result": "not_supplied", "form_coverage": "error_list_only",
+        "format_version": "observed_namespace_2026", "methodology": "user_supplied_samples_review_required",
+        "xsd_validation": "not_available", "signature_verified": False, "origin_verified": False})
+
+
 def inspect_receipt(content, batch_count=None):
     if not isinstance(content, bytes) or not content or len(content) > MAX_RECEIPT:
         fail()
@@ -64,6 +166,8 @@ def inspect_receipt(content, batch_count=None):
         fail()
     if sum(1 for _ in root.iter()) > 30000:
         fail()
+    if root.tag == "{" + CJMHZ + "}ProtokolOZpracovani":
+        return _completeness(root)
     tag = etree.QName(root)
     if tag.localname == "ProcessingResult" and tag.namespace in (None, CSSZ):
         result = root
@@ -178,7 +282,7 @@ def read_receipt(path):
 
 
 def import_receipt(workspace, organization_id, import_id, draft_id, content, context_confirmed=False,
-                   expected_reference=None, batch_count=None):
+                   expected_reference=None, batch_count=None, expected_concrete_id=None):
     if context_confirmed is not True:
         raise ReceiptError("Potvrďte organizaci, měsíc a konkrétní odeslané pracovní XML; protokol nemusí obsahovat VS/období.")
     imported = workspace.get_import(organization_id, import_id)
@@ -200,8 +304,16 @@ def import_receipt(workspace, organization_id, import_id, draft_id, content, con
                                                      wrapper.xpath("string(.//*[local-name()='idPpv'])"))
     expected = set(identities)
     parsed = inspect_receipt(content, batch_count)
-    forms = [i for i in parsed.private["items"] if i["subtype"] == "FORM"]
-    if any(i["form_guid"] not in expected for i in forms):
+    completeness = parsed.kind == "cjmhz_completeness"
+    if completeness:
+        if (parsed.private["variable_symbol"] != org.variable_symbol or parsed.private["period"] != imported.period.iso
+                or parsed.private["monthly_submission_guid"] != canonical_guid(header.findtext(prefix + "idPodani"))):
+            raise ReceiptError("VS, období nebo GUID měsíčního hlášení v protokolu neodpovídá vybranému XML.")
+    if expected_concrete_id is not None and (not completeness or not isinstance(expected_concrete_id, str)
+            or not expected_concrete_id.strip() or expected_concrete_id != parsed.private["concrete_submission_id"]):
+        raise ReceiptError("Identifikátor konkrétního podání neodpovídá protokolu o kompletnosti.")
+    forms = [i for i in parsed.private["items"] if i["subtype"] == "FORM" and i["form_guid"]]
+    if not completeness and any(i["form_guid"] not in expected for i in forms):
         raise ReceiptError("Protokol obsahuje GUID formuláře, které není ve zvoleném XML; nic nebylo spárováno odhadem.")
     def metadata(row, key):
         ref = imported.profile["metadata"].get(key, {})
@@ -211,6 +323,13 @@ def import_receipt(workspace, organization_id, import_id, draft_id, content, con
     for row in imported.source.rows:
         source_forms.setdefault(str(metadata(row, "form_id")).strip().upper(), []).append(row)
     for item in forms:
+        if item["form_guid"] not in expected:
+            # The monthly error list can refer to another part/revision of this MH.
+            # Do not search other organizations or guess a source row from free text.
+            item["link_status"] = "not_in_selected_xml"
+            parsed.private["notes"].append("monthly_form_reference_unresolved")
+            continue
+        item["link_status"] = "selected_xml_guid"
         matches = source_forms.get(item["form_guid"], [])
         if len(matches) == 1:
             row = matches[0]
@@ -230,20 +349,28 @@ def import_receipt(workspace, organization_id, import_id, draft_id, content, con
     report = dict(parsed.private, kind=parsed.kind, outcome=parsed.outcome, submission_ready=False,
                   correlation="explicit_context_and_form_guids" if forms else "explicit_context_only",
                   expected_form_count=len(expected), missing_form_count=len(expected - {i["form_guid"] for i in forms}))
+    if completeness:
+        report.update(correlation="vs_period_monthly_guid_and_explicit_context", missing_form_count=None,
+                      concrete_id_verified=expected_concrete_id is not None)
     if report["missing_form_count"] and parsed.outcome != "rejected" and parsed.kind == "dis_processing_result":
         report["notes"].append("selected_xml_forms_not_all_reported")
         report["outcome"] = "unresolved"
     context = {"confirmed": True, "expected_reference": expected_reference, "batch_count": batch_count,
                "period": imported.period.iso, "draft_sha256": hashlib.sha256(workspace.draft_bytes(org.id, import_id, draft_id)).hexdigest()}
+    if completeness:
+        context["expected_concrete_id"] = expected_concrete_id
     sha = hashlib.sha256(content).hexdigest()
     identity = str(uuid5(UUID(org.id), "receipt:" + draft_id + ":" + sha))
+    from app.core.remediation import ingest_receipt
     with workspace._data(org.id) as db:
         previous = db.execute("SELECT id,context FROM processing_receipts WHERE draft_id=? AND sha256=?", (draft_id, sha)).fetchone()
         if previous:
             if previous["context"] != dumps(context):
                 raise ReceiptError("Tento protokol je již uložen s jiným kontextem; historie se nepřepisuje.")
+            ingest_receipt(db, org.id, imported.period.iso, previous["id"], draft_id, report)
             return previous["id"]
         db.execute("INSERT INTO processing_receipts VALUES (?,?,?,?,?,?,?,?,?)", (identity, import_id, draft_id, now(), sha, parsed.kind, dumps(context), dumps(report), content))
+        ingest_receipt(db, org.id, imported.period.iso, identity, draft_id, report)
     return identity
 
 

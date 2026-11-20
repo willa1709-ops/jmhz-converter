@@ -166,7 +166,7 @@ def self_test():
         else:
             require(False)
         archive = temporary / "synthetic-backup.zip"
-        from app.core.receipts import import_receipt, receipt_detail
+        from app.core.receipts import CJMHZ, import_receipt, receipt_detail
         from app.core.xml_support import parse_local_xml
         from lxml import etree
         receipt = etree.Element("ProcessingResult", type="CSSZ_JMHZ", version="1,0", result="OK")
@@ -180,12 +180,48 @@ def self_test():
         receipt_id = import_receipt(workspace, org.id, repeated.id, repeated_draft, etree.tostring(receipt), True)
         require(receipt_detail(workspace, org.id, repeated.id, receipt_id)["report"]["outcome"] == "accepted_for_processing")
         passed("cssz_dis_receipt_not_monthly_completeness")
+        # Synthetic shape-equivalent monthly completeness protocol; never user data.
+        q = "{" + CJMHZ + "}"
+        complete = etree.Element(q + "ProtokolOZpracovani", nsmap={None: CJMHZ})
+        for key, value in [("datumProtokolu", "2026-10-02T12:00:00+02:00"), ("variabilniSymbol", org.variable_symbol),
+                           ("idKonkretnihoPodani", "a" * 32), ("datumPodani", "2026-10-01T12:00:00+02:00"),
+                           ("idPodani", sent.xpath("string(/*/*[local-name()='hlavicka']/*[local-name()='idPodani'])")),
+                           ("mesic", str(imported.period.month)), ("rok", str(imported.period.year))]:
+            etree.SubElement(complete, q + key).text = value
+        state = etree.SubElement(complete, q + "stavMH")
+        etree.SubElement(state, q + "kod").text = "4"
+        etree.SubElement(state, q + "nazev").text = "Hlášení je částečně přijato"
+        errors = etree.SubElement(complete, q + "chybySeznam")
+        error = etree.SubElement(errors, q + "chyba")
+        for key, value in [("id", "TEST-ERROR"), ("typChyby", "zpracovani"), ("castPodani", "nezarazeno"),
+                           ("idFormulare", sent.xpath("string(//*[local-name()='idFormulare'])")),
+                           ("kod", "TEST-1"), ("popis", "Syntetický kontrolní nález.")]:
+            etree.SubElement(error, q + key).text = value
+        completeness_id = import_receipt(workspace, org.id, repeated.id, repeated_draft, etree.tostring(complete), True)
+        require(receipt_detail(workspace, org.id, repeated.id, completeness_id)["report"]["outcome"] == "monthly_partially_accepted")
+        passed("cjmhz_completeness_reported_state_not_final_export")
+        from app.core.remediation import cases, prepare_correction, register_dispatch, close_after_review
+        finding = next(c for c in cases(workspace, org.id, imported.period) if c["source_receipt_id"] == completeness_id)
+        repair = prepare_correction(workspace, org.id, imported.period, [finding["id"]], repeated.id, repeated_draft,
+                                    "Syntetický záznam opravy pro ověření evidence, bez změny mzdových dat.", True)
+        register_dispatch(workspace, org.id, repair, "cjmhz_completeness", "b" * 32, True)
+        complete.find(q + "idKonkretnihoPodani").text = "b" * 32
+        complete.find(q + "datumProtokolu").text = "2026-10-03T12:00:00+02:00"
+        error.find(q + "kod").text = "TEST-OTHER"
+        followup = import_receipt(workspace, org.id, repeated.id, repeated_draft, etree.tostring(complete), True)
+        require(next(c for c in cases(workspace, org.id, imported.period) if c["id"] == finding["id"])["state"] == "review_required")
+        close_after_review(workspace, org.id, finding["id"], repair, repeated.id, followup,
+                           "Výslovný syntetický přezkum konkrétního nálezu a navázané odpovědi.", True)
+        require(next(c for c in cases(workspace, org.id, imported.period) if c["id"] == finding["id"])["state"] == "closed_by_review")
+        passed("correction_ledger_reference_pairing_explicit_review")
         backup = create_backup(workspace, org.id, archive)
         restored = OrganizationWorkspace(temporary / "restored")
         restore_backup(restored, archive, backup["sha256"])
         require(len(restored.organizations()) == 1)
         require(restored.draft_bytes(org.id, repeated.id, repeated_draft) == workspace.draft_bytes(org.id, repeated.id, repeated_draft))
         require(receipt_detail(restored, org.id, repeated.id, receipt_id) == receipt_detail(workspace, org.id, repeated.id, receipt_id))
+        require(receipt_detail(restored, org.id, repeated.id, completeness_id) == receipt_detail(workspace, org.id, repeated.id, completeness_id))
+        require(next(c for c in cases(restored, org.id, imported.period) if c["id"] == finding["id"])["state"] == "closed_by_review")
         passed("unencrypted_organization_backup_restore")
         # GUI gets its own clean seed so the deliberate invalid import does not mask it.
         gui_workspace, gui_entries = seed_workspace(temporary / "gui")

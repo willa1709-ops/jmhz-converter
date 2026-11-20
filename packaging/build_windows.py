@@ -16,7 +16,7 @@ from windows_policy import requirements, check_wheels, check_installed, audit_bi
 REPO = Path(__file__).resolve().parents[1]
 CORE_TESTS = ["test_conversion_core.py", "test_numbered_payroll.py", "test_organizations.py", "test_employee_xml.py",
               "test_monthly_packet.py", "test_backup_restore.py", "test_qt_workflow.py", "test_packaging_tools.py",
-              "test_preview_acceptance.py", "test_windows_regressions.py", "test_receipts.py"]
+              "test_preview_acceptance.py", "test_windows_regressions.py", "test_receipts.py", "test_completeness_receipts.py", "test_remediation.py"]
 
 
 def command(args, env=None, cwd=None, timeout=None):
@@ -108,6 +108,7 @@ def build(args):
     shutil.copyfile(REPO / "docs/first-run-windows.md", artifact / "CTETE-NEJDRIVE.md")
     shutil.copyfile(REPO / "docs/windows-acceptance.md", artifact / "windows-acceptance.md")
     shutil.copyfile(REPO / "docs/cssz-receipts.md", artifact / "cssz-receipts.md")
+    shutil.copyfile(REPO / "docs/correction-tracking.md", artifact / "correction-tracking.md")
     (artifact / "Spustit-ukazku.cmd").write_bytes((
         '@echo off\r\nsetlocal\r\nset "JMHZ_DEMO_DIR=%LOCALAPPDATA%\\JMHZ-Converter-Preview\\%RANDOM%-%RANDOM%"\r\n'
         'start "" /wait "%~dp0' + executable.name + '" --demo --demo-directory "%JMHZ_DEMO_DIR%"\r\n'

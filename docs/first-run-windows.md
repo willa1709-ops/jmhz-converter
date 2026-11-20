@@ -81,7 +81,8 @@ mzdový systém, jeho DB a výpočetní jádro se touto přejímkou nemění.
 ## Automatická kontrola EXE
 
 K původnímu importu a uloženému XML lze přes **Protokoly ČSSZ…** načíst odpověď
-DIS nebo nevyhodnocenou PDF/XML přílohu. Konkrétní kontext je nutné potvrdit;
+DIS, podporovaný cJMHZ protokol o kompletnosti nebo nevyhodnocenou PDF/XML přílohu.
+Konkrétní kontext je nutné potvrdit; u cJMHZ se navíc porovná VS, období a GUID MH.
 DIS přijetí není potvrzení úplnosti měsíčního hlášení. Podrobný postup je v
 [návodu protokolů](cssz-receipts.md). Načtení ani odpověď neodblokují export.
 

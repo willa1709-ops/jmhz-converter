@@ -102,10 +102,12 @@ pro organizaci/měsíc; starší pořadí importů, kontrol a příprav zůstáv
 První důvod se vztahuje ke všem součástem zahrnutým v tomto pracovním plánu;
 výběrové kombinace nahrazovaných/nezměněných součástí ještě nejsou implementované.
 
-Storno, zamítnutí celého podání, protokoly DIS/cJMHZ, kombinace více důvodů,
+Storno, zamítnutí celého podání, kombinace více důvodů,
 nové PP v opravném podání a účinnost metodiky 2026 vůči 2027 vyžadují další práci.
 Přesné automatické rozhodnutí o přidělení/opakování GUID pro tyto výjimky se
 nepředstírá. Ani uložený plán a XSD shoda neodblokují finální export.
+Ruční čtení protokolů DIS a pozorovaného cJMHZ formátu je popsané v
+[návodu protokolů](cssz-receipts.md); nejde o automatizaci těchto oprav.
 
 ## Zálohy a obnova
 

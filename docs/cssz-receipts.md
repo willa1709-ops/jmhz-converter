@@ -1,95 +1,157 @@
-# Načítání protokolů ČSSZ
+# Načítání protokolů ČSSZ a cJMHZ
 
-Aplikace podporuje **ruční offline import protokolu DIS `ProcessingResult`
-`type="CSSZ_JMHZ"`, `version="1,0"`**. Umí samostatný XML element, doloženou
-obálku GovTalk/ČSSZ a vnitřní ČSSZ Message. Nic nestahuje a nic neodesílá.
-PDF a jiný/nepodporovaný XML formát uloží jako nevyhodnocenou přílohu.
+Aplikace podporuje ruční offline import:
+
+- DIS `ProcessingResult`, `type="CSSZ_JMHZ"`, `version="1,0"`: samostatný element,
+  doloženou obálku GovTalk/ČSSZ a vnitřní ČSSZ Message.
+- cJMHZ `ProtokolOZpracovani` v namespace
+  `http://schemas.cssz.cz/JMHZ/ProtokolOZpracovani/2026`, ve struktuře pozorované
+  ve třech dodaných vzorcích. Neznámé stavy se neodhadují.
+- PDF a jiné/nepodporované XML jako nevyhodnocené přílohy.
+
+Nic nestahuje, neodesílá a neodblokuje finální export.
+Navazující pracovní postup pro záznam opravy, párování další odpovědi a ruční
+uzavření konkrétního nálezu je v [evidenci oprav](correction-tracking.md).
 
 ## Postup
 
 1. Vyberte organizaci, vykazovaný měsíc a **původní import**, ke kterému protokol
-   patří. Musí existovat uložené pracovní XML; nepoužijte automaticky poslední
+   patří. Musí existovat uložené pracovní XML. Nepoužívejte automaticky poslední
    opravený import místo skutečně odeslaných dat.
 2. Klikněte **Protokoly ČSSZ…** a zvolte konkrétní uložené XML.
-3. Pokud znáte vlastní ID odeslané zprávy (`vlastniIdPodani`), vyplňte jej pro
-   přesné porovnání. Není to oficiální GUID měsíčního hlášení ani interní revize.
-   Známý počet balíků zadejte výslovně; jinak ponechte „Nevím“.
-4. Potvrďte, že soubor patří zvolené organizaci, měsíci a XML. Samotný
-   `ProcessingResult` nemusí obsahovat VS/období ani GUID měsíčního hlášení;
-   kontext nelze spolehlivě odhadnout z názvu souboru. Vazba je uživatelsky
-   potvrzená, nikoliv kryptograficky ověřená.
-5. **Načíst protokol XML / přílohu PDF…** provede kontrolu formátu a vazeb a uloží
-   originál s SHA-256. Zvolte řádek historie pro přehled výsledku, obecných chyb,
-   SOUHRN/PVPOJ a jednotlivých FORM (GUID, zdrojový řádek a interní PP, je-li vazba
-   doložená). Texty jsou soukromý náhled, ne diagnostický log.
-6. **Uložit původní XML / PDF…** umožní získat nezměněný originál, například po
-   obnově zálohy. Vyžaduje nový soubor a chráněné umístění; nic neotevírá automaticky.
+3. Vyplňte pouze volitelné pole odpovídající typu protokolu: u DIS vlastní ID
+   zprávy `vlastniIdPodani`, u cJMHZ technické `idKonkretnihoPodani`.
+   Tato pole nejsou zaměnitelná s GUID měsíčního hlášení `idPodani` ani interní
+   revizí. Technické ID kopírujte přesně: vzorky mají délku 32 i 36 znaků,
+   proto se nepřepisuje do formátu UUID. Počet balíků se používá pouze pro DIS;
+   neznámý počet ponechte „Nevím“.
+4. Potvrďte organizaci, měsíc a konkrétní XML. DIS nemusí obsahovat VS/období
+   ani GUID měsíčního hlášení, kontext nelze odhadnout z názvu souboru.
+   U podporovaného cJMHZ se VS, období a GUID MH navíc povinně porovnají.
+   Tato vazba sama není kryptografickým ověřením původu.
+5. **Načíst protokol XML / přílohu PDF…** uloží originál s SHA-256. Zvolte řádek
+   historie. Karta **Nálezy / části podání** ukáže část, kód, typ, popis a doloženou
+   vazbu na PP; **Údaje protokolu** obsahují další metadata a rozsah ověření.
+6. **Uložit původní XML / PDF…** získá nezměněný originál například po obnově
+   zálohy. Vyžaduje nový soubor v chráněném umístění; nic neotevírá automaticky.
 
-Protokoly se uchovávají v SQLite databázi dané organizace s vazbou na import
-**a konkrétní XML**, nikoliv ve společném registru osob nebo diagnostických
-souborech. Stejné bajty ke stejnému XML a se stejným kontextem nevytvoří duplicitu;
-změněný kontext se odmítne, nová odpověď zůstává samostatným záznamem. Záloha a
-obnova celé organizace zahrnuje originály i výsledky. Import staršího protokolu
-nepřepíše automaticky „aktuální stav“ měsíčního hlášení.
+Protokoly zůstávají v SQLite dané organizace s vazbou na import **a konkrétní
+XML**, nikoliv ve společném registru osob nebo diagnostických souborech.
+Opakované načtení stejných bajtů se stejným kontextem nevytvoří duplicitu;
+změněný kontext se odmítne, nová odpověď zůstává samostatným záznamem.
+Záloha a obnova organizace zahrnuje originály i výsledky. Import staršího
+protokolu nepřepíše automaticky aktuální stav měsíčního hlášení.
 
 ## Doložená interpretace DIS
 
-Podklad je dodaný archiv
-`schemas/official/2027/mpsv-jmhz-protokoly-mh-v1.5.zip`, zejména dokument
-`MPSV-JMHZ-protokoly MH_v1.5.docx`, sekce „Interpretace protokolu MH“.
-Přibalený starší TXT obsahuje pracovní formulace i neplatný XML přepis;
-parser jej neopravuje odhadem. Test zahrnuje skutečný XML vzorek z archivu,
-syntetické hraniční případy a podporované namespace. Původ/účinnost dodaných
-podkladů stále vyžadují doložený přezkum.
+Podkladem je dodaný archiv `schemas/official/2027/mpsv-jmhz-protokoly-mh-v1.5.zip`,
+zejména `MPSV-JMHZ-protokoly MH_v1.5.docx`, sekce „Interpretace protokolu MH“.
+Starší TXT obsahuje pracovní formulace i neplatný XML přepis, který parser
+neopravuje odhadem. Test zahrnuje skutečný XML vzorek archivu a syntetické případy.
+Původ a účinnost dodaných podkladů stále vyžadují doložený přezkum.
 
 - Toplevel `result="OK"` znamená přijetí **do dalšího zpracování**. Pro navázání
-  na vybrané XML se navíc kontroluje pokrytí jeho individuálních GUID.
+  na zvolené XML se navíc kontroluje pokrytí jeho individuálních GUID.
 - První `Item` s prázdnými `sqnr`/`identifier`/`subtype` představuje obecné
-  kontroly. Jeho `ERROR` znamená zamítnutí celého dílčího podání, i když jsou
-  jednotlivé formuláře uvedené jako OK.
-- Další položky SOUHRN/PVPOJ reprezentují tyto části, FORM se páruje přes
-  `sqnr` = původní `idFormulare`. Neznámý GUID nebo rozpor skutečně odeslaného
-  OIČ/PPV odpovědi s XML se odmítá. Osoby se nepárují podle jména.
-- Při kombinaci OK/ERROR jde o částečné přijetí DIS. Když jsou všechny formuláře
+  kontroly. Jeho ERROR zamítá celé dílčí podání, i když mají formuláře OK.
+- SOUHRN/PVPOJ reprezentují tyto části. FORM se páruje přes `sqnr` = původní
+  `idFormulare`. Cizí GUID nebo rozpor se skutečně odeslaným OIČ/PPV se odmítá.
+- Kombinace OK/ERROR znamená částečné přijetí DIS. Jsou-li všechny formuláře
   chybné, dokument rozlišuje jeden balík (zamítnutí) a více balíků (částečné
   přijetí). Bez skutečného počtu balíků zůstane výsledek k přezkumu.
-- Neznámý/rozporný stav a chybějící pokrytí se nesmějí změnit na úspěch.
-  Počty a chybové kódy se uchovávají tak, jak přišly; nevymýšlí se chybějící kontroly.
-- Nově vrácené OIČ/PPV se **neaplikují automaticky** do importu, registrace ani
-  historie osob. Zůstávají v soukromém protokolu pro přezkum. U cizince bez
-  odeslaných identifikátorů se neporovnává s metadaty, která XML skutečně neobsahovalo.
+- Neznámý/rozporný stav nebo chybějící pokrytí nejsou úspěch. Počty a kódy se
+  uchovávají tak, jak přišly; chybějící kontroly se nevymýšlejí.
+- Nově vrácené OIČ/PPV se **neaplikují automaticky** do importu, registrace nebo
+  historie osob. Zůstávají v soukromém protokolu. U cizince se neporovnávají
+  s metadaty, která jeho původní XML kvůli identifikační alternativě neobsahovalo.
 
-## Hranice ověření
+## Pozorovaný protokol o kompletnosti cJMHZ
 
-**Protokol z DIS není protokol o kompletnosti cJMHZ ani potvrzení metodicky
-správného úplného měsíčního hlášení.** Rozlišení dokládají Pravidla podání 1.4.6,
-str. 94–96 (v dodaném textovém přepisu řádky přibližně 4751–4882).
-Více oprav/storen může měnit měsíční stav jinak než výsledek jednotlivého podání;
-program poslední načtený soubor neprohlásí za tento stav.
+Strukturu nyní dokládají tři uživatelem poskytnuté soubory stejného namespace.
+Originály s identifikátory a texty chyb **nejsou v repozitáři**, testy používají
+nezávisle vytvořená syntetická data. Namespace není důkaz původu ani účinnosti;
+rok v namespace se nezaměňuje za vykazované období.
 
-Protokolové XSD ani přesná XML struktura výsledku kompletnosti cJMHZ v dodaných
-podkladech nejsou. Aplikace tedy **nepředstírá XSD validaci protokolu**, nevytváří
-nové cJMHZ elementy a neoznačuje PDF za obsahově ověřené. Pro rozšíření dodejte
-aktuální definici/strojové schéma a anonymizovaný XML protokol kompletnosti
-(včetně obálky), ideálně také DIS chybový příklad z používaného kanálu.
-Odpovědi APEP/VREP bez uvedeného ProcessingResult či jiné typy podání zůstávají přílohou.
+Čtou se `datumProtokolu`, `variabilniSymbol`, `idKonkretnihoPodani`, `datumPodani`,
+`idPodani`, `mesic`, `rok`, `stavMH/kod`, `stavMH/nazev` a `chybySeznam/chyba`.
+U nálezu se zachová `id`, `typChyby`, `castPodani`, volitelné `idFormulare`,
+`kod` a `popis`. Popis je text, nikdy příkaz nebo zdroj mzdového vzorce.
 
-XML parser odmítá DTD, externí entity/zdroje, nejednoznačné či duplicitní položky
-formulářů a nadlimitní obsah (10 MiB, nejvýše 1500 individuálních FORM).
-Přítomný podpis/timestamp **není ověřen**. SHA-256 dokládá shodu uložených bajtů,
-nikoliv oficiální původ, pravost doručení nebo přijetí úřadem.
-Běžná diagnostika nezahrnuje RČ/OIČ, mzdy ani texty chyb. Zobrazené protokoly,
+Rozpoznané jsou pouze pozorované shodné dvojice:
+
+| Kód | Název ve vzorcích |
+| --- | --- |
+| 4 | Hlášení je částečně přijato |
+| 6 | Hlášení obsahuje propustné chyby |
+
+Významy popisují také Pravidla podání 1.4.6, str. 28 (textový přepis přibližně
+řádky 1222–1254). U propustných chyb dokument uvádí přijetí jako celku s chybami
+k opravě; **nejde automaticky o zamítnutí**. Program nepřidává domnělý příznak
+úplnosti. Neznámý kód, rozporná legenda či nová struktura zůstávají `unresolved`;
+původní kód/název se soukromě zobrazí. Bezchybný úspěšný scénář nebyl dodán.
+
+`stavMH` je nahlášený **stav měsíčního hlášení**. Neodvozuje se z něj výsledek
+konkrétního podání nebo zamítnutí všech jeho PP. Seznam obsahuje nálezy,
+nikoliv všechny výsledky všech formulářů. Formulář se páruje výhradně přes
+explicitní `idFormulare`, i když `castPodani` říká `nezarazeno`. Chyba části
+`form` bez GUID se na zaměstnance neodhadne. Více nálezů jednoho formuláře je
+přípustných. Odkaz mimo zvolené XML zůstane nepřiřazený: může souviset s jinou
+částí/revizí téhož MH. Jiné organizace se neprohledávají a z popisu se nevybírá
+RČ/OIČ. Rozpor VS, období nebo měsíčního GUID import odmítne.
+
+Bez nezávisle známého technického ID se netvrdí ověření konkrétní odeslané
+zprávy. Ukládá se historické tvrzení protokolu; poslední načtený soubor se
+neprohlásí za aktuální stav MH. Opravné XML ani změna GUID z něj nevznikají.
+
+## Hranice ověření a ochrana dat
+
+**DIS přijetí není kompletnost cJMHZ.** Rozlišení dokládají také Pravidla podání
+1.4.6, str. 94–96. Více oprav/storen může měnit měsíční stav jinak než výsledek
+jednotlivého podání.
+
+Protokolové XSD nebylo dodáno: **XSD validace protokolu se nepředstírá**.
+Přítomný podpis/timestamp není ověřen. SHA-256 dokládá shodu uložených bajtů,
+nikoliv úřední původ, pravost doručení nebo přijetí. PDF není obsahově ověřené.
+Pro další stavy/verze je třeba oficiální schéma/číselník nebo další doložený
+protokol. Jiné typy odpovědí zůstávají nevyhodnocenou přílohou.
+
+Pro načítání dodaných protokolů a sledování oprav již další vzorek není nutný.
+Chybějící XSD protokolu znamená, že jeho strukturu čteme podle doložených
+vzorků, nikoliv že soubor musí být chybný. Později lze doplnit oficiální XSD
+právě tohoto typu odpovědi. Neověřený podpis znamená, že aplikace zatím
+kryptograficky neověřuje původ souboru; netvrdí tím, že podpis je neplatný.
+
+Blokování finálního exportu se týká vytvářeného mzdového hlášení, nikoliv
+načítání odpovědí. K doložení správnosti převodu nadále chybí skutečný
+anonymizovaný export mzdového systému s významem číslovaných položek a
+ověření výsledného XML podle metodiky (například referenční správné XML
+nebo přezkum mzdovým specialistou). Samotné protokolové XSD či ověření podpisu
+tuto správnost neprokáže a export neodblokuje.
+
+Parser odmítá DTD, externí entity/zdroje, nejednoznačná či duplicitní skalární
+pole a nadlimitní obsah. Společný limit je 10 MiB a 30000 XML uzlů. DIS má limit
+1500 individuálních FORM. cJMHZ má samostatný lokální limit 3000 nálezů; nejde
+přitom o domnělý oficiální limit počtu chyb.
+
+Běžná diagnostika neobsahuje RČ/OIČ, mzdy ani texty chyb. Soukromý náhled,
 originály a zálohy mohou obsahovat osobní údaje a **nejsou šifrované**.
+Starší pracovní plány uchovávají neměnný snímek `receipt_status: not_recorded`;
+nově načtené protokoly mají vlastní historii. Plán se nepřepisuje a není dokladem
+skutečného odeslání. **Finální export zůstává blokovaný.**
 
-Starší pracovní plány podání mají neměnný `receipt_status: not_recorded` z doby
-vytvoření plánu. Nově načtené protokoly jsou oddělená historie u konkrétního XML;
-původní plán se zpětně nepřepisuje ani nepovažuje za skutečné odeslání.
-**Finální export zůstává blokovaný** bez ohledu na výsledek importu protokolu.
-
-Ověření 19. 11. 2026: celá moderní sada 275 testů prošla (Linux, Python 3.12.14,
-PySide6 6.12.0); kompatibilní sada společného jádra a Qt5 193 testů prošla
-(Linux, Python 3.8.20, PySide2 5.15.2.1). Zahrnuje 20 testů protokolů, skutečný
-XML vzorek z dodaného archivu, syntetické výsledky, bezpečnost parseru, izolaci,
-neměnnost importu, zálohu/obnovu a GUI. Tato etapa nebyla spuštěna na Windows.
 Po sloučení změn je pro instalovaný program potřeba nové sestavení EXE;
 samotná aktualizace datových definic nové funkce kódu nepřidá.
+
+## Výsledek ověření 19. 11. 2026
+
+Celá moderní sada: **306 testů prošlo**, Linux Python 3.12.14 / PySide6 6.12.0.
+Kompatibilní sada jádra a GUI: **224 testů prošlo**, Linux Python 3.8.20 /
+PySide2 5.15.2.1. Obsahuje 16 testů cJMHZ, zachovaných 20 testů DIS a 15 testů
+evidence oprav a navazujících odpovědí,
+izolaci VS/období/GUID, různé technické identifikátory, neznámé stavy, nejednoznačné
+XML, nepřiřazené či opakované nálezy, zálohu/obnovu a společný GUI náhled.
+Tři poskytnuté originály byly v předchozí etapě místně načteny bez výpisu osobních/mzdových údajů;
+žádný originál není testovacím souborem nebo součástí distribuce. Prošly kontroly
+hashů oficiálních podkladů a relativních odkazů. Windows běh této etapy nebyl
+proveden; zabalený syntetický self-test zahrnuje cJMHZ, navázání opravy,
+výslovný ruční přezkum a obnovu historie ze zálohy.
